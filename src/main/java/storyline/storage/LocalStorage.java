@@ -48,8 +48,7 @@ public class LocalStorage implements StorageAdapter {
     @Override
     public boolean saveTimeline(Timeline timeline) {
 
-        if (writeTimelineToFile(this.appDataPath, timeline)) return true;
-        return false;
+        return writeTimelineToFile(this.appDataPath, timeline);
     }
 
     @Override
@@ -59,15 +58,14 @@ public class LocalStorage implements StorageAdapter {
 
     @Override
     public boolean deleteTimeLine(int timelineID) {
-        if (deleteTimeLineFile(this.appDataPath, timelineID)) return true;
-        return false;
+        return deleteTimeLineFile(this.appDataPath, timelineID);
     }
 
     private boolean deleteTimeLineFile(String directory, int timelineID) {
         String filepath = directory + File.separator + timelineID + FILE_FORMAT;
         File timelineFile = new File(filepath);
         if (timelineFile.exists()) {
-            if (timelineFile.delete()) return true;
+            return timelineFile.delete();
         }
         return false;
     }
