@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class DatabaseStorage implements StorageAdapter{
 
     @Override
-    public Timeline getTimeline(int ID) {
+    public Timeline getTimeline(String ID) {
         return null;
     }
 
@@ -27,7 +27,8 @@ public class DatabaseStorage implements StorageAdapter{
     }
 
     @Override
-    public boolean deleteTimeLine(int ID) {
+    public boolean deleteTimeLine(String name) {
         return false;
     }
+
 }

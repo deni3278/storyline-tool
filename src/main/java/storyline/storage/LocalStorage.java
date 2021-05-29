@@ -18,13 +18,7 @@ public class LocalStorage implements StorageAdapter {
     private LocalStorage() {
         String userHomePath = System.getProperty("user.home");
         String appDataPath = userHomePath + File.separator + DIRECTORY_NAME;
-        if (Files.notExists(Paths.get(appDataPath))) {
-            try {
-                Files.createDirectory(Paths.get(appDataPath));
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        }
+        createDirectoryIfNotExists(appDataPath);
         this.appDataPath = appDataPath;
     }
 
@@ -35,20 +29,29 @@ public class LocalStorage implements StorageAdapter {
         return instance;
     }
 
+    private void createDirectoryIfNotExists(String directoryPath) {
+        if (Files.notExists(Paths.get(directoryPath))) {
+            try {
+                Files.createDirectory(Paths.get(directoryPath));
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+    }
+
     @Override
-    public Timeline getTimeline(int ID) {
-        return readTimelineFromFile(this.appDataPath, ID);
+    public Timeline getTimeline(String ID) {
+        return readObjectFromFile("Timelines", ID);
     }
 
     @Override
     public ArrayList<Timeline> getAllTimelines() {
-        return readAllTimelinesFromDirectory(this.appDataPath);
+        return readAllObjectsFromDirectory("Timelines");
     }
 
     @Override
     public boolean saveTimeline(Timeline timeline) {
-
-        return writeTimelineToFile(this.appDataPath, timeline);
+        return writeObjectToFile("Timelines", timeline);
     }
 
     @Override
@@ -57,12 +60,12 @@ public class LocalStorage implements StorageAdapter {
     }
 
     @Override
-    public boolean deleteTimeLine(int timelineID) {
-        return deleteTimeLineFile(this.appDataPath, timelineID);
+    public boolean deleteTimeLine(String ID) {
+        return deleteFile("Timelines", ID);
     }
 
-    private boolean deleteTimeLineFile(String directory, int timelineID) {
-        String filepath = directory + File.separator + timelineID + FILE_FORMAT;
+    private boolean deleteFile(String subDirectory, String identifier) {
+        String filepath = getFilepath(subDirectory) + File.separator + identifier + FILE_FORMAT;
         File timelineFile = new File(filepath);
         if (timelineFile.exists()) {
             return timelineFile.delete();
@@ -70,55 +73,73 @@ public class LocalStorage implements StorageAdapter {
         return false;
     }
 
-    private boolean writeTimelineToFile(String directory, Timeline timeline) {
-        String filepath = directory + File.separator + timeline.getTimelineID() + FILE_FORMAT;
+    private <T extends Identifiable & Serializable> boolean writeObjectToFile(String subDirectory, T object) {
+        String directoryPath = getFilepath(subDirectory);
+        createDirectoryIfNotExists(directoryPath);
+        String filepath = getFilepath(object, subDirectory);
         try {
             FileOutputStream fileOut = new FileOutputStream(filepath);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(timeline);
+            objectOut.writeObject(object);
             objectOut.close();
-            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
+        return true;
     }
 
-    private Timeline readTimelineFromFile(String directory, int ID) {
+    private String getFilepath(String... subDirectories) {
+        StringBuilder filepathBuilder = new StringBuilder(this.appDataPath + File.separator);
+        Arrays.stream(subDirectories).forEach(path -> filepathBuilder.append(path + File.separator));
+        return filepathBuilder.toString();
+    }
+
+    private <T extends Identifiable & Serializable> String getFilepath(T object, String ...subDirectories) {
+        StringBuilder filepathBuilder = new StringBuilder(getFilepath(subDirectories));
+        filepathBuilder.append(object.getIdentifier() + FILE_FORMAT);
+        return filepathBuilder.toString();
+    }
 
 
-        String filepath = directory + File.separator + ID + FILE_FORMAT;
-        Timeline timeline = null;
+    private <T extends Identifiable & Serializable> ArrayList<T> readAllObjectsFromDirectory(String subDirectory) {
+        ArrayList<T> objects = new ArrayList<>();
+
+        String directoryPath = getFilepath(subDirectory);
+        File directory = new File(directoryPath);
+        //get all file names of the directoryPath
+        String[] files = directory.list();
+
+        for (String file : files) {
+            String objectID = getFileNameWithoutExtension(file);
+            T object = readObjectFromFile(subDirectory, objectID);
+            objects.add(object);
+        }
+
+        return objects;
+
+    }
+
+    private String getFileNameWithoutExtension(String file) {
+        return file.replaceAll("^.*?(([^/\\\\\\.]+))\\.[^\\.]+$", "$1");
+    }
+
+    private <T extends Identifiable & Serializable> T readObjectFromFile(String directory, String identifier) {
+
+        String filepath = this.appDataPath + File.separator + directory + File.separator + identifier + FILE_FORMAT;
+        T object = null;
         try {
-
             FileInputStream fileIn = new FileInputStream(filepath);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 
-            Object obj = objectIn.readObject();
-
-            if (obj instanceof Timeline) {
-                timeline = (Timeline) obj;
+            Object readObject = objectIn.readObject();
+            if (readObject instanceof Identifiable) {
+                object = (T) readObject;
             }
-
             objectIn.close();
         } catch (ClassNotFoundException | IOException exception) {
             exception.printStackTrace();
         }
-        return timeline;
-    }
-
-    private ArrayList<Timeline> readAllTimelinesFromDirectory(String directoryPath) {
-        ArrayList<Timeline> timelines = new ArrayList<>();
-        File directory = new File(directoryPath);
-        String[] files = directory.list();
-
-        Arrays.stream(files).forEach(file -> {
-            String fileNameWithoutExt = file.replaceAll("^.*?(([^/\\\\\\.]+))\\.[^\\.]+$", "$1");
-            int timelineID = Integer.parseInt(fileNameWithoutExt);
-            Timeline timeline = readTimelineFromFile(directoryPath, timelineID);
-            timelines.add(timeline);
-        });
-        return timelines;
-
+        return object;
     }
 }

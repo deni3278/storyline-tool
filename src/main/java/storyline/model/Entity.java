@@ -1,8 +1,10 @@
 package storyline.model;
 
+import storyline.storage.Identifiable;
+
 import java.io.Serializable;
 
-public class Entity implements Serializable {
+public class Entity implements Serializable, Identifiable {
     private int entityID;
     private String entityName;
     private String entityDescription;
@@ -21,4 +23,12 @@ public class Entity implements Serializable {
                 ", entityDescription='" + entityDescription + '\'' +
                 '}';
     }
+
+
+
+    @Override
+    public String getIdentifier() {
+        return String.valueOf(this.entityID);
+    }
+
 }

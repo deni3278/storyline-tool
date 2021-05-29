@@ -1,17 +1,17 @@
 package storyline.model;
 
+import storyline.storage.Identifiable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Timeline implements Serializable {
+public class Timeline implements Serializable, Identifiable {
     private String name;
     private ArrayList<EventCard> eventCards;
-    private int timelineID;
 
-    public Timeline(ArrayList<EventCard> eventCards, int timelineID,String name) {
+    public Timeline(ArrayList<EventCard> eventCards, String name) {
         this.eventCards = eventCards;
         this.name = name;
-        this.timelineID = timelineID;
     }
 
     public String getName() {
@@ -30,20 +30,19 @@ public class Timeline implements Serializable {
         this.eventCards = eventCards;
     }
 
-    public int getTimelineID() {
-        return timelineID;
-    }
 
-    public void setTimelineID(int timelineID) {
-        this.timelineID = timelineID;
-    }
 
     @Override
     public String toString() {
         return "Timeline{" +
                 "name='" + name + '\'' +
                 ", eventCards=" + eventCards +
-                ", timelineID=" + timelineID +
                 '}';
     }
+    @Override
+    public String getIdentifier() {
+        return String.valueOf(this.name);
+    }
+
+
 }

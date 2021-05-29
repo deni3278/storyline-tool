@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface StorageAdapter {
 
-    Timeline getTimeline(int ID);
+    Timeline getTimeline(String name);
 
     ArrayList<Timeline> getAllTimelines();
 
@@ -14,5 +14,5 @@ public interface StorageAdapter {
 
     boolean updateTimeline(Timeline timeline);
 
-    boolean deleteTimeLine(int ID);
+    boolean deleteTimeLine(String name);
 }

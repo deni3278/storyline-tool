@@ -1,9 +1,11 @@
 package storyline.model;
 
+import storyline.storage.Identifiable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class EventCard implements Serializable {
+public class EventCard implements Serializable, Identifiable {
 
     private String name;
     private int eventID;
@@ -25,4 +27,11 @@ public class EventCard implements Serializable {
                 ", eventContent='" + eventContent + '\'' +
                 '}';
     }
+
+    @Override
+    public String getIdentifier() {
+        return String.valueOf(this.eventID);
+    }
+
+
 }
