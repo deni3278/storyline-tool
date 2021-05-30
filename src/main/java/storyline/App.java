@@ -15,7 +15,7 @@ public class App extends Application {
         Parent root = loader.load();
 
         stage.setTitle("Storyline Tool");
-        stage.setScene(new Scene(root, 1000, 800));
+        stage.setScene(new Scene(root, 1280, 720));
         stage.show();
     }
 
