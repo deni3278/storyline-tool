@@ -6,18 +6,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox stylesheets="@../css/eventCard.css" HBox.hgrow="ALWAYS">
+      <VBox fx:id="vLayout" HBox.hgrow="ALWAYS">
          <children>
-            <Label text="Title" textFill="#2ccc70">
+            <Label fx:id="title" text="Title" textFill="#2ccc70">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
-            <Label text="Description" textFill="#2ccc70">
+            <Label fx:id="description" text="Description" textFill="#2ccc70">
                <VBox.margin>
                   <Insets />
                </VBox.margin></Label>

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox minWidth="300.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox minWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="storyline.controller.CardsEntitiesController">
    <children>
       <VBox style="-fx-background-color: #31394c;" HBox.hgrow="ALWAYS">
          <children>
@@ -51,13 +51,10 @@
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </Separator>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="vLayout" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
-                           <children>
-                              <fx:include source="eventCard.fxml" />
-                           </children>
                         </VBox>
                      </children>
                      <opaqueInsets>
