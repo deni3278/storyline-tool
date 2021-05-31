@@ -10,6 +10,7 @@ import javafx.scene.paint.Paint;
 
 public class EventCardController {
 
+    //Below properties are initially not in use, but are used when this controller is assigned to a new eventCard fxml (pls no delet)
     @FXML
     private Label title, description;
     @FXML
