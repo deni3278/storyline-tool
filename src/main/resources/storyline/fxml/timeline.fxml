@@ -9,41 +9,43 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="TOP_CENTER" prefHeight="488.0" prefWidth="985.0" style="-fx-background-color: #31394c;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" minHeight="500.0" minWidth="700.0" prefHeight="500.0" prefWidth="1000.0" style="-fx-background-color: #31394c;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" text="Timeline" textFill="#d9dbdf">
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="75.0" text="Timeline" textFill="#d9dbdf">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <ScrollPane prefHeight="406.0" prefWidth="985.0" stylesheets="@../css/scrollpane.css">
+      <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" minHeight="300.0" minWidth="400.0" stylesheets="@../css/scrollpane.css" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
          <content>
-            <GridPane prefHeight="395.0" prefWidth="983.0" style="-fx-grid-lines-visible: true; -fx-background-color: #2a313d;">
+            <GridPane minWidth="600.0" style="-fx-grid-lines-visible: true; -fx-background-color: #2a313d;">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
          </content>
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin>
       </ScrollPane>
    </children>
    <padding>
