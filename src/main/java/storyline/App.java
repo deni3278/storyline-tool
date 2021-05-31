@@ -9,15 +9,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
-    //.
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/root.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/projectPage.fxml"));
         Parent root = loader.load();
 
         stage.setTitle("Storyline Tool");
-        stage.setScene(new Scene(root, 1280, 720));
+        stage.setScene(new Scene(root));
         stage.show();
+        stage.setMaximized(true);
     }
     public static void main(String[] args) {
         launch(args);
