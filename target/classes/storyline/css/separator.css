@@ -1,0 +1,11 @@
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-color: #242a30;
+    -fx-border-width: 0 10px 0 0;
+}
+
+#horizontal *.line {
+    -fx-border-style: solid;
+    -fx-border-color: #3d465e;
+    -fx-border-width: 2px 0 0 0;
+}
