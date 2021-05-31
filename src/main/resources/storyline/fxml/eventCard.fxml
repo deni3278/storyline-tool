@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-
-<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2ccc70" height="80.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="2.0" />
       <VBox prefHeight="80.0" prefWidth="183.0" stylesheets="@../css/eventCard.css">
          <children>
-            <Label text="Title" />
-            <Label text="Description" />
+            <Label text="Title" textFill="#2ccc70">
+               <VBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label text="Description" textFill="#2ccc70">
+               <VBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </VBox.margin></Label>
          </children>
       </VBox>
    </children>
