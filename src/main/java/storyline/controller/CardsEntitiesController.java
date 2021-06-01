@@ -37,7 +37,15 @@ public class CardsEntitiesController {
         FXMLLoader card = new FXMLLoader(getClass().getResource("../fxml/eventCard.fxml"));
         //Assign a controller to the newly loaded card, and pass the variables for the card
         card.setController(new EventCardController(title, description, color));
+
+        HBox eventCard = card.load();
+        System.out.println(card.toString());
+
+        //eventCard.setUserData(new storyline.model.EventCard(title,description));
+
+        //new storyline.model.EventCard();
+
         //Add the new card to the vbox
-        vLayout.getChildren().add(card.load());
+        vLayout.getChildren().add(eventCard);
     }
 }
