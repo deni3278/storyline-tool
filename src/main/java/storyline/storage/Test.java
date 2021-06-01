@@ -1,7 +1,9 @@
 package storyline.storage;
 
+import javafx.scene.paint.Color;
 import storyline.model.EventCard;
 import storyline.model.Timeline;
+import storyline.model.TimelineEventCard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +13,13 @@ public class Test {
         StorageAdapter localStorage = LocalStorage.getInstance();
 
 
-        EventCard eventCard1 = new EventCard("test", 1, "testesteteet");
-        ArrayList<EventCard> eventCards = new ArrayList<>(Arrays.asList(eventCard1));
+        Color color = Color.BLUE;
+        Color color2 = Color.valueOf(color.toString());
+        System.out.println(color2);
+
+        System.out.println(color.toString());
+        TimelineEventCard eventCard1 = new TimelineEventCard("test", color.toString(), "testesteteet");
+        ArrayList<TimelineEventCard> eventCards = new ArrayList<>(Arrays.asList(eventCard1));
         Timeline timelineOut = new Timeline(eventCards, "a");
         Timeline timelineOut2 = new Timeline(eventCards, "b");
         Timeline timelineOut3 = new Timeline(eventCards, "c");

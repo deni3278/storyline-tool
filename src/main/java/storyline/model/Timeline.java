@@ -1,15 +1,14 @@
 package storyline.model;
 
 import storyline.storage.Identifiable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Timeline implements Serializable, Identifiable {
     private String name;
-    private ArrayList<EventCard> eventCards;
+    private ArrayList<TimelineEventCard> eventCards;
 
-    public Timeline(ArrayList<EventCard> eventCards, String name) {
+    public Timeline(ArrayList<TimelineEventCard> eventCards, String name) {
         this.eventCards = eventCards;
         this.name = name;
     }
@@ -22,11 +21,11 @@ public class Timeline implements Serializable, Identifiable {
         this.name = name;
     }
 
-    public ArrayList<EventCard> getEventCards() {
+    public ArrayList<TimelineEventCard> getEventCards() {
         return eventCards;
     }
 
-    public void setEventCards(ArrayList<EventCard> eventCards) {
+    public void setEventCards(ArrayList<TimelineEventCard> eventCards) {
         this.eventCards = eventCards;
     }
 
