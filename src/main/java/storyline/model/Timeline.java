@@ -13,6 +13,7 @@ public class Timeline implements Serializable, Identifiable {
         this.name = name;
     }
 
+
     public String getName() {
         return name;
     }

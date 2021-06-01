@@ -12,9 +12,6 @@ public class TimelineEventCard extends EventCard {
         super(name, colorString, eventContent);
     }
 
-    public Color getColor() {
-        return Color.valueOf(this.getColorString());
-    }
 
     public double getPosX() {
         return posX;
