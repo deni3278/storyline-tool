@@ -31,7 +31,6 @@ public class CardsEntitiesController {
         card.setController(new EventCardController(title, description, color));
 
         HBox eventCard = card.load();
-        System.out.println(card.toString());
 
         //eventCard.setUserData(new storyline.model.EventCard(title,description));
 
