@@ -18,7 +18,7 @@ public class Test {
         System.out.println(color2);
 
         System.out.println(color.toString());
-        TimelineEventCard eventCard1 = new TimelineEventCard("test", color.toString(), "testesteteet");
+        TimelineEventCard eventCard1 = new TimelineEventCard("test", color.toString(), "testesteteet",1,1);
         ArrayList<TimelineEventCard> eventCards = new ArrayList<>(Arrays.asList(eventCard1));
         Timeline timelineOut = new Timeline(eventCards, "a");
         Timeline timelineOut2 = new Timeline(eventCards, "b");

@@ -8,8 +8,10 @@ public class TimelineEventCard extends EventCard {
     private double posY;
 
 
-    public TimelineEventCard(String name, String colorString, String eventContent) {
+    public TimelineEventCard(String name, String colorString, String eventContent,double posX,double posY) {
         super(name, colorString, eventContent);
+        this.posX = posX;
+        this.posY = posY;
     }
 
 
