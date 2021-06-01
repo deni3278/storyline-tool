@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class EventCard implements Serializable, Identifiable {
-
     private String title;
     private String colorString;
     private ArrayList<Entity> EventAttachedEntities = new ArrayList<>();
@@ -68,6 +67,4 @@ public class EventCard implements Serializable, Identifiable {
     public String getIdentifier() {
         return String.valueOf(this.title);
     }
-
-
 }
