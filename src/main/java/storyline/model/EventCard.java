@@ -11,6 +11,8 @@ public class EventCard implements Serializable, Identifiable {
     private String colorString;
     private ArrayList<Entity> EventAttachedEntities = new ArrayList<>();
     private String eventContent;
+    public int x;
+    public int y;
 
     public EventCard(String name, String colorString, String eventContent) {
         this.title = name;
@@ -57,7 +59,8 @@ public class EventCard implements Serializable, Identifiable {
     @Override
     public String toString() {
         return "EventCard{" +
-                "name='" + title + '\'' +
+                "title='" + title + '\'' +
+                ", color='" + getColor() + '\'' +
                 ", EventAttachedEntities=" + EventAttachedEntities +
                 ", eventContent='" + eventContent + '\'' +
                 '}';

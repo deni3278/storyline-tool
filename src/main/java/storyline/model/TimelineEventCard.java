@@ -1,14 +1,12 @@
 package storyline.model;
 
-import javafx.scene.paint.Color;
-
 public class TimelineEventCard extends EventCard {
 
     private double posX;
     private double posY;
 
 
-    public TimelineEventCard(String name, String colorString, String eventContent,double posX,double posY) {
+    public TimelineEventCard(String name, String colorString, String eventContent, double posX, double posY) {
         super(name, colorString, eventContent);
         this.posX = posX;
         this.posY = posY;

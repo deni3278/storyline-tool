@@ -8,6 +8,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -46,6 +47,7 @@ public class CardsEntitiesController {
         eventCard.setUserData(eventCardParam);
 
         eventCard.setOnDragDetected(event -> {
+
             System.out.println(eventCard + " drag detected");
 
             ImageView preview = new ImageView(eventCard.snapshot(null, null));
