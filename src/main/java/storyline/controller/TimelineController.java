@@ -44,7 +44,7 @@ public class TimelineController {
         StorageAdapter localStorage = LocalStorage.getInstance();
 
         gridPane = timelineGridPane;
-        loadGridFromSave(localStorage,"Test");
+        loadGridFromSave(localStorage, "Test");
 
         timelineGridPane.setOnDragOver(event -> {
             if (event.getGestureSource() != timelineGridPane) {
@@ -93,8 +93,7 @@ public class TimelineController {
                         e.printStackTrace();
                     }
 
-                }
-                else {
+                } else {
                     timelineEventCard = (TimelineEventCard) sourceEventCard;
                     timelineEventCard.setX(columnIndex);
                     timelineEventCard.setY(rowIndex);
@@ -163,24 +162,4 @@ public class TimelineController {
         }
         return null;
     }
-
-    private void populateGrid(GridPane gridPane) {
-
-        int numCols = gridPane.getColumnConstraints().size();
-        int numRows = gridPane.getRowConstraints().size();
-
-        for (int i = 0; i < numCols; i++) {
-            for (int j = 0; j < numRows; j++) {
-                addPane(gridPane, i, j);
-            }
-        }
-    }
-
-    private void addPane(GridPane gridPane, int colIndex, int rowIndex) {
-        Pane pane = new Pane();
-
-        gridPane.add(pane, colIndex, rowIndex);
-    }
 }
-
-
