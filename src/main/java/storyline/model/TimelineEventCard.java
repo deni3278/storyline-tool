@@ -1,6 +1,10 @@
 package storyline.model;
 
-public class TimelineEventCard extends EventCard {
+import storyline.storage.Identifiable;
+
+import java.io.Serializable;
+
+public class TimelineEventCard extends EventCard implements Serializable, Identifiable {
 
     private int x;
     private int y;
@@ -27,5 +31,13 @@ public class TimelineEventCard extends EventCard {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return "TimelineEventCard{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

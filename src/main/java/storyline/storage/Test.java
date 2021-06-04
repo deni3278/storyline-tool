@@ -22,7 +22,6 @@ public class Test {
 
 
         System.out.println("localStorage.saveTimeline(timelineOut) = " + localStorage.saveTimeline(timelineOut));
-        ;
 
         localStorage.getAllTimelines().forEach(System.out::println);
 

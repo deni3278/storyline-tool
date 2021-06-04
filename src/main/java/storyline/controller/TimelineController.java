@@ -14,6 +14,7 @@ import storyline.model.EventCard;
 import storyline.model.Timeline;
 import storyline.model.TimelineEventCard;
 import storyline.storage.LocalStorage;
+import storyline.storage.StorageAdapter;
 
 import java.awt.*;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class TimelineController {
 
     public static ArrayList<TimelineEventCard> timelineEventCards;
     public static Timeline timeline;
+    public static GridPane gridPane;
 
     @FXML
     public ScrollPane timelineScrollPane;
@@ -39,17 +41,10 @@ public class TimelineController {
     private void initialize() {
 
 
-        LocalStorage localStorage = LocalStorage.getInstance();
+        StorageAdapter localStorage = LocalStorage.getInstance();
 
-        timeline = localStorage.getTimeline("test");
-        timelineEventCards = timeline.getEventCards();
-        timelineEventCards.forEach(timelineEventCard -> {
-            try {
-                addTimelineEventCard(timelineEventCard);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        gridPane = timelineGridPane;
+        loadGridFromSave(localStorage,"Test");
 
         timelineGridPane.setOnDragOver(event -> {
             if (event.getGestureSource() != timelineGridPane) {
@@ -114,15 +109,27 @@ public class TimelineController {
 
     }
 
-    private void addTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
+    public static void loadGridFromSave(StorageAdapter localStorage, String test) {
+        timeline = localStorage.getTimeline("test");
+        timelineEventCards = timeline.getEventCards();
+        timelineEventCards.forEach(timelineEventCard -> {
+            try {
+                addTimelineEventCard(timelineEventCard);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private static void addTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
 
         HBox interactableEventCard = createTimelineEventCard(timelineEventCard);
-        timelineGridPane.add(interactableEventCard, timelineEventCard.getX(), timelineEventCard.getY());
+        gridPane.add(interactableEventCard, timelineEventCard.getX(), timelineEventCard.getY());
         if (!timelineEventCards.contains(timelineEventCard)) timelineEventCards.add(timelineEventCard);
     }
 
-    private HBox createTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
-        FXMLLoader card = new FXMLLoader(getClass().getResource("../fxml/eventCard.fxml"));
+    private static HBox createTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
+        FXMLLoader card = new FXMLLoader(TimelineController.class.getResource("../fxml/eventCard.fxml"));
         //Assign a controller to the newly loaded card, and pass the variables for the card
         card.setController(new EventCardController(timelineEventCard.getTitle(), timelineEventCard.getEventContent(), timelineEventCard.getColor()));
 

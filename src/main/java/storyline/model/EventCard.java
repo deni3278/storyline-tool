@@ -11,8 +11,7 @@ public class EventCard implements Serializable, Identifiable {
     private String colorString;
     private ArrayList<Entity> EventAttachedEntities = new ArrayList<>();
     private String eventContent;
-    public int x;
-    public int y;
+
 
     public EventCard(String name, String colorString, String eventContent) {
         this.title = name;
