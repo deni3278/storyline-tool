@@ -87,7 +87,8 @@ public class TimelineController {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
+                    source.setVisible(false);
+                    source.setManaged(false);
                 } else {
                     System.out.println("from within gridpane");
                     timelineEventCard = (TimelineEventCard) sourceEventCard;
@@ -116,8 +117,8 @@ public class TimelineController {
         return overlap;
     }
 
-    public static void loadGridFromSave(StorageAdapter localStorage, String test) {
-        timeline = localStorage.getTimeline("test");
+    public static void loadGridFromSave(StorageAdapter storageAdapter, String ID) {
+        timeline = storageAdapter.getTimeline(ID);
         timelineEventCards = timeline.getEventCards();
         timelineEventCards.forEach(timelineEventCard -> {
             try {
