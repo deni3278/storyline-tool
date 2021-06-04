@@ -13,8 +13,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import storyline.model.EventCard;
+import storyline.storage.LocalStorage;
+import storyline.storage.StorageAdapter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class CardsEntitiesController {
@@ -30,6 +33,15 @@ public class CardsEntitiesController {
     private void initialize() throws IOException {
 
 
+        ArrayList<EventCard> eventCardsFromSave = getEventCards();
+
+        eventCardsFromSave.forEach(eventCard -> {
+            try {
+                createCard(eventCard);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
 
         EventCard eventCard1 = new EventCard("test", RED.toString(), "testtesttest");
         EventCard eventCard2 = new EventCard("test2", BLUE.toString(), "testtesttest");
@@ -37,6 +49,11 @@ public class CardsEntitiesController {
         createCard(eventCard1);
         createCard(eventCard2);
         createCard(eventCard3);
+    }
+
+    private ArrayList<EventCard> getEventCards() {
+        StorageAdapter storageAdapter = LocalStorage.getInstance();
+        return storageAdapter.getAllEventCards();
     }
 
     private void createCard(EventCard eventCardParam) throws IOException {

@@ -1,5 +1,6 @@
 package storyline.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -44,7 +45,8 @@ public class TimelineController {
         StorageAdapter localStorage = LocalStorage.getInstance();
 
         gridPane = timelineGridPane;
-        loadGridFromSave(localStorage, "Test");
+//        Platform.runLater(() -> loadGridFromSave(localStorage, "Test"));
+        startFromBlank("fromblanktest");
 
         timelineGridPane.setOnDragOver(event -> {
             if (event.getGestureSource() != timelineGridPane) {
@@ -117,9 +119,15 @@ public class TimelineController {
         return overlap;
     }
 
+    public static void startFromBlank(String timelineName) {
+        timeline = new Timeline(new ArrayList<TimelineEventCard>(), timelineName);
+        timelineEventCards = timeline.getEventCards();
+    }
+
     public static void loadGridFromSave(StorageAdapter storageAdapter, String ID) {
         timeline = storageAdapter.getTimeline(ID);
         timelineEventCards = timeline.getEventCards();
+        gridPane.getChildren().retainAll(gridPane.getChildren().get(0));
         timelineEventCards.forEach(timelineEventCard -> {
             try {
                 addTimelineEventCard(timelineEventCard);
