@@ -151,7 +151,7 @@ public class TimelineController {
 
         //clears the current grid nodes.
         //need to keep the first node of the gridpane as it holds the layout information like the gridlines...
-        timelineGridPaneStatic.getChildren().retainAll(timelineGridPaneStatic.getChildren().get(0));
+        Platform.runLater(() -> timelineGridPaneStatic.getChildren().retainAll(timelineGridPaneStatic.getChildren().get(0)));
 
         //convers the model timeline eventcards into interactable hboxes and adds them to the gridpane
         timelineEventCards.forEach(timelineEventCard -> {
