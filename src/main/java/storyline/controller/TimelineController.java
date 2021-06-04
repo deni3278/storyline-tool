@@ -45,12 +45,6 @@ public class TimelineController {
 
         timelineGridPaneStatic = timelineGridPane;
 
-
-        StorageAdapter localStorage = LocalStorage.getInstance();
-
-
-//        Platform.runLater(() -> loadGridFromSave(localStorage, "Test"));
-
         timelineGridPane.setOnDragOver(event -> {
             if (event.getGestureSource() != timelineGridPane) {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -76,33 +70,30 @@ public class TimelineController {
 
             EventCard sourceEventCard = (EventCard) source.getUserData();
 
-
             boolean overlap = checkOverlap(columnIndex, rowIndex);
+            if (overlap) return;
 
-            if (overlap == false) {
-                timelineGridPane.getChildren().remove(source);
-
-                TimelineEventCard timelineEventCard;
-                if (!(sourceEventCard instanceof TimelineEventCard)) {
-                    timelineEventCard = new TimelineEventCard(sourceEventCard.getTitle(),
-                            sourceEventCard.getColorString(), sourceEventCard.getEventContent(), columnIndex, rowIndex);
-                    System.out.println("from eventcard vbox");
-                    try {
-                        addTimelineEventCard(timelineEventCard);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    source.setVisible(false);
-                    source.setManaged(false);
-                } else {
-                    System.out.println("from within gridpane");
-                    timelineEventCard = (TimelineEventCard) sourceEventCard;
-                    timelineEventCard.setX(columnIndex);
-                    timelineEventCard.setY(rowIndex);
-                    timelineGridPane.add(source, columnIndex, rowIndex);
+            TimelineEventCard timelineEventCard;
+            if (!(sourceEventCard instanceof TimelineEventCard)) {
+                System.out.println("from eventcard vbox");
+                timelineEventCard = new TimelineEventCard(sourceEventCard.getTitle(),
+                        sourceEventCard.getColorString(), sourceEventCard.getEventContent(), columnIndex, rowIndex);
+                try {
+                    addTimelineEventCard(timelineEventCard);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
+                source.setVisible(true);
+                source.setManaged(true);
+            } else {
+                System.out.println("from within gridpane");
+                timelineGridPane.getChildren().remove(source);
+                timelineEventCard = (TimelineEventCard) sourceEventCard;
+                timelineEventCard.setX(columnIndex);
+                timelineEventCard.setY(rowIndex);
+                timelineGridPane.add(source, columnIndex, rowIndex);
             }
+
 
             event.consume();
         });
@@ -133,9 +124,9 @@ public class TimelineController {
         //initializes public static variables
         timeline = new Timeline(new ArrayList<TimelineEventCard>(), timelineName);
         timelineEventCards = timeline.getEventCards();
+
         //clears the current grid nodes.
-        //need to keep the first node of the gridpane as it holds the layout information like the gridlines...
-        Platform.runLater(() -> timelineGridPaneStatic.getChildren().retainAll(timelineGridPaneStatic.getChildren().get(0)));
+        timelineGridPaneStatic.getChildren().removeIf(node -> node instanceof HBox);
     }
 
     /**
@@ -145,15 +136,19 @@ public class TimelineController {
      * @param ID             the id
      */
     public static void loadGridFromSave(StorageAdapter storageAdapter, String ID) {
+
+
         //initializes public static variables
         timeline = storageAdapter.getTimeline(ID);
         timelineEventCards = timeline.getEventCards();
+        System.out.println("timelineEventCards = " + timelineEventCards);
 
         //clears the current grid nodes.
-        //need to keep the first node of the gridpane as it holds the layout information like the gridlines...
-        Platform.runLater(() -> timelineGridPaneStatic.getChildren().retainAll(timelineGridPaneStatic.getChildren().get(0)));
+        timelineGridPaneStatic.getChildren().removeIf(node -> node instanceof HBox);
 
-        //convers the model timeline eventcards into interactable hboxes and adds them to the gridpane
+
+
+        //converts the model timeline eventcards into interactable hboxes and adds them to the gridpane
         timelineEventCards.forEach(timelineEventCard -> {
             try {
                 addTimelineEventCard(timelineEventCard);

@@ -33,7 +33,8 @@ public class CardsEntitiesController {
     private void initialize() throws IOException {
 
 
-        ArrayList<EventCard> eventCardsFromSave = getEventCards();
+        StorageAdapter localAdapter = LocalStorage.getInstance();
+        ArrayList<EventCard> eventCardsFromSave = getEventCards(localAdapter);
 
         eventCardsFromSave.forEach(eventCard -> {
             try {
@@ -51,8 +52,7 @@ public class CardsEntitiesController {
         createCard(eventCard3);
     }
 
-    private ArrayList<EventCard> getEventCards() {
-        StorageAdapter storageAdapter = LocalStorage.getInstance();
+    private ArrayList<EventCard> getEventCards(StorageAdapter storageAdapter) {
         return storageAdapter.getAllEventCards();
     }
 

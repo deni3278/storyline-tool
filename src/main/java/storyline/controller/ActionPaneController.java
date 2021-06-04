@@ -10,17 +10,12 @@ import storyline.storage.StorageAdapter;
 public class ActionPaneController {
 
     @FXML
-    Button createOrLoadButton,saveTimelineButton,exportTimelineButton,createEventButton,createEntityButton;
+    Button createOrLoadButton, saveTimelineButton, exportTimelineButton, createEventButton, createEntityButton;
 
     @FXML
     public void initialize() {
-        StorageAdapter localStorage = LocalStorage.getInstance();
         createOrLoadButton.setOnMouseClicked(event -> {
-
-
             Context.getInstance().activate("welcome");
-
-
         });
 
 
