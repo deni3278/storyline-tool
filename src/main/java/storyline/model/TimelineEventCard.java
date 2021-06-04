@@ -2,30 +2,30 @@ package storyline.model;
 
 public class TimelineEventCard extends EventCard {
 
-    private double posX;
-    private double posY;
+    private int x;
+    private int y;
 
 
-    public TimelineEventCard(String name, String colorString, String eventContent, double posX, double posY) {
+    public TimelineEventCard(String name, String colorString, String eventContent, int posX, int posY) {
         super(name, colorString, eventContent);
-        this.posX = posX;
-        this.posY = posY;
+        this.x = posX;
+        this.y = posY;
     }
 
 
-    public double getPosX() {
-        return posX;
+    public int getX() {
+        return x;
     }
 
-    public void setPosX(double posX) {
-        this.posX = posX;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public double getPosY() {
-        return posY;
+    public int getY() {
+        return y;
     }
 
-    public void setPosY(double posY) {
-        this.posY = posY;
+    public void setY(int y) {
+        this.y = y;
     }
 }

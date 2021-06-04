@@ -58,6 +58,7 @@ public class CardsEntitiesController {
             ClipboardContent content = new ClipboardContent();
             content.putString("EventCard");
             db.setContent(content);
+
         });
         eventCard.setOnMouseDragged(event -> event.setDragDetect(true));
 

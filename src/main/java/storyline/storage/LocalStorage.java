@@ -1,5 +1,6 @@
 package storyline.storage;
 
+import storyline.model.EventCard;
 import storyline.model.Timeline;
 
 import java.io.*;
@@ -37,6 +38,17 @@ public class LocalStorage implements StorageAdapter {
                 ioException.printStackTrace();
             }
         }
+    }
+
+
+    @Override
+    public boolean saveEventCard(EventCard eventCard) {
+        return writeObjectToFile("Eventcards", eventCard);
+    }
+
+    @Override
+    public ArrayList<EventCard> getAllEventCards() {
+        return readAllObjectsFromDirectory("Eventcards");
     }
 
     @Override
