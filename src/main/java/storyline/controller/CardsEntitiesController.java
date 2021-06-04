@@ -29,6 +29,8 @@ public class CardsEntitiesController {
     @FXML
     private void initialize() throws IOException {
 
+
+
         EventCard eventCard1 = new EventCard("test", RED.toString(), "testtesttest");
         EventCard eventCard2 = new EventCard("test2", BLUE.toString(), "testtesttest");
         EventCard eventCard3 = new EventCard("test3", GREEN.toString(), "testtesttest");

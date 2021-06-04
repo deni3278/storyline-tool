@@ -71,19 +71,14 @@ public class TimelineController {
 
             EventCard sourceEventCard = (EventCard) source.getUserData();
 
-            boolean overlap = false;
-            for (TimelineEventCard eventCard : timelineEventCards) {
-                System.out.println("x =" + eventCard.getX() + " y = " + eventCard.getY());
-                if (eventCard.getX() == columnIndex && eventCard.getY() == rowIndex) {
-                    System.out.println("overlap!");
-                    overlap = true;
-                }
-            }
+            
+            boolean overlap = checkOverlap(columnIndex, rowIndex);
+            
             if (overlap == false) {
                 timelineGridPane.getChildren().remove(source);
 
                 TimelineEventCard timelineEventCard;
-                if (source.getParent() instanceof VBox) {
+                if (!(sourceEventCard instanceof TimelineEventCard)) {
                     timelineEventCard = new TimelineEventCard(sourceEventCard.getTitle(),
                             sourceEventCard.getColorString(), sourceEventCard.getEventContent(), columnIndex, rowIndex);
                     System.out.println("from eventcard vbox");
@@ -94,6 +89,7 @@ public class TimelineController {
                     }
 
                 } else {
+                    System.out.println("from within gridpane");
                     timelineEventCard = (TimelineEventCard) sourceEventCard;
                     timelineEventCard.setX(columnIndex);
                     timelineEventCard.setY(rowIndex);
@@ -106,6 +102,18 @@ public class TimelineController {
         });
 
 
+    }
+
+    private boolean checkOverlap(int columnIndex, int rowIndex) {
+        boolean overlap = false;
+        for (TimelineEventCard eventCard : timelineEventCards) {
+            System.out.println("x =" + eventCard.getX() + " y = " + eventCard.getY());
+            if (eventCard.getX() == columnIndex && eventCard.getY() == rowIndex) {
+                System.out.println("overlap!");
+                overlap = true;
+            }
+        }
+        return overlap;
     }
 
     public static void loadGridFromSave(StorageAdapter localStorage, String test) {
