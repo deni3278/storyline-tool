@@ -3,6 +3,8 @@ package storyline.controller;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import storyline.App;
 
 public class WelcomeController {
     @FXML
@@ -14,10 +16,13 @@ public class WelcomeController {
     @FXML
     private void initialize() {
         initButtons();
+
     }
 
     private void initButtons() {
         blankIconButton.setOnMouseClicked(e -> {
+            TimelineController.startFromBlank("test");
+            Context.getInstance().activate("projectPage");
             System.out.println("Blank");
         });
         blankIconButtonController.setImage(new Image(getClass().getResource("../images/blank.png").toExternalForm()));

@@ -1,5 +1,6 @@
 package storyline.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import storyline.storage.LocalStorage;
@@ -16,7 +17,10 @@ public class ActionPaneController {
         StorageAdapter localStorage = LocalStorage.getInstance();
         createOrLoadButton.setOnMouseClicked(event -> {
 
-            TimelineController.loadGridFromSave(localStorage, "Test");
+
+            Context.getInstance().activate("welcome");
+
+
         });
 
 

@@ -17,17 +17,19 @@ import storyline.model.TimelineEventCard;
 import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
+
 
 public class TimelineController {
 
-    public static ArrayList<TimelineEventCard> timelineEventCards;
+
+    public static ArrayList<TimelineEventCard> timelineEventCards = new ArrayList<>();
+
     public static Timeline timeline;
-    public static GridPane gridPane;
+
+    public static GridPane timelineGridPaneStatic;
+
 
     @FXML
     public ScrollPane timelineScrollPane;
@@ -41,12 +43,13 @@ public class TimelineController {
     @FXML
     private void initialize() {
 
+        timelineGridPaneStatic = timelineGridPane;
+
 
         StorageAdapter localStorage = LocalStorage.getInstance();
 
-        gridPane = timelineGridPane;
+
 //        Platform.runLater(() -> loadGridFromSave(localStorage, "Test"));
-        startFromBlank("fromblanktest");
 
         timelineGridPane.setOnDragOver(event -> {
             if (event.getGestureSource() != timelineGridPane) {
@@ -73,9 +76,9 @@ public class TimelineController {
 
             EventCard sourceEventCard = (EventCard) source.getUserData();
 
-            
+
             boolean overlap = checkOverlap(columnIndex, rowIndex);
-            
+
             if (overlap == false) {
                 timelineGridPane.getChildren().remove(source);
 
@@ -119,15 +122,38 @@ public class TimelineController {
         return overlap;
     }
 
+    /**
+     * Start from blank.
+     *
+     * @param timelineName the timeline name
+     */
+//method for starting a blank timeline
     public static void startFromBlank(String timelineName) {
+
+        //initializes public static variables
         timeline = new Timeline(new ArrayList<TimelineEventCard>(), timelineName);
         timelineEventCards = timeline.getEventCards();
+        //clears the current grid nodes.
+        //need to keep the first node of the gridpane as it holds the layout information like the gridlines...
+        Platform.runLater(() -> timelineGridPaneStatic.getChildren().retainAll(timelineGridPaneStatic.getChildren().get(0)));
     }
 
+    /**
+     * Load a timeline from save and add it to the grid.
+     *
+     * @param storageAdapter the storage adapter
+     * @param ID             the id
+     */
     public static void loadGridFromSave(StorageAdapter storageAdapter, String ID) {
+        //initializes public static variables
         timeline = storageAdapter.getTimeline(ID);
         timelineEventCards = timeline.getEventCards();
-        gridPane.getChildren().retainAll(gridPane.getChildren().get(0));
+
+        //clears the current grid nodes.
+        //need to keep the first node of the gridpane as it holds the layout information like the gridlines...
+        timelineGridPaneStatic.getChildren().retainAll(timelineGridPaneStatic.getChildren().get(0));
+
+        //convers the model timeline eventcards into interactable hboxes and adds them to the gridpane
         timelineEventCards.forEach(timelineEventCard -> {
             try {
                 addTimelineEventCard(timelineEventCard);
@@ -139,10 +165,16 @@ public class TimelineController {
 
     private static void addTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
 
+        //wrap the model timeline eventcard with an interactable hbox
         HBox interactableEventCard = createTimelineEventCard(timelineEventCard);
-        gridPane.add(interactableEventCard, timelineEventCard.getX(), timelineEventCard.getY());
+
+        //adds the hbox to the grid with the coordinates of the eventcard
+        timelineGridPaneStatic.add(interactableEventCard, timelineEventCard.getX(), timelineEventCard.getY());
+
+        //if the list of timeline eventcards doesn't contain the newly added eventcard, add it to the list.
         if (!timelineEventCards.contains(timelineEventCard)) timelineEventCards.add(timelineEventCard);
     }
+
 
     private static HBox createTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
         FXMLLoader card = new FXMLLoader(TimelineController.class.getResource("../fxml/eventCard.fxml"));
@@ -170,6 +202,7 @@ public class TimelineController {
         return eventCard;
     }
 
+    //gets a node from the gridpane from a specific coordinate
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
 
         for (Node node : gridPane.getChildren()) {
