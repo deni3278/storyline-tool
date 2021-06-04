@@ -7,9 +7,11 @@ import java.util.HashMap;
 
 public class Context {
     private final static Context instance = new Context();
+
     public static Context getInstance() {
         return instance;
     }
+
     private HashMap<String, Pane> screenMap = new HashMap<>();
     private Scene main;
 
@@ -17,15 +19,16 @@ public class Context {
         this.main = main;
     }
 
-    public void addScreen(String name, Pane pane){
+    public void addScreen(String name, Pane pane) {
         screenMap.put(name, pane);
     }
 
-    public void removeScreen(String name){
+    public void removeScreen(String name) {
         screenMap.remove(name);
     }
 
-    public void activate(String name){
-        main.setRoot( screenMap.get(name) );
+
+    public void activate(String name) {
+        main.setRoot(screenMap.get(name));
     }
 }
