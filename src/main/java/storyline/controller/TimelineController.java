@@ -40,6 +40,7 @@ public class TimelineController {
 
 
         LocalStorage localStorage = LocalStorage.getInstance();
+
         timeline = localStorage.getTimeline("test");
         timelineEventCards = timeline.getEventCards();
         timelineEventCards.forEach(timelineEventCard -> {
