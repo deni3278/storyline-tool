@@ -4,7 +4,7 @@ import storyline.storage.Identifiable;
 
 import java.io.Serializable;
 
-public class TimelineEventCard extends EventCard implements Serializable, Identifiable {
+public class TimelineEventCard extends EventCard {
 
     private int x;
     private int y;

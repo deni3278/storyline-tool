@@ -18,6 +18,11 @@ public class ActionPaneController {
             Context.getInstance().activate("welcome");
         });
 
+        saveTimelineButton.setOnMouseClicked(event -> {
+            TimelineController.saveCurrentTimeline(LocalStorage.getInstance());
+            System.out.println("success");
+        });
+
 
     }
 

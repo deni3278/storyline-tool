@@ -18,6 +18,7 @@ import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 
@@ -156,6 +157,10 @@ public class TimelineController {
                 e.printStackTrace();
             }
         });
+    }
+
+    public static void saveCurrentTimeline(StorageAdapter storageAdapter) {
+        storageAdapter.saveTimeline(timeline);
     }
 
     private static void addTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
