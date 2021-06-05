@@ -5,6 +5,7 @@ import storyline.storage.Identifiable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class EventCard implements Serializable, Identifiable {
     private String title;
@@ -17,6 +18,7 @@ public class EventCard implements Serializable, Identifiable {
         this.title = name;
         this.colorString = colorString;
         this.eventContent = eventContent;
+
     }
 
     public Color getColor() {

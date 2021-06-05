@@ -5,27 +5,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 
-
-<HBox alignment="CENTER_LEFT" minHeight="75.0" minWidth="1280.0" style="-fx-background-color: #242A30;" stylesheets="@../css/actionPane.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER_LEFT" minHeight="75.0" minWidth="1280.0" style="-fx-background-color: #242A30;" stylesheets="@../css/actionPane.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="storyline.controller.ActionPaneController">
    <children>
-      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="204.0" text="CREATE/LOAD ANOTHER TIMELINE">
+      <Button fx:id="createOrLoadButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="204.0" text="CREATE/LOAD ANOTHER TIMELINE">
          <HBox.margin>
             <Insets />
          </HBox.margin>
       </Button>
-      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="SAVE TIMELINE">
+      <Button fx:id="saveTimelineButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="SAVE TIMELINE">
          <HBox.margin>
             <Insets left="50.0" />
          </HBox.margin>
       </Button>
-      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="EXPORT TIMELINE">
+      <Button fx:id="exportTimelineButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="EXPORT TIMELINE">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
       </Button>
       <Region prefHeight="75.0" prefWidth="500.0" HBox.hgrow="ALWAYS" />
-      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="124.0" styleClass="buttonRight" text="CREATE EVENT" />
-      <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" styleClass="buttonRight" text="CREATE ENTITY">
+      <Button fx:id="createEventButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="124.0" styleClass="buttonRight" text="CREATE EVENT" />
+      <Button fx:id="createEntityButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" styleClass="buttonRight" text="CREATE ENTITY">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
