@@ -132,7 +132,7 @@ public class LocalStorage implements StorageAdapter {
 
     }
 
-    private String getFileNameWithoutExtension(String file) {
+    public static String getFileNameWithoutExtension(String file) {
         return file.replaceAll("^.*?(([^/\\\\\\.]+))\\.[^\\.]+$", "$1");
     }
 

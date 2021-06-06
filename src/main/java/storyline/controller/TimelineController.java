@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -42,9 +43,15 @@ public class TimelineController {
     VBox root;
 
     @FXML
+    Label timelineLabel;
+
+    static Label timelinelabelStatic;
+
+    @FXML
     private void initialize() {
 
         timelineGridPaneStatic = timelineGridPane;
+        timelinelabelStatic = timelineLabel;
 
         timelineGridPane.setOnDragOver(event -> {
             if (event.getGestureSource() != timelineGridPane) {
@@ -115,14 +122,16 @@ public class TimelineController {
     }
 
     /**
-     * Start from blank.
+     * method for starting a blank timeline
      *
      * @param timelineName the timeline name
      */
-//method for starting a blank timeline
     public static void startFromBlank(String timelineName) {
 
+
         //initializes public static variables
+        timelinelabelStatic.setText(timelineName);
+
         timeline = new Timeline(new ArrayList<TimelineEventCard>(), timelineName);
         timelineEventCards = timeline.getEventCards();
 
@@ -141,6 +150,7 @@ public class TimelineController {
 
         //initializes public static variables
         timeline = storageAdapter.getTimeline(ID);
+        timelinelabelStatic.setText(timeline.getName());
         timelineEventCards = timeline.getEventCards();
         System.out.println("timelineEventCards = " + timelineEventCards);
 

@@ -23,6 +23,7 @@ public class App extends Application {
         Context.getInstance().setMainScene(main);
         Context.getInstance().addScreen("projectPage",new FXMLLoader(getClass().getResource("fxml/projectPage.fxml")).load());
         Context.getInstance().addScreen("welcome",new FXMLLoader(getClass().getResource("fxml/welcome.fxml")).load());
+
     }
     public static void main(String[] args) {
         launch(args);

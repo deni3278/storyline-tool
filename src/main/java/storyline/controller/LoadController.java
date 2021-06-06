@@ -3,8 +3,13 @@ package storyline.controller;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import storyline.storage.DatabaseStorage;
 import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
+
+import java.io.File;
 
 public class LoadController {
     @FXML
@@ -29,10 +34,20 @@ public class LoadController {
 
     private void loadLocal() {
         StorageAdapter localStorage = LocalStorage.getInstance();
-        TimelineController.loadGridFromSave(localStorage,"test");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Story files", "*.story"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + File.separator + "StorylineTool"));
+
+        File fileChosen = fileChooser.showOpenDialog(new Stage());
+        if (fileChosen != null) {
+            String fileName = LocalStorage.getFileNameWithoutExtension(fileChosen.getName());
+            System.out.println(fileName);
+
+            TimelineController.loadGridFromSave(localStorage, fileName);
+        }
+
     }
 
     private void loadDatabase() {
-        // Todo: Implement loading from a database.
     }
 }

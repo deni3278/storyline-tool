@@ -1,10 +1,16 @@
 package storyline.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import storyline.App;
+
+import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class WelcomeController {
     @FXML
@@ -21,7 +27,13 @@ public class WelcomeController {
 
     private void initButtons() {
         blankIconButton.setOnMouseClicked(e -> {
-            TimelineController.startFromBlank("test");
+            TextInputDialog inputDialog = new TextInputDialog();
+            inputDialog.setHeaderText("Input timeline name");
+            inputDialog.setTitle("Timeline");
+            Optional<String> input = inputDialog.showAndWait();
+            if (!input.isPresent()) return;
+            String name = input.get();
+            TimelineController.startFromBlank(name);
             Context.getInstance().activate("projectPage");
             System.out.println("Blank");
         });

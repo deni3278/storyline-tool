@@ -28,9 +28,11 @@ public class Test {
         TimelineEventCard timelineEventCard3 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 4, 1);
         ArrayList<TimelineEventCard> eventCards = new ArrayList<>(Arrays.asList(timelineEventCard1, timelineEventCard2, timelineEventCard3));
         Timeline timelineOut = new Timeline(eventCards, "Test");
+        Timeline timelineOut2 = new Timeline(eventCards, "TestTEST");
 
 
         System.out.println("localStorage.saveTimeline(timelineOut) = " + localStorage.saveTimeline(timelineOut));
+        System.out.println("localStorage.saveTimeline(timelineOut) = " + localStorage.saveTimeline(timelineOut2));
 
         localStorage.getAllTimelines().forEach(System.out::println);
 
