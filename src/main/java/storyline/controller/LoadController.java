@@ -18,6 +18,7 @@ public class LoadController {
     @FXML
     private IconButtonController databaseIconButtonController, localIconButtonController;
 
+
     @FXML
     private void initialize() {
         databaseIconButton.setOnMouseClicked(e -> loadDatabase());
@@ -25,14 +26,16 @@ public class LoadController {
         databaseIconButtonController.setText("From Database");
 
         localIconButton.setOnMouseClicked(e -> {
-            loadLocal();
-            Context.getInstance().activate("projectPage");
+
+            if (loadLocal()) {
+                Context.getInstance().activate("projectPage");
+            }
         });
         localIconButtonController.setImage(new Image(getClass().getResource("../images/local.png").toExternalForm()));
         localIconButtonController.setText("From Local File");
     }
 
-    private void loadLocal() {
+    private boolean loadLocal() {
         StorageAdapter localStorage = LocalStorage.getInstance();
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Story files", "*.story"));
@@ -43,9 +46,10 @@ public class LoadController {
             String fileName = LocalStorage.getFileNameWithoutExtension(fileChosen.getName());
             System.out.println(fileName);
 
-            TimelineController.loadGridFromSave(localStorage, fileName);
+            Context.getProjectPageController().getTimelineController().loadGridFromSave(localStorage, fileName);
+            return true;
         }
-
+        return false;
     }
 
     private void loadDatabase() {

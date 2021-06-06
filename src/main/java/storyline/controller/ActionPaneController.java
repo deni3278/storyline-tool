@@ -12,18 +12,30 @@ public class ActionPaneController {
     @FXML
     Button createOrLoadButton, saveTimelineButton, exportTimelineButton, createEventButton, createEntityButton;
 
+    public Button getCreateOrLoadButton() {
+        return createOrLoadButton;
+    }
+
+    public Button getSaveTimelineButton() {
+        return saveTimelineButton;
+    }
+
+    public Button getExportTimelineButton() {
+        return exportTimelineButton;
+    }
+
+    public Button getCreateEventButton() {
+        return createEventButton;
+    }
+
+    public Button getCreateEntityButton() {
+        return createEntityButton;
+    }
+
     @FXML
     public void initialize() {
-        createOrLoadButton.setOnMouseClicked(event -> {
-            Context.getInstance().activate("welcome");
-        });
-
-        saveTimelineButton.setOnMouseClicked(event -> {
-            TimelineController.saveCurrentTimeline(LocalStorage.getInstance());
-            System.out.println("success");
-        });
-
 
     }
+
 
 }

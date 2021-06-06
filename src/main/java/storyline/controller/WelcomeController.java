@@ -31,11 +31,12 @@ public class WelcomeController {
             inputDialog.setHeaderText("Input timeline name");
             inputDialog.setTitle("Timeline");
             Optional<String> input = inputDialog.showAndWait();
-            if (!input.isPresent()) return;
-            String name = input.get();
-            TimelineController.startFromBlank(name);
-            Context.getInstance().activate("projectPage");
-            System.out.println("Blank");
+            if (input.isPresent()) {
+                String name = input.get();
+                Context.getProjectPageController().getTimelineController().startFromBlank(name);
+                Context.getInstance().activate("projectPage");
+                System.out.println("Blank");
+            }
         });
         blankIconButtonController.setImage(new Image(getClass().getResource("../images/blank.png").toExternalForm()));
         blankIconButtonController.setText("Blank");
