@@ -25,11 +25,13 @@ public class App extends Application {
         Parent root = welcomeLoader.load();
         Pane projectPage =  projectPageLoader.load();
 
-        Context.setWelcomeController(welcomeLoader.getController());
-        Context.setProjectPageController(projectPageLoader.getController());
+        Context context = Context.getInstance();
 
-        Context.getInstance().addScreen("projectPage", projectPage);
-        Context.getInstance().addScreen("welcome",(Pane) root);
+        context.setWelcomeController(welcomeLoader.getController());
+        context.setProjectPageController(projectPageLoader.getController());
+
+        context.addScreen("projectPage", projectPage);
+        context.getInstance().addScreen("welcome",(Pane) root);
 
 
         stage.setTitle("Storyline Tool");

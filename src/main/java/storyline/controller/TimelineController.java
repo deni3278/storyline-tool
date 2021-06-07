@@ -92,6 +92,7 @@ public class TimelineController {
             } else {
                 System.out.println("from within gridpane");
                 timelineGridPane.getChildren().remove(source);
+
                 timelineEventCard = (TimelineEventCard) sourceEventCard;
                 timelineEventCard.setX(columnIndex);
                 timelineEventCard.setY(rowIndex);

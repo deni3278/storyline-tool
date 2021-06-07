@@ -39,14 +39,15 @@ public class LoadController {
         StorageAdapter localStorage = LocalStorage.getInstance();
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Story files", "*.story"));
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + File.separator + "StorylineTool"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + File.separator + "StorylineTool" + File.separator + "Timelines"));
 
         File fileChosen = fileChooser.showOpenDialog(new Stage());
         if (fileChosen != null) {
             String fileName = LocalStorage.getFileNameWithoutExtension(fileChosen.getName());
             System.out.println(fileName);
 
-            Context.getProjectPageController().getTimelineController().loadGridFromSave(localStorage, fileName);
+            Context context = Context.getInstance();
+            context.getProjectPageController().getTimelineController().loadGridFromSave(localStorage, fileName);
             return true;
         }
         return false;

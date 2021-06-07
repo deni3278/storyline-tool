@@ -33,7 +33,7 @@ public class WelcomeController {
             Optional<String> input = inputDialog.showAndWait();
             if (input.isPresent()) {
                 String name = input.get();
-                Context.getProjectPageController().getTimelineController().startFromBlank(name);
+                Context.getInstance().getProjectPageController().getTimelineController().startFromBlank(name);
                 Context.getInstance().activate("projectPage");
                 System.out.println("Blank");
             }

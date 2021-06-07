@@ -17,45 +17,9 @@ public class Context {
     private HashMap<String, Pane> screenMap = new HashMap<>();
     private Scene main;
 
-    public static ProjectPageController projectPageController;
+    public ProjectPageController projectPageController;
 
-    public static WelcomeController welcomeController;
-
-    /**
-     * Gets project page controller.
-     *
-     * @return the project page controller
-     */
-    public static ProjectPageController getProjectPageController() {
-        return projectPageController;
-    }
-
-    /**
-     * Sets project page controller.
-     *
-     * @param projectPageController the project page controller
-     */
-    public static void setProjectPageController(ProjectPageController projectPageController) {
-        Context.projectPageController = projectPageController;
-    }
-
-    /**
-     * Gets welcome controller.
-     *
-     * @return the welcome controller
-     */
-    public static WelcomeController getWelcomeController() {
-        return welcomeController;
-    }
-
-    /**
-     * Sets welcome controller.
-     *
-     * @param welcomeController the welcome controller
-     */
-    public static void setWelcomeController(WelcomeController welcomeController) {
-        Context.welcomeController = welcomeController;
-    }
+    public WelcomeController welcomeController;
 
     /**
      * Gets the singleton instance.
@@ -64,6 +28,42 @@ public class Context {
      */
     public static Context getInstance() {
         return instance;
+    }
+
+    /**
+     * Gets project page controller.
+     *
+     * @return the project page controller
+     */
+    public ProjectPageController getProjectPageController() {
+        return projectPageController;
+    }
+
+    /**
+     * Sets project page controller.
+     *
+     * @param projectPageController the project page controller
+     */
+    public void setProjectPageController(ProjectPageController projectPageController) {
+        this.projectPageController = projectPageController;
+    }
+
+    /**
+     * Gets welcome controller.
+     *
+     * @return the welcome controller
+     */
+    public WelcomeController getWelcomeController() {
+        return welcomeController;
+    }
+
+    /**
+     * Sets welcome controller.
+     *
+     * @param welcomeController the welcome controller
+     */
+    public void setWelcomeController(WelcomeController welcomeController) {
+        this.welcomeController = welcomeController;
     }
 
     /**
