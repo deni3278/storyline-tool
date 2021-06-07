@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import storyline.App;
+import storyline.storage.DatabaseStorage;
+import storyline.storage.StorageAdapter;
 
 import java.util.Optional;
 import java.util.Random;
@@ -26,6 +28,8 @@ public class WelcomeController {
     }
 
     private void initButtons() {
+        StorageAdapter database = DatabaseStorage.getInstance();
+
         blankIconButton.setOnMouseClicked(e -> {
             TextInputDialog inputDialog = new TextInputDialog();
             inputDialog.setHeaderText("Input timeline name");

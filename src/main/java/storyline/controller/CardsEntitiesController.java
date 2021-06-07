@@ -32,7 +32,6 @@ public class CardsEntitiesController {
     @FXML
     private void initialize() throws IOException {
 
-
         StorageAdapter localAdapter = LocalStorage.getInstance();
         ArrayList<EventCard> eventCardsFromSave = getEventCards(localAdapter);
 
