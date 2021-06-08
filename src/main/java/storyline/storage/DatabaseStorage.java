@@ -1,13 +1,16 @@
 package storyline.storage;
 
+import storyline.model.Entity;
 import storyline.model.EventCard;
 import storyline.model.Timeline;
+import storyline.model.TimelineEventCard;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.UUID;
 
 public class DatabaseStorage implements StorageAdapter {
 
@@ -44,8 +47,14 @@ public class DatabaseStorage implements StorageAdapter {
     }
 
 
+
     @Override
     public boolean saveEventCard(EventCard eventCard) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteEventCard(EventCard eventCard) {
         return false;
     }
 
@@ -55,29 +64,92 @@ public class DatabaseStorage implements StorageAdapter {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM viewUserEventCards");
+            preparedStatement = connection.prepareStatement("SELECT * FROM viewUserEventCards WHERE fld_UserID = 1");
             preparedStatement.execute();
             resultSet = preparedStatement.getResultSet();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("resultSet = " + resultSet);
-
-
 
         try {
             while (resultSet.next()) {
-                EventCard eventCard;
+                String title = resultSet.getString("fld_Title");
+                String colorString = resultSet.getString("fld_ColorString");
+                String eventContent = resultSet.getString("fld_EventContent");
+                UUID ID = UUID.fromString(resultSet.getString("fld_UserEventCardID"));
+                EventCard eventCard = new EventCard(title,colorString,eventContent,ID);
+                eventCards.add(eventCard);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return null;
+        return eventCards;
     }
 
     @Override
-    public Timeline getTimeline(String ID) {
+    public Timeline getTimeline(String timelineID) {
+
+        Timeline timeline = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT fld_TimelineName FROM tbl_Timeline WHERE fld_TimelineID = ?");
+            preparedStatement.setString(1,timelineID);
+            preparedStatement.execute();
+            resultSet = preparedStatement.getResultSet();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        String timelineName = null;
+        try {
+            if (resultSet.next()) {
+                timelineName = resultSet.getString("fld_TimelineName");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        ArrayList<TimelineEventCard> timelineEventCards = getTimelineEventCards(timelineID);
+        timeline = new Timeline(timelineEventCards, timelineName, UUID.fromString(timelineID));
+        return timeline;
+        
+    }
+
+    public ArrayList<TimelineEventCard> getTimelineEventCards(String timelineID) {
+        ArrayList<TimelineEventCard> timelineEventCards = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM viewTimelineEventCards WHERE fld_TimelineID = ?");
+            preparedStatement.setString(1,timelineID);
+            preparedStatement.execute();
+            resultSet = preparedStatement.getResultSet();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        try {
+            while (resultSet.next()) {
+                String title = resultSet.getString("fld_Title");
+                String colorString = resultSet.getString("fld_ColorString");
+                String eventContent = resultSet.getString("fld_EventContent");
+                int x = resultSet.getInt("fld_X");
+                int y = resultSet.getInt("fld_Y");
+                UUID ID = UUID.fromString(resultSet.getString("fld_TimelineEventCardID"));
+                TimelineEventCard timelineEventCard = new TimelineEventCard(title,colorString,eventContent,x,y,ID);
+
+                timelineEventCards.add(timelineEventCard);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return timelineEventCards;
+    }
+
+    private ArrayList<Entity> getTimelineEventcardEntities() {
         return null;
     }
 
@@ -91,10 +163,6 @@ public class DatabaseStorage implements StorageAdapter {
         return false;
     }
 
-    @Override
-    public boolean updateTimeline(Timeline timeline) {
-        return false;
-    }
 
     @Override
     public boolean deleteTimeLine(String name) {

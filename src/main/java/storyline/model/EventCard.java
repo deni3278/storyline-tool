@@ -15,14 +15,14 @@ public class EventCard extends Identifiable implements Serializable {
     private String eventContent;
 
 
-    public EventCard(String name, String colorString, String eventContent) {
-        this.title = name;
+    public EventCard(String title, String colorString, String eventContent) {
+        this.title = title;
         this.colorString = colorString;
         this.eventContent = eventContent;
         generateID();
     }
-    public EventCard(String name, String colorString, String eventContent, UUID ID) {
-        this.title = name;
+    public EventCard(String title, String colorString, String eventContent, UUID ID) {
+        this.title = title;
         this.colorString = colorString;
         this.eventContent = eventContent;
         setID(ID);

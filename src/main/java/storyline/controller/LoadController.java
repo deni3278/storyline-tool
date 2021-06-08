@@ -21,7 +21,11 @@ public class LoadController {
 
     @FXML
     private void initialize() {
-        databaseIconButton.setOnMouseClicked(e -> loadDatabase());
+        databaseIconButton.setOnMouseClicked(e -> {
+            if (loadDatabase()) {
+                Context.getInstance().activate("projectPage");
+            }
+        });
         databaseIconButtonController.setImage(new Image(getClass().getResource("../images/database.png").toExternalForm()));
         databaseIconButtonController.setText("From Database");
 
@@ -53,6 +57,15 @@ public class LoadController {
         return false;
     }
 
-    private void loadDatabase() {
+    private boolean loadDatabase() {
+
+        StorageAdapter databaseStorage = DatabaseStorage.getInstance();
+        Context context = Context.getInstance();
+        context.getProjectPageController().getTimelineController().loadGridFromSave(databaseStorage,"44EA6116-B5EC-4304-A82F-2E5FA8037E77");
+
+
+
+
+        return false;
     }
 }

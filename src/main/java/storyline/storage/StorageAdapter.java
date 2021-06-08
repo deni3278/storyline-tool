@@ -9,6 +9,8 @@ public interface StorageAdapter {
 
     boolean saveEventCard(EventCard eventCard);
 
+    boolean deleteEventCard(EventCard eventCard);
+
     ArrayList<EventCard> getAllEventCards();
 
     Timeline getTimeline(String name);
@@ -16,8 +18,6 @@ public interface StorageAdapter {
     ArrayList<Timeline> getAllTimelines();
 
     boolean saveTimeline(Timeline timeline);
-
-    boolean updateTimeline(Timeline timeline);
 
     boolean deleteTimeLine(String name);
 }

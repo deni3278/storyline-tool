@@ -5,13 +5,14 @@ import storyline.model.EventCard;
 import storyline.model.Timeline;
 import storyline.model.TimelineEventCard;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Test {
     public static void main(String[] args) {
         StorageAdapter localStorage = LocalStorage.getInstance();
-        StorageAdapter databaseStorage = DatabaseStorage.getInstance();
+        DatabaseStorage databaseStorage = DatabaseStorage.getInstance();
 
         final Color RED = Color.rgb(254, 0, 78, 0.2);
         final Color GREEN = Color.rgb(44, 204, 112, 0.2);
@@ -37,7 +38,8 @@ public class Test {
 //
 //        localStorage.getAllTimelines().forEach(System.out::println);
 
-        databaseStorage.getAllEventCards();
+        System.out.println("databaseStorage.getAllEventCards() = " + databaseStorage.getAllEventCards());
+        System.out.println("databaseStorage.getTimelineEventCards() = " + databaseStorage.getTimelineEventCards("44ea6116-b5ec-4304-a82f-2e5fa8037e77"));
 
     }
 

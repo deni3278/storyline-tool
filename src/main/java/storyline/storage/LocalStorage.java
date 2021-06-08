@@ -46,6 +46,12 @@ public class LocalStorage implements StorageAdapter {
         return writeObjectToFile("Eventcards", eventCard);
     }
 
+
+    @Override
+    public boolean deleteEventCard(EventCard eventCard) {
+        return false;
+    }
+
     @Override
     public ArrayList<EventCard> getAllEventCards() {
         return readAllObjectsFromDirectory("Eventcards");
@@ -64,11 +70,6 @@ public class LocalStorage implements StorageAdapter {
     @Override
     public boolean saveTimeline(Timeline timeline) {
         return writeObjectToFile("Timelines", timeline);
-    }
-
-    @Override
-    public boolean updateTimeline(Timeline timeline) {
-        return saveTimeline(timeline);
     }
 
     @Override
@@ -107,7 +108,7 @@ public class LocalStorage implements StorageAdapter {
         return filepathBuilder.toString();
     }
 
-    private <T extends Identifiable & Serializable> String getFilepath(T object, String ...subDirectories) {
+    private <T extends Identifiable & Serializable> String getFilepath(T object, String... subDirectories) {
         StringBuilder filepathBuilder = new StringBuilder(getFilepath(subDirectories));
         filepathBuilder.append(object.getIdentifier() + FILE_FORMAT);
         return filepathBuilder.toString();
