@@ -5,9 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -190,11 +188,20 @@ public class TimelineController {
     private HBox createTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
         FXMLLoader card = new FXMLLoader(TimelineController.class.getResource("../fxml/eventCard.fxml"));
         //Assign a controller to the newly loaded card, and pass the variables for the card
-        card.setController(new EventCardController(timelineEventCard.getTitle(), timelineEventCard.getEventContent(), timelineEventCard.getColor()));
+        EventCardController controller = new EventCardController(timelineEventCard.getTitle(), timelineEventCard.getEventContent(), timelineEventCard.getColor());
+        card.setController(controller);
 
         HBox eventCard = card.load();
         eventCard.setUserData(timelineEventCard);
 
+        eventCard.setOnContextMenuRequested(event -> {
+            System.out.println("contextmenu");
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem menuItem = new MenuItem("delete");
+            menuItem.setOnAction(event1 -> removeEventCard(eventCard));
+            contextMenu.getItems().add(menuItem);
+            contextMenu.show(timelineGridPane, event.getScreenX(), event.getScreenY());
+        });
         eventCard.setOnDragDetected(event -> {
 
             System.out.println(eventCard + " drag detected");
@@ -211,6 +218,12 @@ public class TimelineController {
         });
         eventCard.setOnMouseDragged(event -> event.setDragDetect(true));
         return eventCard;
+    }
+
+    private void removeEventCard(HBox eventCard) {
+        this.timelineGridPane.getChildren().remove(eventCard);
+        this.timelineEventCards.remove(eventCard.getUserData());
+
     }
 
     //gets a node from the gridpane from a specific coordinate
