@@ -1,16 +1,26 @@
 package storyline.model;
 
 import storyline.storage.Identifiable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class Timeline implements Serializable, Identifiable {
+public class Timeline extends Identifiable implements Serializable {
     private String name;
     private ArrayList<TimelineEventCard> eventCards;
+
 
     public Timeline(ArrayList<TimelineEventCard> eventCards, String name) {
         this.eventCards = eventCards;
         this.name = name;
+        generateID();
+    }
+
+    public Timeline(ArrayList<TimelineEventCard> eventCards, String name, UUID ID) {
+        this.eventCards = eventCards;
+        this.name = name;
+        setID(ID);
     }
 
 
@@ -31,17 +41,12 @@ public class Timeline implements Serializable, Identifiable {
     }
 
 
-
     @Override
     public String toString() {
         return "Timeline{" +
                 "name='" + name + '\'' +
                 ", eventCards=" + eventCards +
                 '}';
-    }
-    @Override
-    public String getIdentifier() {
-        return String.valueOf(this.name);
     }
 
 

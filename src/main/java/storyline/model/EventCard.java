@@ -6,8 +6,9 @@ import storyline.storage.Identifiable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
-public class EventCard implements Serializable, Identifiable {
+public class EventCard extends Identifiable implements Serializable {
     private String title;
     private String colorString;
     private ArrayList<Entity> EventAttachedEntities = new ArrayList<>();
@@ -18,7 +19,13 @@ public class EventCard implements Serializable, Identifiable {
         this.title = name;
         this.colorString = colorString;
         this.eventContent = eventContent;
-
+        generateID();
+    }
+    public EventCard(String name, String colorString, String eventContent, UUID ID) {
+        this.title = name;
+        this.colorString = colorString;
+        this.eventContent = eventContent;
+        setID(ID);
     }
 
     public Color getColor() {
@@ -67,8 +74,5 @@ public class EventCard implements Serializable, Identifiable {
                 '}';
     }
 
-    @Override
-    public String getIdentifier() {
-        return String.valueOf(this.title);
-    }
+
 }

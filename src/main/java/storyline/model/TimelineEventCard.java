@@ -3,6 +3,7 @@ package storyline.model;
 import storyline.storage.Identifiable;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class TimelineEventCard extends EventCard {
 
@@ -12,6 +13,11 @@ public class TimelineEventCard extends EventCard {
 
     public TimelineEventCard(String name, String colorString, String eventContent, int posX, int posY) {
         super(name, colorString, eventContent);
+        this.x = posX;
+        this.y = posY;
+    }
+    public TimelineEventCard(String name, String colorString, String eventContent, int posX, int posY, UUID ID) {
+        super(name, colorString, eventContent,ID);
         this.x = posX;
         this.y = posY;
     }
@@ -38,6 +44,7 @@ public class TimelineEventCard extends EventCard {
         return "TimelineEventCard{" +
                 "x=" + x +
                 ", y=" + y +
+                ", ID=" + getIdentifier() +
                 '}';
     }
 }
