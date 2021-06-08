@@ -42,7 +42,8 @@ public class TimelineEventCard extends EventCard {
     @Override
     public String toString() {
         return "TimelineEventCard{" +
-                "x=" + x +
+                "entities= " + getEventAttachedEntities() +
+                ", x=" + x +
                 ", y=" + y +
                 ", ID=" + getIdentifier() +
                 '}';

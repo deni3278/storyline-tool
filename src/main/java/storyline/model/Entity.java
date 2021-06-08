@@ -49,5 +49,12 @@ public class Entity extends Identifiable implements Serializable {
         this.description = description;
     }
 
-
+    @Override
+    public String toString() {
+        return "Entity{" +
+                "initials='" + initials + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

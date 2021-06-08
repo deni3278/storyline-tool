@@ -47,7 +47,6 @@ public class DatabaseStorage implements StorageAdapter {
     }
 
 
-
     @Override
     public boolean saveEventCard(EventCard eventCard) {
         return false;
@@ -77,7 +76,7 @@ public class DatabaseStorage implements StorageAdapter {
                 String colorString = resultSet.getString("fld_ColorString");
                 String eventContent = resultSet.getString("fld_EventContent");
                 UUID ID = UUID.fromString(resultSet.getString("fld_UserEventCardID"));
-                EventCard eventCard = new EventCard(title,colorString,eventContent,ID);
+                EventCard eventCard = new EventCard(title, colorString, eventContent, ID);
                 eventCards.add(eventCard);
             }
         } catch (SQLException throwables) {
@@ -90,12 +89,12 @@ public class DatabaseStorage implements StorageAdapter {
     @Override
     public Timeline getTimeline(String timelineID) {
 
-        Timeline timeline = null;
-        PreparedStatement preparedStatement = null;
+        Timeline timeline;
+        PreparedStatement preparedStatement;
         ResultSet resultSet = null;
         try {
             preparedStatement = connection.prepareStatement("SELECT fld_TimelineName FROM tbl_Timeline WHERE fld_TimelineID = ?");
-            preparedStatement.setString(1,timelineID);
+            preparedStatement.setString(1, timelineID);
             preparedStatement.execute();
             resultSet = preparedStatement.getResultSet();
         } catch (SQLException throwables) {
@@ -114,7 +113,7 @@ public class DatabaseStorage implements StorageAdapter {
         ArrayList<TimelineEventCard> timelineEventCards = getTimelineEventCards(timelineID);
         timeline = new Timeline(timelineEventCards, timelineName, UUID.fromString(timelineID));
         return timeline;
-        
+
     }
 
     public ArrayList<TimelineEventCard> getTimelineEventCards(String timelineID) {
@@ -123,7 +122,7 @@ public class DatabaseStorage implements StorageAdapter {
         ResultSet resultSet = null;
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM viewTimelineEventCards WHERE fld_TimelineID = ?");
-            preparedStatement.setString(1,timelineID);
+            preparedStatement.setString(1, timelineID);
             preparedStatement.execute();
             resultSet = preparedStatement.getResultSet();
         } catch (SQLException throwables) {
@@ -138,7 +137,9 @@ public class DatabaseStorage implements StorageAdapter {
                 int x = resultSet.getInt("fld_X");
                 int y = resultSet.getInt("fld_Y");
                 UUID ID = UUID.fromString(resultSet.getString("fld_TimelineEventCardID"));
-                TimelineEventCard timelineEventCard = new TimelineEventCard(title,colorString,eventContent,x,y,ID);
+                ArrayList<Entity> entities = getTimelineEventcardEntities(ID.toString());
+                TimelineEventCard timelineEventCard = new TimelineEventCard(title, colorString, eventContent, x, y, ID);
+                timelineEventCard.setEventAttachedEntities(entities);
 
                 timelineEventCards.add(timelineEventCard);
             }
@@ -149,8 +150,34 @@ public class DatabaseStorage implements StorageAdapter {
         return timelineEventCards;
     }
 
-    private ArrayList<Entity> getTimelineEventcardEntities() {
-        return null;
+    private ArrayList<Entity> getTimelineEventcardEntities(String timelineEventCardID) {
+
+        ArrayList<Entity> entities = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM viewTimelineEventCardEntities WHERE fld_TimelineEventCardID = ?");
+            preparedStatement.setString(1, timelineEventCardID);
+            preparedStatement.execute();
+            resultSet = preparedStatement.getResultSet();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            while (resultSet.next()) {
+                UUID entitiyID = UUID.fromString(resultSet.getString("fld_EntityID"));
+                String initials = resultSet.getString("fld_Initials");
+                String entitiyName = resultSet.getString("fld_EntityName");
+                String entitiyDescription = resultSet.getString("fld_EntityDescription");
+                Entity entity = new Entity(initials, entitiyName, entitiyDescription, entitiyID);
+                entities.add(entity);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return entities;
     }
 
     @Override

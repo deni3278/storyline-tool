@@ -62,10 +62,6 @@ public class LoadController {
         StorageAdapter databaseStorage = DatabaseStorage.getInstance();
         Context context = Context.getInstance();
         context.getProjectPageController().getTimelineController().loadGridFromSave(databaseStorage,"44EA6116-B5EC-4304-A82F-2E5FA8037E77");
-
-
-
-
-        return false;
+        return true;
     }
 }

@@ -41,6 +41,8 @@ public class Test {
         System.out.println("databaseStorage.getAllEventCards() = " + databaseStorage.getAllEventCards());
         System.out.println("databaseStorage.getTimelineEventCards() = " + databaseStorage.getTimelineEventCards("44ea6116-b5ec-4304-a82f-2e5fa8037e77"));
 
+        System.out.println(databaseStorage.getTimeline("44ea6116-b5ec-4304-a82f-2e5fa8037e77"));
+
     }
 
 }
