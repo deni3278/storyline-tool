@@ -1,6 +1,7 @@
 package storyline.storage;
 
 import storyline.model.EventCard;
+import storyline.model.Identifiable;
 import storyline.model.Timeline;
 
 import java.io.*;

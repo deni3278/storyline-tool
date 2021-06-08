@@ -1,8 +1,5 @@
 package storyline.model;
 
-import storyline.storage.Identifiable;
-
-import java.io.Serializable;
 import java.util.UUID;
 
 public class TimelineEventCard extends EventCard {

@@ -1,7 +1,5 @@
 package storyline.model;
 
-import storyline.storage.Identifiable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;

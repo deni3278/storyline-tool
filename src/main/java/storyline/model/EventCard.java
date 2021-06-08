@@ -1,11 +1,9 @@
 package storyline.model;
 
 import javafx.scene.paint.Color;
-import storyline.storage.Identifiable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.UUID;
 
 public class EventCard extends Identifiable implements Serializable {

@@ -11,6 +11,8 @@ public interface StorageAdapter {
 
     boolean deleteEventCard(EventCard eventCard);
 
+
+
     ArrayList<EventCard> getAllEventCards();
 
     Timeline getTimeline(String name);

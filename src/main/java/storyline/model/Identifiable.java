@@ -1,4 +1,4 @@
-package storyline.storage;
+package storyline.model;
 
 import java.io.Serializable;
 import java.util.UUID;
