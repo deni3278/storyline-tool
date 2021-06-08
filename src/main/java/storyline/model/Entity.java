@@ -3,8 +3,9 @@ package storyline.model;
 import storyline.storage.Identifiable;
 
 import java.io.Serializable;
+import java.util.UUID;
 
-public class Entity implements Serializable, Identifiable {
+public class Entity extends Identifiable implements Serializable {
     private String initials;
     private String name;
     private String description;
@@ -14,6 +15,14 @@ public class Entity implements Serializable, Identifiable {
         this.initials = initials;
         this.name = name;
         this.description = description;
+        generateID();
+    }
+
+    public Entity(String initials, String name, String description, UUID ID) {
+        this.initials = initials;
+        this.name = name;
+        this.description = description;
+        setID(ID);
     }
 
     public String getInitials() {
@@ -40,9 +49,5 @@ public class Entity implements Serializable, Identifiable {
         this.description = description;
     }
 
-    @Override
-    public String getIdentifier() {
-        return String.valueOf(this.name);
-    }
 
 }

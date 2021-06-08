@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -18,18 +20,17 @@ import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 
+/**
+ * The type Timeline controller.
+ */
 public class TimelineController {
 
-
-    public static ArrayList<TimelineEventCard> timelineEventCards = new ArrayList<>();
-
-    public static Timeline timeline;
-
-    public static GridPane timelineGridPaneStatic;
-
+    private Timeline timeline;
+    private ArrayList<TimelineEventCard> timelineEventCards;
 
     @FXML
     public ScrollPane timelineScrollPane;
@@ -41,9 +42,12 @@ public class TimelineController {
     VBox root;
 
     @FXML
-    private void initialize() {
+    Label timelineLabel;
 
-        timelineGridPaneStatic = timelineGridPane;
+    @FXML
+    public void initialize() {
+
+        this.timelineEventCards = new ArrayList<>();
 
         timelineGridPane.setOnDragOver(event -> {
             if (event.getGestureSource() != timelineGridPane) {
@@ -88,6 +92,7 @@ public class TimelineController {
             } else {
                 System.out.println("from within gridpane");
                 timelineGridPane.getChildren().remove(source);
+
                 timelineEventCard = (TimelineEventCard) sourceEventCard;
                 timelineEventCard.setX(columnIndex);
                 timelineEventCard.setY(rowIndex);
@@ -103,7 +108,7 @@ public class TimelineController {
 
     private boolean checkOverlap(int columnIndex, int rowIndex) {
         boolean overlap = false;
-        for (TimelineEventCard eventCard : timelineEventCards) {
+        for (TimelineEventCard eventCard : this.timelineEventCards) {
             System.out.println("x =" + eventCard.getX() + " y = " + eventCard.getY());
             if (eventCard.getX() == columnIndex && eventCard.getY() == rowIndex) {
                 System.out.println("overlap!");
@@ -114,38 +119,40 @@ public class TimelineController {
     }
 
     /**
-     * Start from blank.
+     * method for starting a blank timeline
      *
      * @param timelineName the timeline name
      */
-//method for starting a blank timeline
-    public static void startFromBlank(String timelineName) {
+    public void startFromBlank(String timelineName) {
 
-        //initializes public static variables
-        timeline = new Timeline(new ArrayList<TimelineEventCard>(), timelineName);
+
+        //initializes variables
+        timelineLabel.setText(timelineName);
+
+        this.timeline = new Timeline(new ArrayList<TimelineEventCard>(), timelineName);
         timelineEventCards = timeline.getEventCards();
 
         //clears the current grid nodes.
-        timelineGridPaneStatic.getChildren().removeIf(node -> node instanceof HBox);
+        timelineGridPane.getChildren().removeIf(node -> node instanceof HBox);
     }
 
     /**
-     * Load a timeline from save and add it to the grid.
+     * Load a timeline from save and adds it to the grid.
      *
      * @param storageAdapter the storage adapter
      * @param ID             the id
      */
-    public static void loadGridFromSave(StorageAdapter storageAdapter, String ID) {
+    public void loadGridFromSave(StorageAdapter storageAdapter, String ID) {
 
 
-        //initializes public static variables
+        //initializes variables
         timeline = storageAdapter.getTimeline(ID);
+        timelineLabel.setText(timeline.getName());
         timelineEventCards = timeline.getEventCards();
         System.out.println("timelineEventCards = " + timelineEventCards);
 
         //clears the current grid nodes.
-        timelineGridPaneStatic.getChildren().removeIf(node -> node instanceof HBox);
-
+        timelineGridPane.getChildren().removeIf(node -> node instanceof HBox);
 
 
         //converts the model timeline eventcards into interactable hboxes and adds them to the gridpane
@@ -158,20 +165,29 @@ public class TimelineController {
         });
     }
 
-    private static void addTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
+    /**
+     * Saves current timeline.
+     *
+     * @param storageAdapter the storage adapter
+     */
+    public void saveCurrentTimeline(StorageAdapter storageAdapter) {
+        storageAdapter.saveTimeline(timeline);
+    }
+
+    private void addTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
 
         //wrap the model timeline eventcard with an interactable hbox
         HBox interactableEventCard = createTimelineEventCard(timelineEventCard);
 
         //adds the hbox to the grid with the coordinates of the eventcard
-        timelineGridPaneStatic.add(interactableEventCard, timelineEventCard.getX(), timelineEventCard.getY());
+        timelineGridPane.add(interactableEventCard, timelineEventCard.getX(), timelineEventCard.getY());
 
         //if the list of timeline eventcards doesn't contain the newly added eventcard, add it to the list.
         if (!timelineEventCards.contains(timelineEventCard)) timelineEventCards.add(timelineEventCard);
     }
 
 
-    private static HBox createTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
+    private HBox createTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
         FXMLLoader card = new FXMLLoader(TimelineController.class.getResource("../fxml/eventCard.fxml"));
         //Assign a controller to the newly loaded card, and pass the variables for the card
         card.setController(new EventCardController(timelineEventCard.getTitle(), timelineEventCard.getEventContent(), timelineEventCard.getColor()));
