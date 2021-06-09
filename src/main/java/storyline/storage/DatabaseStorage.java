@@ -182,14 +182,124 @@ public class DatabaseStorage implements StorageAdapter {
 
     @Override
     public ArrayList<Timeline> getAllTimelines() {
-        return null;
+
+        ArrayList<String> timelineIDs = new ArrayList<>();
+        ArrayList<Timeline> timelines = new ArrayList<>();
+
+        PreparedStatement getAllIDsStatement = null;
+
+        ResultSet resultSet = null;
+        try {
+            getAllIDsStatement = connection.prepareStatement("SELECT fld_TimelineID FROM viewTimeline where fld_UserID = 1");
+            getAllIDsStatement.execute();
+            resultSet = getAllIDsStatement.getResultSet();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        try {
+            while (resultSet.next()) {
+                timelineIDs.add(resultSet.getString("fld_TimelineID"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        timelineIDs.forEach(timelineID -> {
+            timelines.add(getTimeline(timelineID));
+        });
+        return timelines;
     }
 
     @Override
     public boolean saveTimeline(Timeline timeline) {
-        return false;
+
+        CallableStatement preparedStatement = null;
+
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareCall("EXEC save_timeline @timelineName = ?, @timelineID = ?, @userID = ?");
+            preparedStatement.setString(1, timeline.getName());
+            preparedStatement.setString(2, timeline.getIdentifier().toString());
+            preparedStatement.setInt(3, 1);
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        saveTimelineEventCards(timeline.getEventCards(),timeline.getIdentifier());
+
+
+        return true;
     }
 
+    private void saveTimelineEventCards(ArrayList<TimelineEventCard> timelineEventCards, UUID timelineID) {
+        deleteTimelineEventCards(timelineID);
+
+        String sql = "exec save_timelineEventCard @fld_TimelineEventCardID = ?, @fld_TimelineID = ?, @fld_Title = ?, @fld_EventContent = ?, @fld_ColorString = ?, @fld_X = ?, @fld_Y = ?";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+
+            for (TimelineEventCard timelineEventCard : timelineEventCards) {
+
+                preparedStatement.setString(1, timelineEventCard.getIdentifier().toString());
+                preparedStatement.setString(2, timelineID.toString());
+                preparedStatement.setString(3, timelineEventCard.getTitle());
+                preparedStatement.setString(4, timelineEventCard.getEventContent());
+                preparedStatement.setString(5, timelineEventCard.getColorString());
+                preparedStatement.setInt(6, timelineEventCard.getX());
+                preparedStatement.setInt(7, timelineEventCard.getY());
+                preparedStatement.addBatch();
+            }
+            int[] affectedRecords = preparedStatement.executeBatch();
+            System.out.println("affectedRecords.length = " + affectedRecords.length);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void saveTimelineEventCardEntities(ArrayList<TimelineEventCard> timelineEventCards) {
+
+        deleteTimelineEventCardEntities(timelineEventCards);
+
+        String sql = "";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+
+            for (TimelineEventCard timelineEventCard : timelineEventCards) {
+                for (Entity entity: timelineEventCard.getEventAttachedEntities()){
+
+                    preparedStatement.addBatch();
+                }
+
+
+            }
+            int[] affectedRecords = preparedStatement.executeBatch();
+            System.out.println("affectedRecords.length = " + affectedRecords.length);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    private void deleteTimelineEventCardEntities(ArrayList<TimelineEventCard> timelineEventCards) {
+
+    }
+
+    private void deleteTimelineEventCards(UUID timelineID) {
+        CallableStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareCall("EXEC deleteTimelineEventCards @timelineID = ?");
+            preparedStatement.setString(1,timelineID.toString());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     @Override
     public boolean deleteTimeLine(String name) {

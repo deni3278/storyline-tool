@@ -1,8 +1,11 @@
 package storyline.controller;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -13,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import storyline.model.EventCard;
+import storyline.storage.DatabaseStorage;
 import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
@@ -26,22 +30,14 @@ public class CardsEntitiesController {
     final Color GREEN = Color.rgb(44, 204, 112, 0.2);
     final Color BLUE = Color.rgb(0, 193, 254, 0.2);
 
+    private ArrayList<EventCard> eventCards = new ArrayList<>();
+
     @FXML
     VBox vLayout;
 
     @FXML
     private void initialize() throws IOException {
 
-        StorageAdapter localAdapter = LocalStorage.getInstance();
-        ArrayList<EventCard> eventCardsFromSave = getEventCards(localAdapter);
-
-        eventCardsFromSave.forEach(eventCard -> {
-            try {
-                createCard(eventCard);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
 
         EventCard eventCard1 = new EventCard("test", RED.toString(), "testtesttest");
         EventCard eventCard2 = new EventCard("test2", BLUE.toString(), "testtesttest");
@@ -49,6 +45,45 @@ public class CardsEntitiesController {
         createCard(eventCard1);
         createCard(eventCard2);
         createCard(eventCard3);
+
+        vLayout.setOnContextMenuRequested(event -> {
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem addEventcard = new MenuItem("Add Eventcard");
+            addEventcard.setOnAction(menuEvent -> {
+                EventCard eventCard = new EventCard("fromcontextmenu", RED.toString(), "from contextmenu");
+                try {
+                    createCard(eventCard);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+            contextMenu.getItems().add(addEventcard);
+            contextMenu.show(vLayout, event.getScreenX(), event.getScreenY());
+        });
+    }
+
+    public void loadCardsFromStorage(StorageAdapter storageAdapter) {
+
+        vLayout.getChildren().clear();
+        eventCards.clear();
+
+        ArrayList<EventCard> eventCardsFromSave = getEventCards(storageAdapter);
+        eventCardsFromSave.forEach(eventCard -> {
+            try {
+                createCard(eventCard);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+    }
+
+    public void removeEventCard(HBox eventCard) {
+        this.eventCards.remove(eventCard.getUserData());
+        this.vLayout.getChildren().remove(eventCard);
+    }
+
+    private void saveCards(StorageAdapter storageAdapter) {
+        eventCards.forEach(storageAdapter::saveEventCard);
     }
 
     private ArrayList<EventCard> getEventCards(StorageAdapter storageAdapter) {
@@ -64,6 +99,14 @@ public class CardsEntitiesController {
         HBox eventCard = card.load();
         eventCard.setUserData(eventCardParam);
 
+        eventCard.setOnContextMenuRequested(event -> {
+            System.out.println("contextmenu");
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem menuItem = new MenuItem("delete");
+            menuItem.setOnAction(event1 -> removeEventCard(eventCard));
+            contextMenu.getItems().add(menuItem);
+            contextMenu.show(vLayout, event.getScreenX(), event.getScreenY());
+        });
         eventCard.setOnDragDetected(event -> {
 
             System.out.println(eventCard + " drag detected");
@@ -82,6 +125,7 @@ public class CardsEntitiesController {
 
         //Add the new card to the vbox
         vLayout.getChildren().add(eventCard);
+        eventCards.add(eventCardParam);
     }
 
 }

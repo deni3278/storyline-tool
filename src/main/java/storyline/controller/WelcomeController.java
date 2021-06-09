@@ -28,7 +28,7 @@ public class WelcomeController {
     }
 
     private void initButtons() {
-        StorageAdapter database = DatabaseStorage.getInstance();
+        StorageAdapter storage = DatabaseStorage.getInstance();
 
         blankIconButton.setOnMouseClicked(e -> {
             TextInputDialog inputDialog = new TextInputDialog();
@@ -37,8 +37,11 @@ public class WelcomeController {
             Optional<String> input = inputDialog.showAndWait();
             if (input.isPresent()) {
                 String name = input.get();
-                Context.getInstance().getProjectPageController().getTimelineController().startFromBlank(name);
-                Context.getInstance().activate("projectPage");
+                if (name.length() == 0) name = "Timeline";
+                Context instance = Context.getInstance();
+                instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(storage);
+                instance.getProjectPageController().getTimelineController().startFromBlank(name);
+                instance.activate("projectPage");
                 System.out.println("Blank");
             }
         });

@@ -18,19 +18,19 @@ public class Test {
         final Color GREEN = Color.rgb(44, 204, 112, 0.2);
         final Color BLUE = Color.rgb(0, 193, 254, 0.2);
 
-//        EventCard eventCard1 = new EventCard("eventcard1", BLUE.toString(), "eventcard1content");
-//        EventCard eventCard2 = new EventCard("eventcard2", RED.toString(), "eventcard2content");
-//        EventCard eventCard3 = new EventCard("eventcard3", GREEN.toString(), "eventcard3content");
+        EventCard eventCard1 = new EventCard("eventcard1", BLUE.toString(), "eventcard1content");
+        EventCard eventCard2 = new EventCard("eventcard2", RED.toString(), "eventcard2content");
+        EventCard eventCard3 = new EventCard("eventcard3", GREEN.toString(), "eventcard3content");
 //        localStorage.saveEventCard(eventCard1);
 //        localStorage.saveEventCard(eventCard2);
 //        System.out.println("localStorage.saveEventCard(eventCard3) = " + localStorage.saveEventCard(eventCard3));;
 //
-//        TimelineEventCard timelineEventCard1 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 1, 1);
-//        TimelineEventCard timelineEventCard2 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 2, 1);
-//        TimelineEventCard timelineEventCard3 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 4, 1);
-//        ArrayList<TimelineEventCard> eventCards = new ArrayList<>(Arrays.asList(timelineEventCard1, timelineEventCard2, timelineEventCard3));
-//        Timeline timelineOut = new Timeline(eventCards, "Test");
-//        Timeline timelineOut2 = new Timeline(eventCards, "TestTEST");
+        TimelineEventCard timelineEventCard1 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 1, 1);
+        TimelineEventCard timelineEventCard2 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 2, 1);
+        TimelineEventCard timelineEventCard3 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 4, 1);
+        ArrayList<TimelineEventCard> eventCards = new ArrayList<>(Arrays.asList(timelineEventCard1, timelineEventCard2, timelineEventCard3));
+        Timeline timelineOut = new Timeline(eventCards, "Test");
+        Timeline timelineOut2 = new Timeline(eventCards, "TestTEST");
 //
 //
 //        System.out.println("localStorage.saveTimeline(timelineOut) = " + localStorage.saveTimeline(timelineOut));
@@ -42,6 +42,8 @@ public class Test {
         System.out.println("databaseStorage.getTimelineEventCards() = " + databaseStorage.getTimelineEventCards("44ea6116-b5ec-4304-a82f-2e5fa8037e77"));
 
         System.out.println(databaseStorage.getTimeline("44ea6116-b5ec-4304-a82f-2e5fa8037e77"));
+        System.out.println("databaseStorage.getAllTimelines() = " + databaseStorage.getAllTimelines());;
+        databaseStorage.saveTimeline(timelineOut);
 
     }
 

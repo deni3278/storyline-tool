@@ -23,7 +23,9 @@ public class LoadController {
     private void initialize() {
         databaseIconButton.setOnMouseClicked(e -> {
             if (loadDatabase()) {
-                Context.getInstance().activate("projectPage");
+                Context instance = Context.getInstance();
+                instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(DatabaseStorage.getInstance());
+                instance.activate("projectPage");
             }
         });
         databaseIconButtonController.setImage(new Image(getClass().getResource("../images/database.png").toExternalForm()));
@@ -32,7 +34,9 @@ public class LoadController {
         localIconButton.setOnMouseClicked(e -> {
 
             if (loadLocal()) {
-                Context.getInstance().activate("projectPage");
+                Context instance = Context.getInstance();
+                instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(LocalStorage.getInstance());
+                instance.activate("projectPage");
             }
         });
         localIconButtonController.setImage(new Image(getClass().getResource("../images/local.png").toExternalForm()));
@@ -61,7 +65,7 @@ public class LoadController {
 
         StorageAdapter databaseStorage = DatabaseStorage.getInstance();
         Context context = Context.getInstance();
-        context.getProjectPageController().getTimelineController().loadGridFromSave(databaseStorage,"44EA6116-B5EC-4304-A82F-2E5FA8037E77");
+        context.getProjectPageController().getTimelineController().loadGridFromSave(databaseStorage, "44EA6116-B5EC-4304-A82F-2E5FA8037E77");
         return true;
     }
 }
