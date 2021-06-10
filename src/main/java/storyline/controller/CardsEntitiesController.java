@@ -1,7 +1,5 @@
 package storyline.controller;
 
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
@@ -9,15 +7,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import storyline.model.EventCard;
-import storyline.storage.DatabaseStorage;
-import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
 import java.io.IOException;
@@ -39,27 +33,6 @@ public class CardsEntitiesController {
     private void initialize() throws IOException {
 
 
-        EventCard eventCard1 = new EventCard("test", RED.toString(), "testtesttest");
-        EventCard eventCard2 = new EventCard("test2", BLUE.toString(), "testtesttest");
-        EventCard eventCard3 = new EventCard("test3", GREEN.toString(), "testtesttest");
-        createCard(eventCard1);
-        createCard(eventCard2);
-        createCard(eventCard3);
-
-        vLayout.setOnContextMenuRequested(event -> {
-            ContextMenu contextMenu = new ContextMenu();
-            MenuItem addEventcard = new MenuItem("Add Eventcard");
-            addEventcard.setOnAction(menuEvent -> {
-                EventCard eventCard = new EventCard("fromcontextmenu", RED.toString(), "from contextmenu");
-                try {
-                    createCard(eventCard);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            });
-            contextMenu.getItems().add(addEventcard);
-            contextMenu.show(vLayout, event.getScreenX(), event.getScreenY());
-        });
     }
 
     public void loadCardsFromStorage(StorageAdapter storageAdapter) {

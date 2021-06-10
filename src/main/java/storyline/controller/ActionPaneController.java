@@ -1,10 +1,7 @@
 package storyline.controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import storyline.storage.LocalStorage;
-import storyline.storage.StorageAdapter;
 
 
 public class ActionPaneController {
@@ -34,7 +31,7 @@ public class ActionPaneController {
 
     @FXML
     public void initialize() {
-
+        createOrLoadButton.setOnMouseClicked(event -> Context.getInstance().activate("welcome"));
     }
 
 

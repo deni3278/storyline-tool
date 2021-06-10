@@ -1,24 +1,26 @@
 package storyline.controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import storyline.model.EventCard;
 import storyline.model.Timeline;
 import storyline.model.TimelineEventCard;
-import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
 
 

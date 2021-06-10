@@ -1,9 +1,7 @@
 package storyline.controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import storyline.storage.LocalStorage;
+import storyline.storage.DatabaseStorage;
 
 /**
  * Contains all the controllers from the projectpage fxml via fx:include
@@ -23,12 +21,10 @@ public class ProjectPageController {
 
     @FXML
     public void initialize() {
-        actionPaneController.getCreateOrLoadButton().setOnMouseClicked(event -> {
-            Context.getInstance().activate("welcome");
-        });
+
 
         actionPaneController.getSaveTimelineButton().setOnMouseClicked(event -> {
-            timelineController.saveCurrentTimeline(LocalStorage.getInstance());
+            timelineController.saveCurrentTimeline(DatabaseStorage.getInstance());
             System.out.println("success");
         });
 

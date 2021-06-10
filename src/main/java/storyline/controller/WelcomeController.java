@@ -4,15 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import storyline.App;
 import storyline.storage.DatabaseStorage;
 import storyline.storage.StorageAdapter;
 
 import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class WelcomeController {
     @FXML

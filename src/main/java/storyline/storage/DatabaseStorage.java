@@ -296,6 +296,7 @@ public class DatabaseStorage implements StorageAdapter {
         try {
             preparedStatement = connection.prepareCall("EXEC deleteTimelineEventCards @timelineID = ?");
             preparedStatement.setString(1,timelineID.toString());
+            preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

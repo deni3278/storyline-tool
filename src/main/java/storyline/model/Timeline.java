@@ -41,11 +41,8 @@ public class Timeline extends Identifiable implements Serializable {
 
     @Override
     public String toString() {
-        return "Timeline{" +
-                "name='" + name + '\'' +
-                ", eventCards=" + eventCards +
-                '}';
+        return this.getName();
+
+
     }
-
-
 }

@@ -1,15 +1,17 @@
 package storyline.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.stage.Popup;
+import storyline.model.Timeline;
 import storyline.storage.DatabaseStorage;
 import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
-import java.io.File;
+import java.io.IOException;
 
 public class LoadController {
     @FXML
@@ -21,51 +23,46 @@ public class LoadController {
 
     @FXML
     private void initialize() {
-        databaseIconButton.setOnMouseClicked(e -> {
-            if (loadDatabase()) {
-                Context instance = Context.getInstance();
-                instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(DatabaseStorage.getInstance());
-                instance.activate("projectPage");
-            }
-        });
+        databaseIconButton.setOnMouseClicked(e -> showTimelines(DatabaseStorage.getInstance()));
         databaseIconButtonController.setImage(new Image(getClass().getResource("../images/database.png").toExternalForm()));
         databaseIconButtonController.setText("From Database");
 
-        localIconButton.setOnMouseClicked(e -> {
-
-            if (loadLocal()) {
-                Context instance = Context.getInstance();
-                instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(LocalStorage.getInstance());
-                instance.activate("projectPage");
-            }
-        });
+        localIconButton.setOnMouseClicked(e -> showTimelines(LocalStorage.getInstance()));
         localIconButtonController.setImage(new Image(getClass().getResource("../images/local.png").toExternalForm()));
         localIconButtonController.setText("From Local File");
     }
 
-    private boolean loadLocal() {
-        StorageAdapter localStorage = LocalStorage.getInstance();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Story files", "*.story"));
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + File.separator + "StorylineTool" + File.separator + "Timelines"));
 
-        File fileChosen = fileChooser.showOpenDialog(new Stage());
-        if (fileChosen != null) {
-            String fileName = LocalStorage.getFileNameWithoutExtension(fileChosen.getName());
-            System.out.println(fileName);
-
-            Context context = Context.getInstance();
-            context.getProjectPageController().getTimelineController().loadGridFromSave(localStorage, fileName);
-            return true;
+    private void showTimelines(StorageAdapter storageAdapter) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/listTimelines.fxml"));
+        ScrollPane root = null;
+        try {
+            root = loader.load();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
-        return false;
+        TimelineListViewController timelineListViewController = loader.getController();
+        timelineListViewController.setTimelines(storageAdapter.getAllTimelines());
+
+        Popup popup = new Popup();
+        popup.getContent().add(root);
+        popup.show(localIconButton.getScene().getWindow());
+
+        timelineListViewController.closeButton.setOnMouseClicked(event -> popup.hide());
+
+        timelineListViewController.loadButton.setOnMouseClicked(event -> {
+            Timeline timelineSelected = (Timeline) timelineListViewController.timelineListView.getSelectionModel().getSelectedItem();
+            loadSelectedTimeline(storageAdapter, timelineSelected);
+            popup.hide();
+        });
+
+
     }
 
-    private boolean loadDatabase() {
-
-        StorageAdapter databaseStorage = DatabaseStorage.getInstance();
-        Context context = Context.getInstance();
-        context.getProjectPageController().getTimelineController().loadGridFromSave(databaseStorage, "44EA6116-B5EC-4304-A82F-2E5FA8037E77");
-        return true;
+    private void loadSelectedTimeline(StorageAdapter storageAdapter, Timeline timelineSelected) {
+        Context instance = Context.getInstance();
+        instance.getProjectPageController().getTimelineController().loadGridFromSave(storageAdapter, timelineSelected.getIdentifier().toString());
+        instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(storageAdapter);
+        instance.activate("projectPage");
     }
 }
