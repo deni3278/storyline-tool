@@ -5,7 +5,6 @@ import storyline.model.EventCard;
 import storyline.model.Timeline;
 import storyline.model.TimelineEventCard;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -39,9 +38,6 @@ public class Test {
 //        localStorage.getAllTimelines().forEach(System.out::println);
 
         System.out.println("databaseStorage.getAllEventCards() = " + databaseStorage.getAllEventCards());
-        System.out.println("databaseStorage.getTimelineEventCards() = " + databaseStorage.getTimelineEventCards("44ea6116-b5ec-4304-a82f-2e5fa8037e77"));
-
-        System.out.println(databaseStorage.getTimeline("44ea6116-b5ec-4304-a82f-2e5fa8037e77"));
         System.out.println("databaseStorage.getAllTimelines() = " + databaseStorage.getAllTimelines());;
         databaseStorage.saveTimeline(timelineOut);
 

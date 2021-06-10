@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import storyline.storage.DatabaseStorage;
+import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
 import java.util.Optional;
@@ -23,7 +23,7 @@ public class WelcomeController {
     }
 
     private void initButtons() {
-        StorageAdapter storage = DatabaseStorage.getInstance();
+        StorageAdapter storage = LocalStorage.getInstance();
 
         blankIconButton.setOnMouseClicked(e -> {
             TextInputDialog inputDialog = new TextInputDialog();
