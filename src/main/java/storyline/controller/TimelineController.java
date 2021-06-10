@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 
 /**
- * The type Timeline controller.
+ * The Timeline controller.
  */
 public class TimelineController {
 
@@ -57,7 +57,6 @@ public class TimelineController {
         });
 
         timelineGridPane.setOnDragDropped(event -> {
-
 
             HBox source = (HBox) event.getGestureSource();
 
@@ -98,12 +97,8 @@ public class TimelineController {
                 timelineEventCard.setY(rowIndex);
                 timelineGridPane.add(source, columnIndex, rowIndex);
             }
-
-
             event.consume();
         });
-
-
     }
 
     private boolean checkOverlap(int columnIndex, int rowIndex) {
@@ -154,7 +149,6 @@ public class TimelineController {
         //clears the current grid nodes.
         timelineGridPane.getChildren().removeIf(node -> node instanceof HBox);
 
-
         //converts the model timeline eventcards into interactable hboxes and adds them to the gridpane
         timelineEventCards.forEach(timelineEventCard -> {
             try {
@@ -170,8 +164,8 @@ public class TimelineController {
      *
      * @param storageAdapter the storage adapter
      */
-    public void saveCurrentTimeline(StorageAdapter storageAdapter) {
-        storageAdapter.saveTimeline(timeline);
+    public boolean saveCurrentTimeline(StorageAdapter storageAdapter) {
+        return storageAdapter.saveTimeline(timeline);
     }
 
     private void addTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
@@ -197,16 +191,13 @@ public class TimelineController {
         eventCard.setUserData(timelineEventCard);
 
         eventCard.setOnContextMenuRequested(event -> {
-            System.out.println("contextmenu");
             ContextMenu contextMenu = new ContextMenu();
-            MenuItem menuItem = new MenuItem("delete");
+            MenuItem menuItem = new MenuItem("Delete");
             menuItem.setOnAction(event1 -> removeEventCard(eventCard));
             contextMenu.getItems().add(menuItem);
             contextMenu.show(timelineGridPane, event.getScreenX(), event.getScreenY());
         });
         eventCard.setOnDragDetected(event -> {
-
-            System.out.println(eventCard + " drag detected");
 
             ImageView preview = new ImageView(eventCard.snapshot(null, null));
 

@@ -225,12 +225,9 @@ public class DatabaseStorage implements StorageAdapter {
             preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
-
-
         saveTimelineEventCards(timeline.getEventCards(),timeline.getIdentifier());
-
-
         return true;
     }
 

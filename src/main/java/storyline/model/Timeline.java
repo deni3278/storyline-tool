@@ -42,7 +42,5 @@ public class Timeline extends Identifiable implements Serializable {
     @Override
     public String toString() {
         return this.getName();
-
-
     }
 }

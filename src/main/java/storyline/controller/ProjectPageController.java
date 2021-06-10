@@ -1,7 +1,13 @@
 package storyline.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import storyline.storage.DatabaseStorage;
+import storyline.storage.LocalStorage;
+
+import java.util.Optional;
 
 /**
  * Contains all the controllers from the projectpage fxml via fx:include
@@ -24,11 +30,34 @@ public class ProjectPageController {
 
 
         actionPaneController.getSaveTimelineButton().setOnMouseClicked(event -> {
-            timelineController.saveCurrentTimeline(DatabaseStorage.getInstance());
-            System.out.println("success");
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Save current timeline");
+            alert.setHeaderText("Chose where to save your current project");
+
+            ButtonType database = new ButtonType("Database");
+            ButtonType local = new ButtonType("Local");
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(database, local, buttonTypeCancel);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            boolean success = false;
+            if (result.get() == database) {
+                success = timelineController.saveCurrentTimeline(DatabaseStorage.getInstance());
+                System.out.println("saved in database");
+            } else if (result.get() == local) {
+                success = timelineController.saveCurrentTimeline(LocalStorage.getInstance());
+                System.out.println("saved locally");
+            }
+            if (success){
+                Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                successAlert.setHeaderText("Successfully saved your current project");
+                successAlert.showAndWait();
+            }
+
+
         });
-
-
     }
 
     /**
