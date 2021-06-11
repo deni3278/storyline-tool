@@ -14,6 +14,10 @@ public class CreateEventController {
     @FXML
     Button btnAccept;
 
+    public Button getBtnAccept() {
+        return btnAccept;
+    }
+
     @FXML
     TextField fldTitle;
 
@@ -43,7 +47,6 @@ public class CreateEventController {
 
     public String getColor(String choice) {
         switch (choice) {
-
             case "Red":
                 return CardsEntitiesController.RED.toString();
             case "Blue":
@@ -51,6 +54,6 @@ public class CreateEventController {
             case "Green":
                 return CardsEntitiesController.BLUE.toString();
         }
-        return null;
+        return CardsEntitiesController.GREEN.toString();
     }
 }
