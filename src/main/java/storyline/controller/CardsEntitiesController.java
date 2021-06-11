@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 public class CardsEntitiesController {
     //Preset colors
-    final Color RED = Color.rgb(254, 0, 78, 0.2);
-    final Color GREEN = Color.rgb(44, 204, 112, 0.2);
-    final Color BLUE = Color.rgb(0, 193, 254, 0.2);
+    public static final Color RED = Color.rgb(254, 0, 78, 0.2);
+    public static final Color GREEN = Color.rgb(44, 204, 112, 0.2);
+    public static final Color BLUE = Color.rgb(0, 193, 254, 0.2);
 
     private ArrayList<EventCard> eventCards = new ArrayList<>();
 
@@ -63,7 +63,7 @@ public class CardsEntitiesController {
         return storageAdapter.getAllEventCards();
     }
 
-    private void createCard(EventCard eventCardParam) throws IOException {
+    public void createCard(EventCard eventCardParam) throws IOException {
         //Load the fxml of the event card
         FXMLLoader card = new FXMLLoader(getClass().getResource("../fxml/eventCard.fxml"));
         //Assign a controller to the newly loaded card, and pass the variables for the card
