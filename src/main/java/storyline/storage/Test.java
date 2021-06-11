@@ -20,9 +20,9 @@ public class Test {
         EventCard eventCard1 = new EventCard("eventcard1", BLUE.toString(), "eventcard1content");
         EventCard eventCard2 = new EventCard("eventcard2", RED.toString(), "eventcard2content");
         EventCard eventCard3 = new EventCard("eventcard3", GREEN.toString(), "eventcard3content");
-//        localStorage.saveEventCard(eventCard1);
-//        localStorage.saveEventCard(eventCard2);
-//        System.out.println("localStorage.saveEventCard(eventCard3) = " + localStorage.saveEventCard(eventCard3));;
+        localStorage.saveEventCard(eventCard1);
+        localStorage.saveEventCard(eventCard2);
+        System.out.println("localStorage.saveEventCard(eventCard3) = " + localStorage.saveEventCard(eventCard3));;
 //
         TimelineEventCard timelineEventCard1 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 1, 1);
         TimelineEventCard timelineEventCard2 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 2, 1);
@@ -37,9 +37,9 @@ public class Test {
 //
 //        localStorage.getAllTimelines().forEach(System.out::println);
 
-        System.out.println("databaseStorage.getAllEventCards() = " + databaseStorage.getAllEventCards());
-        System.out.println("databaseStorage.getAllTimelines() = " + databaseStorage.getAllTimelines());;
-        databaseStorage.saveTimeline(timelineOut);
+//        System.out.println("databaseStorage.getAllEventCards() = " + databaseStorage.getAllEventCards());
+//        System.out.println("databaseStorage.getAllTimelines() = " + databaseStorage.getAllTimelines());;
+//        databaseStorage.saveTimeline(timelineOut);
 
     }
 

@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import storyline.controller.Context;
 import storyline.controller.TimelineController;
+import storyline.storage.Test;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -18,6 +19,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+        Test.main(null);
         FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("fxml/welcome.fxml"));
         FXMLLoader projectPageLoader = new FXMLLoader(getClass().getResource("fxml/projectPage.fxml"));
 
