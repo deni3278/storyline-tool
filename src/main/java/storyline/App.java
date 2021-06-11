@@ -14,7 +14,6 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
         Test.main(null);
         FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("fxml/welcome.fxml"));
         FXMLLoader projectPageLoader = new FXMLLoader(getClass().getResource("fxml/projectPage.fxml"));

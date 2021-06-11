@@ -15,7 +15,6 @@ public class TimelineListViewController {
     @FXML
     Button closeButton, loadButton;
 
-
     public ListView getTimelineListView() {
         return timelineListView;
     }

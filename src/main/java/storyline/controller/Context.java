@@ -21,6 +21,8 @@ public class Context {
 
     public WelcomeController welcomeController;
 
+    private Context() {}
+
     /**
      * Gets the singleton instance.
      *
