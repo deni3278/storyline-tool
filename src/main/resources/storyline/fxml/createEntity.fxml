@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="650.0" minWidth="1000.0" style="-fx-background-color: #31394c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" spacing="100.0" VBox.vgrow="NEVER">
+         <children>
+            <TextField promptText="Enter Entity Name" style="-fx-background-color: #31394c; -fx-border-color: grey; -fx-border-radius: 60; -fx-border-width: 3;" HBox.hgrow="ALWAYS" />
+            <TextField promptText="Enter Initials" style="-fx-background-color: #31394c; -fx-border-color: grey; -fx-border-radius: 60; -fx-border-width: 3;" HBox.hgrow="ALWAYS" />
+         </children>
+         <padding>
+            <Insets bottom="35.0" top="35.0" />
+         </padding>
+      </HBox>
+      <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="SOMETIMES">
+         <children>
+            <TextArea maxHeight="450.0" promptText="Enter Details..." HBox.hgrow="ALWAYS" />
+         </children>
+         <padding>
+            <Insets bottom="35.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" style="-fx-background-color: BB86FC;" text="Accept" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets left="35.0" right="35.0" />
+   </padding>
+</VBox>
