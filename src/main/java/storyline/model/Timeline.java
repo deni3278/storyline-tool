@@ -2,6 +2,7 @@ package storyline.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Timeline extends Identifiable implements Serializable {
@@ -21,6 +22,18 @@ public class Timeline extends Identifiable implements Serializable {
         setID(ID);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Timeline timeline = (Timeline) o;
+        return Objects.equals(getName(), timeline.getName()) && Objects.equals(getEventCards(), timeline.getEventCards());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getEventCards());
+    }
 
     public String getName() {
         return name;

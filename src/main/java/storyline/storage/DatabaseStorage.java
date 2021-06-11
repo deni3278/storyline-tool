@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
 
+/**
+ * This class is the database implementation of the StorageAdapter class.
+ * takes username and password from connection.prop
+ */
 public class DatabaseStorage implements StorageAdapter {
 
     private static DatabaseStorage instance;

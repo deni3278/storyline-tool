@@ -1,6 +1,7 @@
 package storyline.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Entity extends Identifiable implements Serializable {
@@ -45,6 +46,19 @@ public class Entity extends Identifiable implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return Objects.equals(getInitials(), entity.getInitials()) && Objects.equals(getName(), entity.getName()) && Objects.equals(getDescription(), entity.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getInitials(), getName(), getDescription());
     }
 
     @Override

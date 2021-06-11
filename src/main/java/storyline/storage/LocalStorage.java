@@ -10,6 +10,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This class is the local impementation of StorageAdapter. stores files under the home folder and then /StorylineTool.
+ */
 public class LocalStorage implements StorageAdapter {
 
     private static LocalStorage instance;
@@ -78,7 +81,7 @@ public class LocalStorage implements StorageAdapter {
         return deleteFile("Timelines", ID);
     }
 
-    private boolean deleteFile(String subDirectory, String identifier) {
+    public boolean deleteFile(String subDirectory, String identifier) {
         String filepath = getFilepath(subDirectory) + File.separator + identifier + FILE_FORMAT;
         File timelineFile = new File(filepath);
         if (timelineFile.exists()) {
@@ -87,7 +90,7 @@ public class LocalStorage implements StorageAdapter {
         return false;
     }
 
-    private <T extends Identifiable & Serializable> boolean writeObjectToFile(String subDirectory, T object) {
+    public <T extends Identifiable & Serializable> boolean writeObjectToFile(String subDirectory, T object) {
         String directoryPath = getFilepath(subDirectory);
         createDirectoryIfNotExists(directoryPath);
         String filepath = getFilepath(object, subDirectory);
@@ -103,20 +106,20 @@ public class LocalStorage implements StorageAdapter {
         return true;
     }
 
-    private String getFilepath(String... subDirectories) {
+    public String getFilepath(String... subDirectories) {
         StringBuilder filepathBuilder = new StringBuilder(this.appDataPath + File.separator);
         Arrays.stream(subDirectories).forEach(path -> filepathBuilder.append(path + File.separator));
         return filepathBuilder.toString();
     }
 
-    private <T extends Identifiable & Serializable> String getFilepath(T object, String... subDirectories) {
+    public <T extends Identifiable & Serializable> String getFilepath(T object, String... subDirectories) {
         StringBuilder filepathBuilder = new StringBuilder(getFilepath(subDirectories));
         filepathBuilder.append(object.getIdentifier() + FILE_FORMAT);
         return filepathBuilder.toString();
     }
 
 
-    private <T extends Identifiable & Serializable> ArrayList<T> readAllObjectsFromDirectory(String subDirectory) {
+    public <T extends Identifiable & Serializable> ArrayList<T> readAllObjectsFromDirectory(String subDirectory) {
         ArrayList<T> objects = new ArrayList<>();
 
         String directoryPath = getFilepath(subDirectory);
@@ -138,7 +141,7 @@ public class LocalStorage implements StorageAdapter {
         return file.replaceAll("^.*?(([^/\\\\\\.]+))\\.[^\\.]+$", "$1");
     }
 
-    private <T extends Identifiable & Serializable> T readObjectFromFile(String directory, String identifier) {
+    public <T extends Identifiable & Serializable> T readObjectFromFile(String directory, String identifier) {
 
         String filepath = this.appDataPath + File.separator + directory + File.separator + identifier + FILE_FORMAT;
         T object = null;

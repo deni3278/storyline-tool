@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class EventCard extends Identifiable implements Serializable {
@@ -72,5 +73,16 @@ public class EventCard extends Identifiable implements Serializable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EventCard eventCard = (EventCard) o;
+        return Objects.equals(getTitle(), eventCard.getTitle()) && Objects.equals(getColorString(), eventCard.getColorString()) && Objects.equals(getEventAttachedEntities(), eventCard.getEventAttachedEntities()) && Objects.equals(getEventContent(), eventCard.getEventContent());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getColorString(), getEventAttachedEntities(), getEventContent());
+    }
 }

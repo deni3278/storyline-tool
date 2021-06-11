@@ -1,5 +1,6 @@
 package storyline.model;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class TimelineEventCard extends EventCard {
@@ -44,5 +45,19 @@ public class TimelineEventCard extends EventCard {
                 ", y=" + y +
                 ", ID=" + getIdentifier() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        TimelineEventCard that = (TimelineEventCard) o;
+        return getX() == that.getX() && getY() == that.getY();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getX(), getY());
     }
 }
