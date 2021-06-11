@@ -101,6 +101,14 @@ public class TimelineController {
         });
     }
 
+    public Timeline getTimeline(){
+        return this.timeline;
+    }
+
+    public ArrayList<TimelineEventCard> getTimelineEventCards() {
+        return this.timelineEventCards;
+    }
+
     private boolean checkOverlap(int columnIndex, int rowIndex) {
         boolean overlap = false;
         for (TimelineEventCard eventCard : this.timelineEventCards) {
@@ -229,4 +237,5 @@ public class TimelineController {
         }
         return null;
     }
+
 }

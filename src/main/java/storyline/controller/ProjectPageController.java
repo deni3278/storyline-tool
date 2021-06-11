@@ -1,12 +1,19 @@
 package storyline.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import storyline.model.TimelineEventCard;
 import storyline.storage.DatabaseStorage;
 import storyline.storage.LocalStorage;
 
+import java.io.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Optional;
 
 /**
@@ -58,6 +65,13 @@ public class ProjectPageController {
 
 
         });
+        actionPaneController.getExportTimelineButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                exportTimelineToFile();
+            }
+        });
+
     }
 
     /**
@@ -87,4 +101,50 @@ public class ProjectPageController {
         return cardsEntitiesController;
     }
 
+    private void exportTimelineToFile (){
+
+        try {
+            File timelineExport = new File(timelineController.getTimeline().getName()+".txt");
+            if (timelineExport.createNewFile()) {
+                ArrayList<TimelineEventCard> expEventCards = new ArrayList<>(timelineController.getTimelineEventCards());
+                expEventCards.sort(Comparator.comparing(timelineEventCard -> timelineEventCard.getX()));
+                System.out.println(expEventCards);
+                exportFileTextContent(expEventCards, timelineExport);
+
+                System.out.println("File created: "+ timelineExport.getName());
+            }
+            else {
+                System.out.println("File already exists");
+            }
+        } catch (IOException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+    }
+
+    private void exportFileTextContent(ArrayList<TimelineEventCard> expEventCards, File timelineExport) throws IOException {
+        FileOutputStream fos = new FileOutputStream(timelineExport);
+        BufferedWriter writeEventCard = new BufferedWriter(new OutputStreamWriter(fos));
+        int smallestY = -1;
+
+        for (int i =0;i<expEventCards.size();i++){
+            if(smallestY<expEventCards.get(i).getY()){
+              smallestY=expEventCards.get(i).getY();
+            }
+            else
+                continue;
+        }
+        for (int i=0;i<expEventCards.size();i++){
+
+            if(expEventCards.get(i).getY()>smallestY) {
+                writeEventCard.write("\t");
+                writeEventCard.write(expEventCards.get(i).getTitle()+"\n"+expEventCards.get(i).getEventContent());
+            }else{
+                writeEventCard.write(expEventCards.get(i).getTitle()+"\n"+expEventCards.get(i).getEventContent());
+                }
+            writeEventCard.newLine();
+            }
+        writeEventCard.close();
+    }
 }
