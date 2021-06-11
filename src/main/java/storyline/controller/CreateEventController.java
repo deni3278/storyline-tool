@@ -30,6 +30,7 @@ public class CreateEventController {
     @FXML
     private void initialize() {
         choiceColor.getItems().addAll("Red", "Blue", "Green");
+        
     }
 
     @FXML
