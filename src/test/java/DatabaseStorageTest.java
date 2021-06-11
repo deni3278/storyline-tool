@@ -1,9 +1,8 @@
-package storyline.storage;
-
 import javafx.scene.paint.Color;
 import org.junit.Test;
 import storyline.model.Timeline;
 import storyline.model.TimelineEventCard;
+import storyline.storage.DatabaseStorage;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;

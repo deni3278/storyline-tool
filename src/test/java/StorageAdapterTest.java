@@ -1,8 +1,9 @@
-package storyline.storage;
-
 import javafx.scene.paint.Color;
 import org.junit.Before;
 import storyline.model.EventCard;
+import storyline.storage.DatabaseStorage;
+import storyline.storage.LocalStorage;
+import storyline.storage.StorageAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
