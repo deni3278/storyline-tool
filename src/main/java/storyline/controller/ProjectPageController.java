@@ -101,6 +101,10 @@ public class ProjectPageController {
         return cardsEntitiesController;
     }
 
+    /**
+     * Exports timeline to a txt file.
+     */
+
     private void exportTimelineToFile (){
 
         try {
@@ -123,6 +127,14 @@ public class ProjectPageController {
 
     }
 
+    /**
+     * Iterates through event card array and formats the text based on their placement
+     *
+     * @param expEventCards cloned array of timeline event cards.
+     * @param timelineExport file variable for the exported timeline.
+     * @throws IOException
+     */
+
     private void exportFileTextContent(ArrayList<TimelineEventCard> expEventCards, File timelineExport) throws IOException {
         FileOutputStream fos = new FileOutputStream(timelineExport);
         BufferedWriter writeEventCard = new BufferedWriter(new OutputStreamWriter(fos));
@@ -138,8 +150,8 @@ public class ProjectPageController {
         for (int i=0;i<expEventCards.size();i++){
 
             if(expEventCards.get(i).getY()>smallestY) {
-                writeEventCard.write("\t");
-                writeEventCard.write(expEventCards.get(i).getTitle()+"\n"+expEventCards.get(i).getEventContent());
+                writeEventCard.write("       ");
+                writeEventCard.write(expEventCards.get(i).getTitle()+"\n       "+expEventCards.get(i).getEventContent());
             }else{
                 writeEventCard.write(expEventCards.get(i).getTitle()+"\n"+expEventCards.get(i).getEventContent());
                 }

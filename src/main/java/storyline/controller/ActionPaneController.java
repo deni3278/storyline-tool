@@ -46,11 +46,12 @@ public class ActionPaneController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            CreateEventController crontroller = fxmlLoader.getController();
+            CreateEventController controller = fxmlLoader.getController();
             Popup popup = new Popup();
             popup.getContent().add(pane);
             popup.show(createEventButton.getScene().getWindow());
-            crontroller.getBtnAccept().setOnMouseClicked(event1 -> popup.hide());
+            controller.getBtnSave().setOnMouseClicked(event1 -> popup.hide());
+            controller.getBtnCancel().setOnMouseClicked(event1 -> popup.hide());
         });
     }
 
