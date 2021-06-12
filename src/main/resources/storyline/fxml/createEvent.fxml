@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="650.0" minWidth="1000.0" style="-fx-background-color: #31394c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="storyline.controller.CreateEventController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="650.0" minWidth="1000.0" stylesheets="@../css/createEventCard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="storyline.controller.CreateEventController">
    <children>
-      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" spacing="100.0" VBox.vgrow="NEVER">
+      <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" text="Create Event" textFill="#d9dbdf">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets top="30.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" spacing="100.0" stylesheets="@../css/createEventCard.css" VBox.vgrow="NEVER">
          <children>
-            <TextField fx:id="fldTitle" promptText="Enter Event Card Title" style="-fx-background-color: #31394c; -fx-border-color: red; -fx-border-radius: 60; -fx-border-width: 3;" stylesheets="@../css/textFieldColor.css" HBox.hgrow="ALWAYS" />
-            <ChoiceBox fx:id="choiceColor" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets right="-95.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@../images/bell.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="fldTitle" promptText="Event Title" stylesheets="@../css/createEventCard.css" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <ImageView fitHeight="30.0" fitWidth="30.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="-20.0" right="-95.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@../images/Paintbrush.png" />
+               </image>
+            </ImageView>
+            <ChoiceBox fx:id="choiceColor" maxWidth="302.0" stylesheets="@../css/createEventCard.css" HBox.hgrow="ALWAYS">
                <rotationAxis>
                   <Point3D />
                </rotationAxis>
@@ -20,17 +58,31 @@
             <Insets bottom="35.0" top="35.0" />
          </padding>
       </HBox>
-      <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="SOMETIMES">
+      <HBox maxHeight="1.7976931348623157E308" stylesheets="@../css/createEventCard.css" VBox.vgrow="SOMETIMES">
          <children>
-            <TextArea fx:id="areaContent" maxHeight="450.0" promptText="Enter Event..." style="-fx-background-color: #31394c;" HBox.hgrow="ALWAYS" />
+            <TextArea fx:id="areaContent" maxHeight="450.0" promptText="Describe the new event..." stylesheets="@../css/createEventCard.css" wrapText="true" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font></TextArea>
          </children>
          <padding>
             <Insets bottom="35.0" top="35.0" />
          </padding>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@../css/createEventCard.css">
          <children>
-            <Button fx:id="btnAccept" mnemonicParsing="false" onAction="#handleAccept" style="-fx-background-color: #BB86FC;" text="Accept" />
+            <Button fx:id="btnSave" minWidth="80.0" mnemonicParsing="false" onAction="#handleSave" styleClass="Save" stylesheets="@../css/createEventCard.css" text="SAVE">
+               <HBox.margin>
+                  <Insets right="100.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnCancel" minWidth="80.0" mnemonicParsing="false" styleClass="Cancel" stylesheets="@../css/createEventCard.css" text="CANCEL">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin></Button>
          </children>
       </HBox>
    </children>

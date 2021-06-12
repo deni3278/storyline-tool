@@ -12,10 +12,14 @@ import java.io.IOException;
 
 public class CreateEventController {
     @FXML
-    Button btnAccept;
+    Button btnSave, btnCancel;
 
-    public Button getBtnAccept() {
-        return btnAccept;
+    public Button getBtnSave() {
+        return btnSave;
+    }
+
+    public Button getBtnCancel(){
+        return btnCancel;
     }
 
     @FXML
@@ -30,11 +34,10 @@ public class CreateEventController {
     @FXML
     private void initialize() {
         choiceColor.getItems().addAll("Red", "Blue", "Green");
-        
     }
 
     @FXML
-    public void handleAccept() {
+    public void handleSave() {
         EventCard eventCard = new EventCard(fldTitle.getText(), getColor(choiceColor.getSelectionModel().getSelectedItem()),
                 areaContent.getText());
         try {
@@ -57,4 +60,7 @@ public class CreateEventController {
         }
         return CardsEntitiesController.GREEN.toString();
     }
-}
+
+
+    }
+
