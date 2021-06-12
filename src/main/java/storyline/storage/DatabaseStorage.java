@@ -57,7 +57,7 @@ public class DatabaseStorage implements StorageAdapter {
     }
 
     @Override
-    public boolean deleteEventCard(EventCard eventCard) {
+    public boolean deleteEventCard(String ID) {
         return false;
     }
 

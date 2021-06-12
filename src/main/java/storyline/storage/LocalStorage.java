@@ -52,8 +52,8 @@ public class LocalStorage implements StorageAdapter {
 
 
     @Override
-    public boolean deleteEventCard(EventCard eventCard) {
-        return false;
+    public boolean deleteEventCard(String ID) {
+        return deleteFile("Eventcards", ID);
     }
 
     @Override

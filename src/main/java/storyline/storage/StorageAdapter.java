@@ -9,7 +9,7 @@ public interface StorageAdapter {
 
     boolean saveEventCard(EventCard eventCard);
 
-    boolean deleteEventCard(EventCard eventCard);
+    boolean deleteEventCard(String ID);
 
 
 
