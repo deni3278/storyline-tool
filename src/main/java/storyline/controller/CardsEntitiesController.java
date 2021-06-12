@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import storyline.model.EventCard;
+import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
 import java.io.IOException;
@@ -55,8 +56,15 @@ public class CardsEntitiesController {
         this.vLayout.getChildren().remove(eventCard);
     }
 
-    private void saveCards(StorageAdapter storageAdapter) {
+    public void saveCurrentCards(StorageAdapter storageAdapter) {
         eventCards.forEach(storageAdapter::saveEventCard);
+    }
+
+    public void saveCard(StorageAdapter storageAdapter, EventCard eventCard) {
+        storageAdapter.saveEventCard(eventCard);
+    }
+    public void deleteCard(StorageAdapter storageAdapter, EventCard eventCard) {
+        storageAdapter.deleteEventCard(eventCard.getIdentifier().toString());
     }
 
     private ArrayList<EventCard> getEventCards(StorageAdapter storageAdapter) {
@@ -76,7 +84,10 @@ public class CardsEntitiesController {
             System.out.println("contextmenu");
             ContextMenu contextMenu = new ContextMenu();
             MenuItem menuItem = new MenuItem("delete");
-            menuItem.setOnAction(event1 -> removeEventCard(eventCard));
+            menuItem.setOnAction(event1 -> {
+                removeEventCard(eventCard);
+                deleteCard(LocalStorage.getInstance(),eventCardParam);
+            });
             contextMenu.getItems().add(menuItem);
             contextMenu.show(vLayout, event.getScreenX(), event.getScreenY());
         });

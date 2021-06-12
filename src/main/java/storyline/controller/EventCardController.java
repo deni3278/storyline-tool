@@ -19,6 +19,7 @@ public class EventCardController {
         Platform.runLater(()->{
             this.title.setText(title);
             this.description.setText(description);
+            this.description.setWrapText(true);
             this.vLayout.setBackground(new Background(new BackgroundFill(color, null, null)));
         });
 

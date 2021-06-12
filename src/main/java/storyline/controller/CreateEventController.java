@@ -5,21 +5,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 import storyline.model.EventCard;
+import storyline.storage.LocalStorage;
 
 import java.io.IOException;
 
 public class CreateEventController {
     @FXML
-    Button btnSave, btnCancel;
+    Button btnAccept;
 
-    public Button getBtnSave() {
-        return btnSave;
-    }
-
-    public Button getBtnCancel(){
-        return btnCancel;
+    public Button getBtnAccept() {
+        return btnAccept;
     }
 
     @FXML
@@ -34,14 +30,18 @@ public class CreateEventController {
     @FXML
     private void initialize() {
         choiceColor.getItems().addAll("Red", "Blue", "Green");
+
     }
 
     @FXML
-    public void handleSave() {
+    public void handleAccept() {
         EventCard eventCard = new EventCard(fldTitle.getText(), getColor(choiceColor.getSelectionModel().getSelectedItem()),
                 areaContent.getText());
         try {
-            Context.getInstance().projectPageController.cardsEntitiesController.createCard(eventCard);
+            CardsEntitiesController cardsEntitiesController = Context.getInstance().projectPageController.cardsEntitiesController;
+            cardsEntitiesController.createCard(eventCard);
+            cardsEntitiesController.saveCard(LocalStorage.getInstance(), eventCard);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,13 +54,10 @@ public class CreateEventController {
             case "Red":
                 return CardsEntitiesController.RED.toString();
             case "Blue":
-                return CardsEntitiesController.GREEN.toString();
-            case "Green":
                 return CardsEntitiesController.BLUE.toString();
+
+            default:
+                return CardsEntitiesController.GREEN.toString();
         }
-        return CardsEntitiesController.GREEN.toString();
     }
-
-
-    }
-
+}
