@@ -8,7 +8,7 @@
    <children>
       <VBox fx:id="vLayout" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="title" text="Title" textFill="#2ccc70">
+            <Label fx:id="title" maxWidth="200.0" text="Title" textFill="#2ccc70">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
