@@ -46,18 +46,21 @@ public class WelcomeController {
         fictionIconButton.setOnMouseClicked(e -> {
             System.out.println("Fiction");
         });
+        fictionIconButton.setDisable(true);
         fictionIconButtonController.setImage(new Image(getClass().getResource("../images/fiction.png").toExternalForm()));
         fictionIconButtonController.setText("Fiction");
 
         historicalIconButton.setOnMouseClicked(e -> {
             System.out.println("Historical");
         });
+        historicalIconButton.setDisable(true);
         historicalIconButtonController.setImage(new Image(getClass().getResource("../images/historical.png").toExternalForm()));
         historicalIconButtonController.setText("Historical");
 
         screenplayIconButton.setOnMouseClicked(e -> {
             System.out.println("Screenplay");
         });
+        screenplayIconButton.setDisable(true);
         screenplayIconButtonController.setImage(new Image(getClass().getResource("../images/screenplay.png").toExternalForm()));
         screenplayIconButtonController.setText("Screenplay");
     }
