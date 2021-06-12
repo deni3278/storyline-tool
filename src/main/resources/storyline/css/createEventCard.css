@@ -1,0 +1,43 @@
+VBox{
+    -fx-background-color: #31394c;
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.8), 50, 0, 0, 0);
+}
+.Save{
+    -fx-background-color: #86fc92;
+}
+.Cancel{
+    -fx-background-color: #fc8686;
+}
+.text-area {
+    -fx-background-color: #31394c;
+    -fx-border-width: 3;
+    -fx-border-radius: 5;
+    -fx-border-color:  #3D465E;
+    -fx-text-fill: #d9dbdf;
+}
+.text-area .content {
+    -fx-background-color: #31394c;
+
+}
+.text-field{
+    -fx-background-color: #31394c;
+    -fx-border-width: 3;
+    -fx-border-radius: 5;
+    -fx-border-color:  #3D465E;
+    -fx-text-fill: #d9dbdf;
+}
+.choice-box{
+    -fx-background-color: #31394c;
+    -fx-border-width: 3;
+    -fx-border-radius: 5;
+    -fx-border-color:  #3D465E;
+    -fx-font-size: 18;
+}
+.choice-box .context-menu{
+    -fx-font-size: 18;
+    -fx-background-color: #31394c;
+    -fx-min-width: 302;
+}
+.choice-box .label{
+    -fx-text-fill: #d9dbdf;
+}
