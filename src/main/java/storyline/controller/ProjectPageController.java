@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
 import storyline.model.TimelineEventCard;
 import storyline.storage.DatabaseStorage;
 import storyline.storage.LocalStorage;
@@ -68,7 +69,16 @@ public class ProjectPageController {
         actionPaneController.getExportTimelineButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                exportTimelineToFile();
+                FileChooser saveFile = new FileChooser();
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                saveFile.getExtensionFilters().add(extFilter);
+
+                File saveTxt = saveFile.showSaveDialog(actionPaneController.getExportTimelineButton().getScene().getWindow());
+                try {
+                    exportTimelineToFile(saveTxt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -105,58 +115,52 @@ public class ProjectPageController {
      * Exports timeline to a txt file.
      */
 
-    private void exportTimelineToFile (){
+    private void exportTimelineToFile (File saveTxt) throws IOException {
 
-        try {
-            File timelineExport = new File(timelineController.getTimeline().getName()+".txt");
-            if (timelineExport.createNewFile()) {
+            if (saveTxt !=null) {
                 ArrayList<TimelineEventCard> expEventCards = new ArrayList<>(timelineController.getTimelineEventCards());
                 expEventCards.sort(Comparator.comparing(timelineEventCard -> timelineEventCard.getX()));
                 System.out.println(expEventCards);
-                exportFileTextContent(expEventCards, timelineExport);
+                exportFileTextContent(expEventCards, saveTxt);
 
-                System.out.println("File created: "+ timelineExport.getName());
+                System.out.println("File created: "+ saveTxt.getName());
             }
             else {
                 System.out.println("File already exists");
             }
-        } catch (IOException e){
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
     }
 
     /**
      * Iterates through event card array and formats the text based on their placement
      *
      * @param expEventCards cloned array of timeline event cards.
-     * @param timelineExport file variable for the exported timeline.
+     * @param saveTxt file variable for the exported timeline.
      * @throws IOException
      */
 
-    private void exportFileTextContent(ArrayList<TimelineEventCard> expEventCards, File timelineExport) throws IOException {
-        FileOutputStream fos = new FileOutputStream(timelineExport);
-        BufferedWriter writeEventCard = new BufferedWriter(new OutputStreamWriter(fos));
-        int smallestY = -1;
+    private void exportFileTextContent(ArrayList<TimelineEventCard> expEventCards, File saveTxt) throws IOException {
+        try (PrintWriter printWriter = new PrintWriter(saveTxt)) {
+            int smallestY = -1;
+            int asciiValueOfSpace = 32;
 
-        for (int i =0;i<expEventCards.size();i++){
-            if(smallestY<expEventCards.get(i).getY()){
-              smallestY=expEventCards.get(i).getY();
+            for (int i = 0; i < expEventCards.size(); i++) {
+                if (smallestY < expEventCards.get(i).getY()) {
+                    smallestY = expEventCards.get(i).getY();
+                } else
+                    continue;
             }
-            else
-                continue;
-        }
-        for (int i=0;i<expEventCards.size();i++){
+            for (int i = 0; i < expEventCards.size(); i++) {
 
-            if(expEventCards.get(i).getY()>smallestY) {
-                writeEventCard.write("       ");
-                writeEventCard.write(expEventCards.get(i).getTitle()+"\n       "+expEventCards.get(i).getEventContent());
-            }else{
-                writeEventCard.write(expEventCards.get(i).getTitle()+"\n"+expEventCards.get(i).getEventContent());
+                if (expEventCards.get(i).getY() > smallestY) {
+                    printWriter.format("%x,%s",asciiValueOfSpace,expEventCards.get(i).getTitle() + "\n" + expEventCards.get(i).getEventContent() + "\n");
+
+                } else {
+                    printWriter.write(expEventCards.get(i).getTitle() + "\n" + expEventCards.get(i).getEventContent() + "\n");
+                    }
                 }
-            writeEventCard.newLine();
-            }
-        writeEventCard.close();
+        }
+        catch (Exception e){
+           e.printStackTrace();
+        }
     }
 }
