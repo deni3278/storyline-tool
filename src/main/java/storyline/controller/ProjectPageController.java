@@ -152,10 +152,10 @@ public class ProjectPageController {
             for (int i = 0; i < expEventCards.size(); i++) {
 
                 if (expEventCards.get(i).getY() > smallestY) {
-                    printWriter.format("%x,%s",asciiValueOfSpace,expEventCards.get(i).getTitle() + "\n" + expEventCards.get(i).getEventContent() + "\n");
+                    printWriter.format("%x,%s",asciiValueOfSpace,expEventCards.get(i).getTitle() + "\n" + expEventCards.get(i).getEventContent() + "\n\n");
 
                 } else {
-                    printWriter.write(expEventCards.get(i).getTitle() + "\n" + expEventCards.get(i).getEventContent() + "\n");
+                    printWriter.write(expEventCards.get(i).getTitle() + "\n" + expEventCards.get(i).getEventContent() + "\n\n");
                     }
                 }
         }
