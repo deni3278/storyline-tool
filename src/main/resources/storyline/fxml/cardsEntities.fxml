@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox minWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="storyline.controller.CardsEntitiesController">
+<HBox minWidth="300.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="storyline.controller.CardsEntitiesController">
    <children>
       <VBox style="-fx-background-color: #31394c;" HBox.hgrow="ALWAYS">
          <children>
@@ -59,6 +60,11 @@
                               <Insets />
                            </opaqueInsets>
                         </VBox>
+                        <Label fx:id="lblCounter" text="0" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </Label>
                      </children>
                      <opaqueInsets>
                         <Insets />

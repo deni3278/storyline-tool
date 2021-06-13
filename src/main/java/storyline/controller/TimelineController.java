@@ -127,8 +127,6 @@ public class TimelineController {
      * @param timelineName the timeline name
      */
     public void startFromBlank(String timelineName) {
-
-
         //initializes variables
         timelineLabel.setText(timelineName);
 
@@ -181,13 +179,12 @@ public class TimelineController {
         //wrap the model timeline eventcard with an interactable hbox
         HBox interactableEventCard = createTimelineEventCard(timelineEventCard);
 
-        //adds the hbox to the grid with the coordinates of the eventcard
+        //adds the hbox to the grid with the coordinates of the event card
         timelineGridPane.add(interactableEventCard, timelineEventCard.getX(), timelineEventCard.getY());
 
         //if the list of timeline eventcards doesn't contain the newly added eventcard, add it to the list.
         if (!timelineEventCards.contains(timelineEventCard)) timelineEventCards.add(timelineEventCard);
     }
-
 
     private HBox createTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
         FXMLLoader card = new FXMLLoader(TimelineController.class.getResource("../fxml/eventCard.fxml"));
@@ -227,7 +224,7 @@ public class TimelineController {
 
     }
 
-    //gets a node from the gridpane from a specific coordinate
+    //gets a node from the grid pane from a specific coordinate
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
 
         for (Node node : gridPane.getChildren()) {
