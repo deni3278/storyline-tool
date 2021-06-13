@@ -29,19 +29,7 @@ public class WelcomeController {
         StorageAdapter storage = LocalStorage.getInstance();
 
         blankIconButton.setOnMouseClicked(e -> {
-            TextInputDialog inputDialog = new TextInputDialog();
-            inputDialog.setHeaderText("Input timeline name");
-            inputDialog.setTitle("Timeline");
-            Optional<String> input = inputDialog.showAndWait();
-            if (input.isPresent()) {
-                String name = input.get();
-                if (name.length() == 0) name = "Timeline";
-                Context instance = Context.getInstance();
-                instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(storage);
-                instance.getProjectPageController().getTimelineController().startFromBlank(name);
-                instance.activate("projectPage");
-                System.out.println("Blank");
-            }
+            startFromBlankDialog(storage);
         });
         blankIconButtonController.setImage(new Image(getClass().getResource("../images/blank.png").toExternalForm()));
         blankIconButtonController.setText("Blank");
@@ -66,5 +54,21 @@ public class WelcomeController {
         screenplayIconButton.setDisable(true);
         screenplayIconButtonController.setImage(new Image(getClass().getResource("../images/screenplay.png").toExternalForm()));
         screenplayIconButtonController.setText("Screenplay");
+    }
+
+    private void startFromBlankDialog(StorageAdapter storage) {
+        TextInputDialog inputDialog = new TextInputDialog();
+        inputDialog.setHeaderText("Input timeline name");
+        inputDialog.setTitle("Timeline");
+        Optional<String> input = inputDialog.showAndWait();
+        if (input.isPresent()) {
+            String name = input.get();
+            if (name.length() == 0) name = "Timeline";
+            Context instance = Context.getInstance();
+            instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(storage);
+            instance.getProjectPageController().getTimelineController().startFromBlank(name);
+            instance.activate("projectPage");
+            System.out.println("Blank");
+        }
     }
 }

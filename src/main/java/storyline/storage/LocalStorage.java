@@ -115,7 +115,7 @@ public class LocalStorage implements StorageAdapter {
      * @param object       the object needed to be save to a file
      * @return true if successfull write
      */
-    public <T extends Identifiable & Serializable> boolean writeObjectToFile(String subDirectory, T object) {
+    private  <T extends Identifiable & Serializable> boolean writeObjectToFile(String subDirectory, T object) {
         String directoryPath = getFilepath(subDirectory);
         createDirectoryIfNotExists(directoryPath);
         String filepath = getFilepath(object, subDirectory);
@@ -137,7 +137,7 @@ public class LocalStorage implements StorageAdapter {
      * @param subDirectories the sub directories
      * @return the filepath
      */
-    public String getFilepath(String... subDirectories) {
+    private String getFilepath(String... subDirectories) {
         StringBuilder filepathBuilder = new StringBuilder(this.appDataPath + File.separator);
         Arrays.stream(subDirectories).forEach(path -> filepathBuilder.append(path + File.separator));
         return filepathBuilder.toString();
@@ -151,7 +151,7 @@ public class LocalStorage implements StorageAdapter {
      * @param subDirectories the sub directories
      * @return the filepath
      */
-    public <T extends Identifiable & Serializable> String getFilepath(T object, String... subDirectories) {
+    private  <T extends Identifiable & Serializable> String getFilepath(T object, String... subDirectories) {
         StringBuilder filepathBuilder = new StringBuilder(getFilepath(subDirectories));
         filepathBuilder.append(object.getIdentifier() + FILE_FORMAT);
         return filepathBuilder.toString();
@@ -165,11 +165,12 @@ public class LocalStorage implements StorageAdapter {
      * @param subDirectory the sub directory
      * @return the array list of all objects from the specified directory
      */
-    public <T extends Identifiable & Serializable> ArrayList<T> readAllObjectsFromDirectory(String subDirectory) {
+    private  <T extends Identifiable & Serializable> ArrayList<T> readAllObjectsFromDirectory(String subDirectory) {
         ArrayList<T> objects = new ArrayList<>();
 
         String directoryPath = getFilepath(subDirectory);
         File directory = new File(directoryPath);
+        if (!directory.exists()) return objects;
         //get all file names of the directoryPath
         String[] files = directory.list();
 
