@@ -8,6 +8,7 @@ import java.util.UUID;
 public class Timeline extends Identifiable implements Serializable {
     private String name;
     private ArrayList<TimelineEventCard> eventCards;
+    private static final long serialVersionUID = 355062240;
 
 
     public Timeline(ArrayList<TimelineEventCard> eventCards, String name) {

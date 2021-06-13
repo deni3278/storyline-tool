@@ -12,6 +12,7 @@ import storyline.storage.LocalStorage;
 import storyline.storage.StorageAdapter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoadController {
     @FXML
@@ -42,7 +43,9 @@ public class LoadController {
             ioException.printStackTrace();
         }
         TimelineListViewController timelineListViewController = loader.getController();
-        timelineListViewController.setTimelines(storageAdapter.getAllTimelines());
+        ArrayList<Timeline> allTimelines = storageAdapter.getAllTimelines();
+
+        if (allTimelines != null) timelineListViewController.setTimelines(allTimelines);
 
         Popup popup = new Popup();
         popup.getContent().add(root);

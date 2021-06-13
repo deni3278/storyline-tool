@@ -10,6 +10,7 @@ import java.util.UUID;
  */
 public abstract class Identifiable implements Serializable {
     private UUID ID;
+    private static final long serialVersionUID = 355062239;
 
     public void setID(UUID ID) {
         this.ID = ID;
