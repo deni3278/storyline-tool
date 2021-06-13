@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -35,11 +36,35 @@ public class CardsEntitiesController {
     private VBox vLayout;
 
     @FXML
+    private TextField fldSearch;
+
+    @FXML
     private Label lblCounter;
 
     @FXML
     private void initialize() {
         lblCounter.textProperty().bind(Bindings.size(eventCards).asString());
+    }
+
+    public void search(){
+
+        //Iterate through the vbox vLayout and check if the text on the eventCard contains any of the text in the searchbar textfield
+        for (int i = 0; i < vLayout.getChildren().size(); i++) {
+            if (((EventCard)vLayout.getChildren().get(i).getUserData()).getTitle().toLowerCase().contains(fldSearch.getText().toLowerCase())){
+                vLayout.getChildren().get(i).setVisible(true);
+                vLayout.getChildren().get(i).setManaged(true);
+            }
+            else if (((EventCard)vLayout.getChildren().get(i).getUserData()).getEventContent().toLowerCase().contains(fldSearch.getText().toLowerCase())){
+                vLayout.getChildren().get(i).setVisible(true);
+                vLayout.getChildren().get(i).setManaged(true);
+            }
+            else{
+                vLayout.getChildren().get(i).setVisible(false);
+                vLayout.getChildren().get(i).setManaged(false);
+            }
+
+        }
+
     }
 
     public void loadCardsFromStorage(StorageAdapter storageAdapter) {
