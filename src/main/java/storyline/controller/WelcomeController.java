@@ -9,6 +9,9 @@ import storyline.storage.StorageAdapter;
 
 import java.util.Optional;
 
+/**
+ * The Welcome controller contains the logic for the buttons present on the welcome page.
+ */
 public class WelcomeController {
     @FXML
     private VBox blankIconButton, fictionIconButton, historicalIconButton, screenplayIconButton;

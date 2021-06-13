@@ -10,6 +10,9 @@ import storyline.storage.LocalStorage;
 
 import java.io.IOException;
 
+/**
+ * The Create event controller contains the logic for the popup that is shown when creating a new event card.
+ */
 public class CreateEventController {
     @FXML
     Button btnSave, btnCancel;

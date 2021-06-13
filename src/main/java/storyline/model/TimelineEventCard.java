@@ -3,6 +3,10 @@ package storyline.model;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * The TimelineEventCard model class extends the EventCard class and it's purpose is to be used on the timeline
+ * as it contains the coordinate that the card is placed on.
+ */
 public class TimelineEventCard extends EventCard {
 
     private int x;

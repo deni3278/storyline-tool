@@ -43,6 +43,11 @@ public class DatabaseStorage implements StorageAdapter {
         }
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static DatabaseStorage getInstance() {
         if (instance == null) {
             instance = new DatabaseStorage();
@@ -91,14 +96,14 @@ public class DatabaseStorage implements StorageAdapter {
     }
 
     @Override
-    public Timeline getTimeline(String timelineID) {
+    public Timeline getTimeline(String ID) {
 
         Timeline timeline;
         PreparedStatement preparedStatement;
         ResultSet resultSet = null;
         try {
             preparedStatement = connection.prepareStatement("SELECT fld_TimelineName FROM tbl_Timeline WHERE fld_TimelineID = ?");
-            preparedStatement.setString(1, timelineID);
+            preparedStatement.setString(1, ID);
             preparedStatement.execute();
             resultSet = preparedStatement.getResultSet();
         } catch (SQLException throwables) {
@@ -114,12 +119,18 @@ public class DatabaseStorage implements StorageAdapter {
         }
 
 
-        ArrayList<TimelineEventCard> timelineEventCards = getTimelineEventCards(timelineID);
-        timeline = new Timeline(timelineEventCards, timelineName, UUID.fromString(timelineID));
+        ArrayList<TimelineEventCard> timelineEventCards = getTimelineEventCards(ID);
+        timeline = new Timeline(timelineEventCards, timelineName, UUID.fromString(ID));
         return timeline;
 
     }
 
+    /**
+     * Gets timeline event cards.
+     *
+     * @param timelineID the timeline id
+     * @return the timeline event cards
+     */
     public ArrayList<TimelineEventCard> getTimelineEventCards(String timelineID) {
         ArrayList<TimelineEventCard> timelineEventCards = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -154,6 +165,12 @@ public class DatabaseStorage implements StorageAdapter {
         return timelineEventCards;
     }
 
+    /**
+     * Gets timeline event card's entities.
+     *
+     * @param timelineEventCardID the timeline eventcard ID
+     * @return the timeline event card entities
+     */
     private ArrayList<Entity> getTimelineEventcardEntities(String timelineEventCardID) {
 
         ArrayList<Entity> entities = new ArrayList<>();
@@ -262,6 +279,12 @@ public class DatabaseStorage implements StorageAdapter {
 
     }
 
+    /**
+     * Save timeline event card entities.
+     * TODO: implement the method
+     *
+     * @param timelineEventCards the timeline event cards
+     */
     public void saveTimelineEventCardEntities(ArrayList<TimelineEventCard> timelineEventCards) {
 
         deleteTimelineEventCardEntities(timelineEventCards);
@@ -304,7 +327,7 @@ public class DatabaseStorage implements StorageAdapter {
     }
 
     @Override
-    public boolean deleteTimeLine(String name) {
+    public boolean deleteTimeLine(String ID) {
         return false;
     }
 

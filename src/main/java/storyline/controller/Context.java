@@ -32,11 +32,7 @@ public class Context {
         return instance;
     }
 
-    /**
-     * Gets project page controller.
-     *
-     * @return the project page controller
-     */
+
     public ProjectPageController getProjectPageController() {
         return projectPageController;
     }
@@ -50,20 +46,12 @@ public class Context {
         this.projectPageController = projectPageController;
     }
 
-    /**
-     * Gets welcome controller.
-     *
-     * @return the welcome controller
-     */
+
     public WelcomeController getWelcomeController() {
         return welcomeController;
     }
 
-    /**
-     * Sets welcome controller.
-     *
-     * @param welcomeController the welcome controller
-     */
+
     public void setWelcomeController(WelcomeController welcomeController) {
         this.welcomeController = welcomeController;
     }
@@ -78,7 +66,7 @@ public class Context {
     }
 
     /**
-     * Add screen.
+     * Add screen to hashmap of screens.
      *
      * @param name the name of the page
      * @param pane the pane
@@ -88,7 +76,7 @@ public class Context {
     }
 
     /**
-     * Remove screen.
+     * Remove screen from hashmap of screens.
      *
      * @param name the name of the page
      */

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 
 /**
- * The Timeline controller.
+ * The Timeline controller contains the logic of the gridpane(timeline) shown on the project page.
  */
 public class TimelineController {
 
@@ -108,6 +108,8 @@ public class TimelineController {
     public ArrayList<TimelineEventCard> getTimelineEventCards() {
         return this.timelineEventCards;
     }
+
+
 
     private boolean checkOverlap(int columnIndex, int rowIndex) {
         boolean overlap = false;

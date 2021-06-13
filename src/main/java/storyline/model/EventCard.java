@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * The model entity EventCard contains the information of a user's eventcard upon being dragged to the timeline,
+ * the eventcard gets converted into the subclass TimelineEventCard.
+ */
 public class EventCard extends Identifiable implements Serializable {
     private String title;
     private String colorString;

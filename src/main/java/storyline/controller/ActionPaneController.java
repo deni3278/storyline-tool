@@ -9,6 +9,10 @@ import javafx.stage.Popup;
 import java.io.IOException;
 
 
+/**
+ * The Action pane controller contains the menu bar at the top of the project page. contains methods for
+ * getting the buttons so they can be accessed from other controllers.
+ */
 public class ActionPaneController {
 
     @FXML

@@ -14,6 +14,9 @@ import storyline.storage.StorageAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The Load controller contains the logic for the loading buttons on the bottom part of the welcome page.
+ */
 public class LoadController {
     @FXML
     private VBox databaseIconButton, localIconButton;

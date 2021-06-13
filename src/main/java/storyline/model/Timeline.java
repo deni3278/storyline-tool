@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
+
+/**
+ * The Timeline model class contains the name of the Timeline plus the current timelineeventcards in it.
+ */
 public class Timeline extends Identifiable implements Serializable {
     private String name;
     private ArrayList<TimelineEventCard> eventCards;

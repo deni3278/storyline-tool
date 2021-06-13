@@ -27,6 +27,11 @@ public class LocalStorage implements StorageAdapter {
         this.appDataPath = appDataPath;
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static LocalStorage getInstance() {
         if (instance == null) {
             instance = new LocalStorage();
@@ -34,7 +39,12 @@ public class LocalStorage implements StorageAdapter {
         return instance;
     }
 
-    private void createDirectoryIfNotExists(String directoryPath) {
+    /**
+     * Create directory if not exists.
+     *
+     * @param directoryPath the directory path
+     */
+    public static void createDirectoryIfNotExists(String directoryPath) {
         if (Files.notExists(Paths.get(directoryPath))) {
             try {
                 Files.createDirectory(Paths.get(directoryPath));
@@ -81,6 +91,13 @@ public class LocalStorage implements StorageAdapter {
         return deleteFile("Timelines", ID);
     }
 
+    /**
+     * Deletes file specified.
+     *
+     * @param subDirectory the sub directory
+     * @param identifier   the identifier
+     * @return true if successfull
+     */
     public boolean deleteFile(String subDirectory, String identifier) {
         String filepath = getFilepath(subDirectory) + File.separator + identifier + FILE_FORMAT;
         File timelineFile = new File(filepath);
@@ -90,6 +107,14 @@ public class LocalStorage implements StorageAdapter {
         return false;
     }
 
+    /**
+     * Write object to local file.
+     *
+     * @param <T>          the type parameter
+     * @param subDirectory the sub directory
+     * @param object       the object needed to be save to a file
+     * @return true if successfull write
+     */
     public <T extends Identifiable & Serializable> boolean writeObjectToFile(String subDirectory, T object) {
         String directoryPath = getFilepath(subDirectory);
         createDirectoryIfNotExists(directoryPath);
@@ -106,12 +131,26 @@ public class LocalStorage implements StorageAdapter {
         return true;
     }
 
+    /**
+     * Gets filepath.
+     *
+     * @param subDirectories the sub directories
+     * @return the filepath
+     */
     public String getFilepath(String... subDirectories) {
         StringBuilder filepathBuilder = new StringBuilder(this.appDataPath + File.separator);
         Arrays.stream(subDirectories).forEach(path -> filepathBuilder.append(path + File.separator));
         return filepathBuilder.toString();
     }
 
+    /**
+     * Gets filepath.
+     *
+     * @param <T>            the type parameter
+     * @param object         the object
+     * @param subDirectories the sub directories
+     * @return the filepath
+     */
     public <T extends Identifiable & Serializable> String getFilepath(T object, String... subDirectories) {
         StringBuilder filepathBuilder = new StringBuilder(getFilepath(subDirectories));
         filepathBuilder.append(object.getIdentifier() + FILE_FORMAT);
@@ -119,6 +158,13 @@ public class LocalStorage implements StorageAdapter {
     }
 
 
+    /**
+     * Read all objects from specified directory.
+     *
+     * @param <T>          the type parameter
+     * @param subDirectory the sub directory
+     * @return the array list of all objects from the specified directory
+     */
     public <T extends Identifiable & Serializable> ArrayList<T> readAllObjectsFromDirectory(String subDirectory) {
         ArrayList<T> objects = new ArrayList<>();
 
@@ -137,10 +183,24 @@ public class LocalStorage implements StorageAdapter {
 
     }
 
+    /**
+     * Gets file name without extension.
+     *
+     * @param file the path of the file
+     * @return the file name without extension
+     */
     public static String getFileNameWithoutExtension(String file) {
         return file.replaceAll("^.*?(([^/\\\\\\.]+))\\.[^\\.]+$", "$1");
     }
 
+    /**
+     * Read object from file t.
+     *
+     * @param <T>        the type parameter, must extend identifiable and implement serializable
+     * @param directory  the directory to be read from
+     * @param identifier the identifier of the file to be read
+     * @return the object read from the file
+     */
     public <T extends Identifiable & Serializable> T readObjectFromFile(String directory, String identifier) {
 
         String filepath = this.appDataPath + File.separator + directory + File.separator + identifier + FILE_FORMAT;

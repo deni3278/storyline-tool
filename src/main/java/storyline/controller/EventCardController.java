@@ -8,6 +8,10 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
+/**
+ * The Event card controller is the controller
+ * for each individual eventcard and is instantiated each time a eventcard is made.
+ */
 public class EventCardController {
     //Below properties are initially not in use, but are used when this controller is assigned to a new eventCard fxml (pls no delet)
     @FXML

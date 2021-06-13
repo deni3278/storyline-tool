@@ -24,10 +24,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+/**
+ * The Cards entities controller contains the logic for the list of event cards
+ * shown on the right side of the project page.
+ */
 public class CardsEntitiesController {
-    //Preset colors
+
+//Preset colors
     public static final Color RED = Color.rgb(254, 0, 78, 0.2);
+
     public static final Color GREEN = Color.rgb(44, 204, 112, 0.2);
+
     public static final Color BLUE = Color.rgb(0, 193, 254, 0.2);
 
     private final ObservableList<EventCard> eventCards = FXCollections.observableArrayList();
@@ -67,6 +74,11 @@ public class CardsEntitiesController {
 
     }
 
+    /**
+     * Load cards from storage.
+     *
+     * @param storageAdapter the storage adapter
+     */
     public void loadCardsFromStorage(StorageAdapter storageAdapter) {
 
         vLayout.getChildren().clear();
@@ -82,18 +94,41 @@ public class CardsEntitiesController {
         });
     }
 
+    /**
+     * Remove event card from the list.
+     *
+     * @param eventCard the event card
+     */
     public void removeEventCard(HBox eventCard) {
         this.eventCards.remove(eventCard.getUserData());
         this.vLayout.getChildren().remove(eventCard);
     }
 
+    /**
+     * Save current cards.
+     *
+     * @param storageAdapter the storage adapter
+     */
     public void saveCurrentCards(StorageAdapter storageAdapter) {
         eventCards.forEach(storageAdapter::saveEventCard);
     }
 
+    /**
+     * Save card to storage.
+     *
+     * @param storageAdapter the storage adapter
+     * @param eventCard      the event card
+     */
     public void saveCard(StorageAdapter storageAdapter, EventCard eventCard) {
         storageAdapter.saveEventCard(eventCard);
     }
+
+    /**
+     * Delete card from storage.
+     *
+     * @param storageAdapter the storage adapter
+     * @param eventCard      the event card
+     */
     public void deleteCard(StorageAdapter storageAdapter, EventCard eventCard) {
         storageAdapter.deleteEventCard(eventCard.getIdentifier().toString());
     }
@@ -102,6 +137,12 @@ public class CardsEntitiesController {
         return storageAdapter.getAllEventCards();
     }
 
+    /**
+     * Create card and add it to the list.
+     *
+     * @param eventCardParam the event card param
+     * @throws IOException the io exception
+     */
     public void createCard(EventCard eventCardParam) throws IOException {
         //Load the fxml of the event card
         FXMLLoader card = new FXMLLoader(getClass().getResource("../fxml/eventCard.fxml"));

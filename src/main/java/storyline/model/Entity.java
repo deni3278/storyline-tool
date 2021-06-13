@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+
+/**
+ * The entity model class represents an entity that can be refferred to upon creating an eventcard.
+ */
 public class Entity extends Identifiable implements Serializable {
     private String initials;
     private String name;
