@@ -16,9 +16,11 @@ public abstract class Identifiable implements Serializable {
         this.ID = ID;
 
     }
+
     public UUID getIdentifier() {
         return ID;
     }
+
     public void generateID() {
         this.ID = UUID.randomUUID();
     }

@@ -1,8 +1,12 @@
 package storyline.controller;
 
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -25,15 +29,17 @@ public class CardsEntitiesController {
     public static final Color GREEN = Color.rgb(44, 204, 112, 0.2);
     public static final Color BLUE = Color.rgb(0, 193, 254, 0.2);
 
-    private ArrayList<EventCard> eventCards = new ArrayList<>();
+    private final ObservableList<EventCard> eventCards = FXCollections.observableArrayList();
 
     @FXML
-    VBox vLayout;
+    private VBox vLayout;
 
     @FXML
-    private void initialize() throws IOException {
+    private Label lblCounter;
 
-
+    @FXML
+    private void initialize() {
+        lblCounter.textProperty().bind(Bindings.size(eventCards).asString());
     }
 
     public void loadCardsFromStorage(StorageAdapter storageAdapter) {

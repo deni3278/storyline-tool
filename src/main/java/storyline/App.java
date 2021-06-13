@@ -34,9 +34,8 @@ public class App extends Application {
         stage.show();
         stage.setMaximized(true);
         context.setMainScene(main);
-
-
     }
+
     public static void main(String[] args) {
         launch(args);
     }
