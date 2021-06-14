@@ -49,8 +49,10 @@ public class TimelineController {
 
         this.timelineEventCards = new ArrayList<>();
 
+        //checks if the drag event source is an eventcard
         timelineGridPane.setOnDragOver(event -> {
-            if (event.getGestureSource() != timelineGridPane) {
+            Node source = (Node) event.getGestureSource();
+            if (source.getUserData() instanceof EventCard){
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             event.consume();
@@ -58,47 +60,46 @@ public class TimelineController {
 
         timelineGridPane.setOnDragDropped(event -> {
 
-            HBox source = (HBox) event.getGestureSource();
-
-            System.out.println("source.getUserData() = " + source.getUserData());
-            double mouseX = event.getX();
-            double mouseY = event.getY();
-
+            //gets the row and column index according to the event's mouse coordinate
             Bounds cellBounds = timelineGridPane.impl_getCellBounds(0, 0);
+            int columnIndex = (int) Math.floor(event.getX() / cellBounds.getWidth());
+            int rowIndex = (int) Math.floor(event.getY() / cellBounds.getHeight());
 
-            int columnIndex = (int) Math.floor(mouseX / cellBounds.getWidth());
-            int rowIndex = (int) Math.floor(mouseY / cellBounds.getHeight());
-            System.out.println("rowIndex = " + rowIndex);
-            System.out.println("columnIndex = " + columnIndex);
+            //checks if the newly dropped eventcard overlaps the current timeline event cards
+            if (checkOverlap(columnIndex, rowIndex)) return;
 
+            //gets the source object of the event, which is an HBox containing an eventcard in its userdata
+            HBox source = (HBox) event.getGestureSource();
             EventCard sourceEventCard = (EventCard) source.getUserData();
 
-            boolean overlap = checkOverlap(columnIndex, rowIndex);
-            if (overlap) return;
-
-            TimelineEventCard timelineEventCard;
+            /*
+            if the source is not an instance of TimelineEventCard it means that it comes from outside the timeline
+            and should be added to the timeline as a new TimelineEventCard. Otherwise the source should be treated
+            as a TimelineEventCard from within the timeline and be moved to the corresponding coordinate
+            */
             if (!(sourceEventCard instanceof TimelineEventCard)) {
-                System.out.println("from eventcard vbox");
-                timelineEventCard = new TimelineEventCard(sourceEventCard.getTitle(),
-                        sourceEventCard.getColorString(), sourceEventCard.getEventContent(), columnIndex, rowIndex);
-                try {
-                    addTimelineEventCard(timelineEventCard);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                source.setVisible(true);
-                source.setManaged(true);
+                addNewTimelineEventCard(columnIndex, rowIndex, sourceEventCard);
             } else {
-                System.out.println("from within gridpane");
-                timelineGridPane.getChildren().remove(source);
-
-                timelineEventCard = (TimelineEventCard) sourceEventCard;
-                timelineEventCard.setX(columnIndex);
-                timelineEventCard.setY(rowIndex);
-                timelineGridPane.add(source, columnIndex, rowIndex);
+                moveTimelineEventCard(source, columnIndex, rowIndex, (TimelineEventCard) sourceEventCard);
             }
             event.consume();
         });
+    }
+
+    private void moveTimelineEventCard(HBox source, int columnIndex, int rowIndex, TimelineEventCard sourceEventCard) {
+        TimelineEventCard timelineEventCard;
+        timelineGridPane.getChildren().remove(source);
+        timelineEventCard = sourceEventCard;
+        timelineEventCard.setX(columnIndex);
+        timelineEventCard.setY(rowIndex);
+        timelineGridPane.add(source, columnIndex, rowIndex);
+    }
+
+    private void addNewTimelineEventCard(int columnIndex, int rowIndex, EventCard sourceEventCard) {
+        TimelineEventCard timelineEventCard;
+        timelineEventCard = new TimelineEventCard(sourceEventCard.getTitle(),
+                sourceEventCard.getColorString(), sourceEventCard.getEventContent(), columnIndex, rowIndex);
+        addTimelineEventCard(timelineEventCard);
     }
 
     public Timeline getTimeline(){
@@ -114,9 +115,7 @@ public class TimelineController {
     private boolean checkOverlap(int columnIndex, int rowIndex) {
         boolean overlap = false;
         for (TimelineEventCard eventCard : this.timelineEventCards) {
-            System.out.println("x =" + eventCard.getX() + " y = " + eventCard.getY());
             if (eventCard.getX() == columnIndex && eventCard.getY() == rowIndex) {
-                System.out.println("overlap!");
                 overlap = true;
             }
         }
@@ -152,18 +151,13 @@ public class TimelineController {
         timeline = storageAdapter.getTimeline(ID);
         timelineLabel.setText(timeline.getName());
         timelineEventCards = timeline.getEventCards();
-        System.out.println("timelineEventCards = " + timelineEventCards);
 
         //clears the current grid nodes.
         timelineGridPane.getChildren().removeIf(node -> node instanceof HBox);
 
         //converts the model timeline eventcards into interactable hboxes and adds them to the gridpane
         timelineEventCards.forEach(timelineEventCard -> {
-            try {
-                addTimelineEventCard(timelineEventCard);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            addTimelineEventCard(timelineEventCard);
         });
     }
 
@@ -176,10 +170,15 @@ public class TimelineController {
         return storageAdapter.saveTimeline(timeline);
     }
 
-    private void addTimelineEventCard(TimelineEventCard timelineEventCard) throws IOException {
+    private void addTimelineEventCard(TimelineEventCard timelineEventCard) {
 
         //wrap the model timeline eventcard with an interactable hbox
-        HBox interactableEventCard = createTimelineEventCard(timelineEventCard);
+        HBox interactableEventCard = null;
+        try {
+            interactableEventCard = createTimelineEventCard(timelineEventCard);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
 
         //adds the hbox to the grid with the coordinates of the event card
         timelineGridPane.add(interactableEventCard, timelineEventCard.getX(), timelineEventCard.getY());

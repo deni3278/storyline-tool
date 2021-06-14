@@ -148,11 +148,11 @@ public class CardsEntitiesController {
         FXMLLoader card = new FXMLLoader(getClass().getResource("../fxml/eventCard.fxml"));
         //Assign a controller to the newly loaded card, and pass the variables for the card
         card.setController(new EventCardController(eventCardParam.getTitle(), eventCardParam.getEventContent(), eventCardParam.getColor()));
+
         HBox eventCard = card.load();
         eventCard.setUserData(eventCardParam);
 
         eventCard.setOnContextMenuRequested(event -> {
-            System.out.println("contextmenu");
             ContextMenu contextMenu = new ContextMenu();
             MenuItem menuItem = new MenuItem("Delete");
             menuItem.setOnAction(event1 -> {
@@ -163,7 +163,6 @@ public class CardsEntitiesController {
             contextMenu.show(eventCard, event.getScreenX(), event.getScreenY());
         });
         eventCard.setOnDragDetected(event -> {
-            System.out.println(eventCard + " drag detected");
             ImageView preview = new ImageView(eventCard.snapshot(null, null));
             Dragboard db = eventCard.startDragAndDrop(TransferMode.ANY);
             db.setDragView(preview.getImage());
