@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * This class is the local impementation of StorageAdapter. stores files under the home folder and then /StorylineTool.
+ * This class is the local implementation of StorageAdapter. stores files under the home folder and then /StorylineTool.
  */
 public class LocalStorage implements StorageAdapter {
 
@@ -195,7 +195,7 @@ public class LocalStorage implements StorageAdapter {
     }
 
     /**
-     * Read object from file t.
+     * Read object from file.
      *
      * @param <T>        the type parameter, must extend identifiable and implement serializable
      * @param directory  the directory to be read from
