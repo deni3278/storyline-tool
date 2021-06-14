@@ -15,6 +15,7 @@ public class Timeline extends Identifiable implements Serializable {
     private static final long serialVersionUID = 355062240;
 
 
+
     public Timeline(ArrayList<TimelineEventCard> eventCards, String name) {
         this.eventCards = eventCards;
         this.name = name;

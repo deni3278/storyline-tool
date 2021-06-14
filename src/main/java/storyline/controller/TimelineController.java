@@ -202,7 +202,7 @@ public class TimelineController {
             MenuItem menuItem = new MenuItem("Delete");
             menuItem.setOnAction(event1 -> removeEventCard(eventCard));
             contextMenu.getItems().add(menuItem);
-            contextMenu.show(timelineGridPane, event.getScreenX(), event.getScreenY());
+            contextMenu.show(eventCard, event.getScreenX(), event.getScreenY());
         });
         eventCard.setOnDragDetected(event -> {
 

@@ -1,11 +1,8 @@
 import javafx.scene.paint.Color;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import storyline.model.EventCard;
 import storyline.storage.LocalStorage;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,6 +31,7 @@ public class LocalStorageTest {
         localStorage.deleteFile("Eventcards", eventCardOut.getIdentifier().toString());
         EventCard eventCardIn = localStorage.readObjectFromFile("Eventcards", eventCardOut.getIdentifier().toString());
         assertNull(eventCardIn);
+
     }
 
     @Test
