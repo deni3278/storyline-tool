@@ -51,13 +51,12 @@ public class ProjectPageController {
             alert.getButtonTypes().setAll(database, local, buttonTypeCancel);
 
             Optional<ButtonType> result = alert.showAndWait();
+            if (!result.isPresent()) return;
             boolean success = false;
             if (result.get() == database) {
                 success = timelineController.saveCurrentTimeline(DatabaseStorage.getInstance());
-                System.out.println("saved in database");
             } else if (result.get() == local) {
                 success = timelineController.saveCurrentTimeline(LocalStorage.getInstance());
-                System.out.println("saved locally");
             }
             if (success) {
                 Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -135,15 +134,14 @@ public class ProjectPageController {
      *
      * @param expEventCards cloned array of timeline event cards.
      * @param saveTxt       file variable for the exported timeline.
-     * @throws IOException
      */
 
-    private void exportFileTextContent(ArrayList<TimelineEventCard> expEventCards, File saveTxt) throws IOException {
+    private void exportFileTextContent(ArrayList<TimelineEventCard> expEventCards, File saveTxt) {
         try (PrintWriter printWriter = new PrintWriter(saveTxt)) {
 
             for (TimelineEventCard expEventCard : expEventCards) {
                 String whiteSpace = getSpaces(expEventCard.getY());
-                printWriter.write(whiteSpace + expEventCard.getTitle() + "\n" + whiteSpace +expEventCard.getEventContent() + "\n\n");
+                printWriter.write(whiteSpace + expEventCard.getTitle() + "\n" + whiteSpace + expEventCard.getEventContent() + "\n\n");
             }
 
         } catch (Exception e) {
@@ -151,11 +149,11 @@ public class ProjectPageController {
         }
     }
 
-    public String getSpaces(int y) {
-        String spaces = "";
+    private String getSpaces(int y) {
+        StringBuilder spaces = new StringBuilder();
         for (int i = 0; i < y; i++) {
-            spaces += "    ";
+            spaces.append("    ");
         }
-        return spaces;
+        return spaces.toString();
     }
 }

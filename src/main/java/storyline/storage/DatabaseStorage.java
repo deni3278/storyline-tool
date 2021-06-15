@@ -18,9 +18,9 @@ import java.util.UUID;
  */
 public class DatabaseStorage implements StorageAdapter {
 
-    private static DatabaseStorage instance;
-
     private Connection connection;
+
+    private static DatabaseStorage instance;
 
     private DatabaseStorage() {
         FileInputStream propertiesFile;
@@ -235,20 +235,18 @@ public class DatabaseStorage implements StorageAdapter {
     @Override
     public boolean saveTimeline(Timeline timeline) {
 
-        CallableStatement preparedStatement = null;
-
-        ResultSet resultSet = null;
+        CallableStatement callableStatement;
         try {
-            preparedStatement = connection.prepareCall("EXEC save_timeline @timelineName = ?, @timelineID = ?, @userID = ?");
-            preparedStatement.setString(1, timeline.getName());
-            preparedStatement.setString(2, timeline.getIdentifier().toString());
-            preparedStatement.setInt(3, 1);
-            preparedStatement.execute();
+            callableStatement = connection.prepareCall("EXEC save_timeline @timelineName = ?, @timelineID = ?, @userID = ?");
+            callableStatement.setString(1, timeline.getName());
+            callableStatement.setString(2, timeline.getIdentifier().toString());
+            callableStatement.setInt(3, 1);
+            callableStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
         }
-        saveTimelineEventCards(timeline.getEventCards(),timeline.getIdentifier());
+        saveTimelineEventCards(timeline.getEventCards(), timeline.getIdentifier());
         return true;
     }
 
@@ -295,7 +293,7 @@ public class DatabaseStorage implements StorageAdapter {
             preparedStatement = connection.prepareStatement(sql);
 
             for (TimelineEventCard timelineEventCard : timelineEventCards) {
-                for (Entity entity: timelineEventCard.getEventAttachedEntities()){
+                for (Entity entity : timelineEventCard.getEventAttachedEntities()) {
 
                     preparedStatement.addBatch();
                 }
@@ -319,7 +317,7 @@ public class DatabaseStorage implements StorageAdapter {
 
         try {
             preparedStatement = connection.prepareCall("EXEC deleteTimelineEventCards @timelineID = ?");
-            preparedStatement.setString(1,timelineID.toString());
+            preparedStatement.setString(1, timelineID.toString());
             preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

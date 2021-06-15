@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public interface StorageAdapter {
 
     /**
-     * Saves eventcard. is meant for both updating and creating a new eventcard.
+     * Saves specified eventcard. is meant for both updating and creating a new eventcard.
      *
      * @param eventCard the event card
      * @return true if successfull
@@ -20,7 +20,7 @@ public interface StorageAdapter {
     boolean saveEventCard(EventCard eventCard);
 
     /**
-     * Delete event card boolean.
+     * Deletes specified event card.
      *
      * @param ID the id
      * @return true if successfull
