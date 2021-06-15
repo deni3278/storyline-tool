@@ -52,7 +52,7 @@ public class TimelineController {
         //checks if the drag event source is an eventcard
         timelineGridPane.setOnDragOver(event -> {
             Node source = (Node) event.getGestureSource();
-            if (source.getUserData() instanceof EventCard){
+            if (source.getUserData() instanceof EventCard) {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             event.consume();
@@ -102,14 +102,13 @@ public class TimelineController {
         addTimelineEventCard(timelineEventCard);
     }
 
-    public Timeline getTimeline(){
+    public Timeline getTimeline() {
         return this.timeline;
     }
 
     public ArrayList<TimelineEventCard> getTimelineEventCards() {
         return this.timelineEventCards;
     }
-
 
 
     private boolean checkOverlap(int columnIndex, int rowIndex) {
@@ -223,17 +222,6 @@ public class TimelineController {
         this.timelineGridPane.getChildren().remove(eventCard);
         this.timelineEventCards.remove(eventCard.getUserData());
 
-    }
-
-    //gets a node from the grid pane from a specific coordinate
-    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                return node;
-            }
-        }
-        return null;
     }
 
 }

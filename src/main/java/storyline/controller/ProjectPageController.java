@@ -11,8 +11,9 @@ import storyline.model.TimelineEventCard;
 import storyline.storage.DatabaseStorage;
 import storyline.storage.LocalStorage;
 
-import java.io.*;
-
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
@@ -58,7 +59,7 @@ public class ProjectPageController {
                 success = timelineController.saveCurrentTimeline(LocalStorage.getInstance());
                 System.out.println("saved locally");
             }
-            if (success){
+            if (success) {
                 Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 successAlert.setHeaderText("Successfully saved your current project");
                 successAlert.showAndWait();
@@ -115,52 +116,46 @@ public class ProjectPageController {
      * Exports timeline to a txt file.
      */
 
-    private void exportTimelineToFile (File saveTxt) throws IOException {
+    private void exportTimelineToFile(File saveTxt) throws IOException {
 
-            if (saveTxt !=null) {
-                ArrayList<TimelineEventCard> expEventCards = new ArrayList<>(timelineController.getTimelineEventCards());
-                expEventCards.sort(Comparator.comparing(timelineEventCard -> timelineEventCard.getX()));
-                System.out.println(expEventCards);
-                exportFileTextContent(expEventCards, saveTxt);
+        if (saveTxt != null) {
+            ArrayList<TimelineEventCard> expEventCards = new ArrayList<>(timelineController.getTimelineEventCards());
+            expEventCards.sort(Comparator.comparingInt(TimelineEventCard::getX).thenComparingInt(TimelineEventCard::getY));
+            System.out.println(expEventCards);
+            exportFileTextContent(expEventCards, saveTxt);
 
-                System.out.println("File created: "+ saveTxt.getName());
-            }
-            else {
-                System.out.println("File already exists");
-            }
+            System.out.println("File created: " + saveTxt.getName());
+        } else {
+            System.out.println("File already exists");
+        }
     }
 
     /**
      * Iterates through event card array and formats the text based on their placement
      *
      * @param expEventCards cloned array of timeline event cards.
-     * @param saveTxt file variable for the exported timeline.
+     * @param saveTxt       file variable for the exported timeline.
      * @throws IOException
      */
 
     private void exportFileTextContent(ArrayList<TimelineEventCard> expEventCards, File saveTxt) throws IOException {
         try (PrintWriter printWriter = new PrintWriter(saveTxt)) {
-            int smallestY = -1;
-            int asciiValueOfSpace = 32;
 
-            for (int i = 0; i < expEventCards.size(); i++) {
-                if (smallestY < expEventCards.get(i).getY()) {
-                    smallestY = expEventCards.get(i).getY();
-                } else
-                    continue;
+            for (TimelineEventCard expEventCard : expEventCards) {
+                String whiteSpace = getSpaces(expEventCard.getY());
+                printWriter.write(whiteSpace + expEventCard.getTitle() + "\n" + whiteSpace +expEventCard.getEventContent() + "\n\n");
             }
-            for (int i = 0; i < expEventCards.size(); i++) {
 
-                if (expEventCards.get(i).getY() > smallestY) {
-                    printWriter.format("%x,%s",asciiValueOfSpace,expEventCards.get(i).getTitle() + "\n" + expEventCards.get(i).getEventContent() + "\n\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-                } else {
-                    printWriter.write(expEventCards.get(i).getTitle() + "\n" + expEventCards.get(i).getEventContent() + "\n\n");
-                    }
-                }
+    public String getSpaces(int y) {
+        String spaces = "";
+        for (int i = 0; i < y; i++) {
+            spaces += "    ";
         }
-        catch (Exception e){
-           e.printStackTrace();
-        }
+        return spaces;
     }
 }
