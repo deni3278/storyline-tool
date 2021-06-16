@@ -17,7 +17,7 @@ public class EventCard extends Identifiable implements Serializable {
     private String eventContent;
     private ArrayList<Entity> eventAttachedEntities = new ArrayList<>();
 
-    private static final long SERIAL_VERSION_UID = 355062238;
+    private static final long serialVersionUID = 355062238;
 
     public EventCard(String title, String colorString, String eventContent) {
         this.title = title;

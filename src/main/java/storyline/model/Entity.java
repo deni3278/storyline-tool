@@ -13,7 +13,7 @@ public class Entity extends Identifiable implements Serializable {
     private String name;
     private String description;
 
-    private static final long SERIAL_VERSION_UID = 355062237;
+    private static final long serialVersionUID = 355062237;
 
     public Entity(String initials, String name, String description) {
         this.initials = initials;

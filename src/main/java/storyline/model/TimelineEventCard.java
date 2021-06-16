@@ -11,7 +11,7 @@ public class TimelineEventCard extends EventCard {
     private int x;
     private int y;
 
-    private static final long SERIAL_VERSION_UID = 355062241;
+    private static final long serialVersionUID = 355062241;
 
     public TimelineEventCard(String name, String colorString, String eventContent, int posX, int posY) {
         super(name, colorString, eventContent);
