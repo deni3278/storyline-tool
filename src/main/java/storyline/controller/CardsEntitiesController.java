@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -53,9 +54,11 @@ public class CardsEntitiesController {
         lblCounter.textProperty().bind(Bindings.size(eventCards).asString());
     }
 
-    public void search(){
-
-        //Iterate through the vbox vLayout and check if the text on the eventCard contains any of the text in the searchbar textfield
+    /**
+     * Iterate through the vbox vLayout and check if the text on the eventCard contains any of the text in the searchbar textfield
+     */
+    @FXML
+    private void search() {
         for (int i = 0; i < vLayout.getChildren().size(); i++) {
             if (((EventCard)vLayout.getChildren().get(i).getUserData()).getTitle().toLowerCase().contains(fldSearch.getText().toLowerCase())){
                 vLayout.getChildren().get(i).setVisible(true);

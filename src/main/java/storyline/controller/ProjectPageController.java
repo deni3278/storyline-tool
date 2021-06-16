@@ -123,6 +123,7 @@ public class ProjectPageController {
             System.out.println(expEventCards);
             exportFileTextContent(expEventCards, saveTxt);
 
+
             System.out.println("File created: " + saveTxt.getName());
         } else {
             System.out.println("File already exists");
