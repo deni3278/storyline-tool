@@ -115,7 +115,7 @@ public class LocalStorage implements StorageAdapter {
      * @param object       the object needed to be save to a file
      * @return true if successfull write
      */
-    private  <T extends Identifiable & Serializable> boolean writeObjectToFile(String subDirectory, T object) {
+    private <T extends Identifiable & Serializable> boolean writeObjectToFile(String subDirectory, T object) {
         String directoryPath = getFilepath(subDirectory);
         createDirectoryIfNotExists(directoryPath);
         String filepath = getFilepath(object, subDirectory);
@@ -151,7 +151,7 @@ public class LocalStorage implements StorageAdapter {
      * @param subDirectories the sub directories
      * @return the filepath
      */
-    private  <T extends Identifiable & Serializable> String getFilepath(T object, String... subDirectories) {
+    private <T extends Identifiable & Serializable> String getFilepath(T object, String... subDirectories) {
         StringBuilder filepathBuilder = new StringBuilder(getFilepath(subDirectories));
         filepathBuilder.append(object.getIdentifier() + FILE_FORMAT);
         return filepathBuilder.toString();
@@ -164,7 +164,7 @@ public class LocalStorage implements StorageAdapter {
      * @param subDirectory the sub directory
      * @return the array list of all objects from the specified directory
      */
-    private  <T extends Identifiable & Serializable> ArrayList<T> readAllObjectsFromDirectory(String subDirectory) {
+    private <T extends Identifiable & Serializable> ArrayList<T> readAllObjectsFromDirectory(String subDirectory) {
         ArrayList<T> objects = new ArrayList<>();
 
         String directoryPath = getFilepath(subDirectory);
@@ -203,7 +203,7 @@ public class LocalStorage implements StorageAdapter {
      */
     public <T extends Identifiable & Serializable> T readObjectFromFile(String directory, String identifier) {
 
-        String filepath = this.appDataPath + File.separator + directory + File.separator + identifier + FILE_FORMAT;
+        String filepath = getFilepath(directory) + File.separator + identifier + FILE_FORMAT;
         T object = null;
         try {
             FileInputStream fileIn = new FileInputStream(filepath);
@@ -220,3 +220,4 @@ public class LocalStorage implements StorageAdapter {
         return object;
     }
 }
+

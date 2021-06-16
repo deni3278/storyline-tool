@@ -69,7 +69,8 @@ public class LoadController {
     private void loadSelectedTimeline(StorageAdapter storageAdapter, Timeline timelineSelected) {
         Context instance = Context.getInstance();
         instance.getProjectPageController().getTimelineController().loadGridFromSave(storageAdapter, timelineSelected.getIdentifier().toString());
-        instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(storageAdapter);
+        //only loads user event cards from local storage at the moment as there is currently no way in the ui to save them to the database
+        instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(LocalStorage.getInstance());
         instance.activate("projectPage");
     }
 }
