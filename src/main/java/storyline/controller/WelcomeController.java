@@ -28,29 +28,21 @@ public class WelcomeController {
     private void initButtons() {
         StorageAdapter storage = LocalStorage.getInstance();
 
-        blankIconButton.setOnMouseClicked(e -> {
-            startFromBlankDialog(storage);
-        });
+        blankIconButton.setOnMouseClicked(e -> startFromBlankDialog(storage));
         blankIconButtonController.setImage(new Image(getClass().getResource("../images/blank.png").toExternalForm()));
         blankIconButtonController.setText("Blank");
 
-        fictionIconButton.setOnMouseClicked(e -> {
-            System.out.println("Fiction");
-        });
+        fictionIconButton.setOnMouseClicked(e -> System.out.println("Fiction"));
         fictionIconButton.setDisable(true);
         fictionIconButtonController.setImage(new Image(getClass().getResource("../images/fiction.png").toExternalForm()));
         fictionIconButtonController.setText("Fiction");
 
-        historicalIconButton.setOnMouseClicked(e -> {
-            System.out.println("Historical");
-        });
+        historicalIconButton.setOnMouseClicked(e -> System.out.println("Historical"));
         historicalIconButton.setDisable(true);
         historicalIconButtonController.setImage(new Image(getClass().getResource("../images/historical.png").toExternalForm()));
         historicalIconButtonController.setText("Historical");
 
-        screenplayIconButton.setOnMouseClicked(e -> {
-            System.out.println("Screenplay");
-        });
+        screenplayIconButton.setOnMouseClicked(e -> System.out.println("Screenplay"));
         screenplayIconButton.setDisable(true);
         screenplayIconButtonController.setImage(new Image(getClass().getResource("../images/screenplay.png").toExternalForm()));
         screenplayIconButtonController.setText("Screenplay");
@@ -60,15 +52,18 @@ public class WelcomeController {
         TextInputDialog inputDialog = new TextInputDialog();
         inputDialog.setHeaderText("Input timeline name");
         inputDialog.setTitle("Timeline");
+
         Optional<String> input = inputDialog.showAndWait();
+
         if (input.isPresent()) {
             String name = input.get();
+
             if (name.length() == 0) name = "Timeline";
+
             Context instance = Context.getInstance();
             instance.getProjectPageController().getCardsEntitiesController().loadCardsFromStorage(storage);
             instance.getProjectPageController().getTimelineController().startFromBlank(name);
             instance.activate("projectPage");
-            System.out.println("Blank");
         }
     }
 }

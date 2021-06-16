@@ -12,9 +12,8 @@ import java.util.ArrayList;
  * a list of timelines the user can chose to load from when pressing one of the load buttons on the welcome page.
  */
 public class TimelineListViewController {
-
     @FXML
-    ListView timelineListView;
+    private ListView timelineListView;
 
     @FXML
     Button closeButton, loadButton;
@@ -29,10 +28,5 @@ public class TimelineListViewController {
 
     public void setTimelines(ArrayList<Timeline> timelines) {
         this.timelineListView.getItems().setAll(timelines);
-    }
-
-    @FXML
-    public void initialize() {
-
     }
 }

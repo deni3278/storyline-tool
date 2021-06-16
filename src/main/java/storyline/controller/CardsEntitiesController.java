@@ -24,18 +24,13 @@ import storyline.storage.StorageAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 /**
  * The Cards entities controller contains the logic for the list of event cards
  * shown on the right side of the project page.
  */
 public class CardsEntitiesController {
-
-//Preset colors
     public static final Color RED = Color.rgb(254, 0, 78, 0.2);
-
     public static final Color GREEN = Color.rgb(44, 204, 112, 0.2);
-
     public static final Color BLUE = Color.rgb(0, 193, 254, 0.2);
 
     private final ObservableList<EventCard> eventCards = FXCollections.observableArrayList();
@@ -83,7 +78,6 @@ public class CardsEntitiesController {
      * @param storageAdapter the storage adapter
      */
     public void loadCardsFromStorage(StorageAdapter storageAdapter) {
-
         vLayout.getChildren().clear();
         eventCards.clear();
 

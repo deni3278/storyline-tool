@@ -10,14 +10,14 @@ import javafx.scene.paint.Paint;
 
 /**
  * The Event card controller is the controller
- * for each individual eventcard and is instantiated each time a eventcard is made.
+ * for each individual event card and is instantiated each time a event card is made.
  */
 public class EventCardController {
-    //Below properties are initially not in use, but are used when this controller is assigned to a new eventCard fxml (pls no delet)
     @FXML
-    public Label title, description;
+    private Label title, description;
+
     @FXML
-    public VBox vLayout;
+    private VBox vLayout;
 
     public EventCardController(String title, String description, Paint color) {
         Platform.runLater(()->{
@@ -26,7 +26,6 @@ public class EventCardController {
             this.description.setWrapText(true);
             this.vLayout.setBackground(new Background(new BackgroundFill(color, null, null)));
         });
-
     }
 }
 

@@ -15,24 +15,16 @@ import java.io.IOException;
  */
 public class CreateEventController {
     @FXML
-    Button btnSave, btnCancel;
-
-    public Button getBtnSave() {
-        return btnSave;
-    }
-
-    public Button getBtnCancel(){
-        return btnCancel;
-    }
+    private Button btnSave, btnCancel;
 
     @FXML
-    TextField fldTitle;
+    private TextField fldTitle;
 
     @FXML
-    TextArea areaContent;
+    private TextArea areaContent;
 
     @FXML
-    ChoiceBox<String> choiceColor;
+    private ChoiceBox<String> choiceColor;
 
     @FXML
     private void initialize() {
@@ -40,20 +32,17 @@ public class CreateEventController {
     }
 
     @FXML
-    public void handleSave() {
-        EventCard eventCard = new EventCard(fldTitle.getText(), getColor(choiceColor.getSelectionModel().getSelectedItem()),
-                areaContent.getText());
+    private void handleSave() {
+        EventCard eventCard = new EventCard(fldTitle.getText(), getColor(choiceColor.getSelectionModel().getSelectedItem()), areaContent.getText());
+
         try {
-            CardsEntitiesController cardsEntitiesController = Context.getInstance().projectPageController.cardsEntitiesController;
+            CardsEntitiesController cardsEntitiesController = Context.getInstance().projectPageController.getCardsEntitiesController();
             cardsEntitiesController.createCard(eventCard);
             cardsEntitiesController.saveCard(LocalStorage.getInstance(), eventCard);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 
     public String getColor(String choice) {
         switch (choice) {
@@ -67,6 +56,11 @@ public class CreateEventController {
         }
     }
 
-
+    public Button getBtnSave() {
+        return btnSave;
     }
 
+    public Button getBtnCancel(){
+        return btnCancel;
+    }
+}

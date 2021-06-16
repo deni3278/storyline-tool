@@ -17,7 +17,6 @@ import java.util.UUID;
  * takes username and password from connection.prop
  */
 public class DatabaseStorage implements StorageAdapter {
-
     private Connection connection;
 
     private static DatabaseStorage instance;
@@ -52,9 +51,9 @@ public class DatabaseStorage implements StorageAdapter {
         if (instance == null) {
             instance = new DatabaseStorage();
         }
+
         return instance;
     }
-
 
     @Override
     public boolean saveEventCard(EventCard eventCard) {
@@ -69,8 +68,9 @@ public class DatabaseStorage implements StorageAdapter {
     @Override
     public ArrayList<EventCard> getAllEventCards() {
         ArrayList<EventCard> eventCards = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         ResultSet resultSet = null;
+
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM viewUserEventCards WHERE fld_UserID = 1");
             preparedStatement.execute();
@@ -97,10 +97,10 @@ public class DatabaseStorage implements StorageAdapter {
 
     @Override
     public Timeline getTimeline(String ID) {
-
         Timeline timeline;
         PreparedStatement preparedStatement;
         ResultSet resultSet = null;
+
         try {
             preparedStatement = connection.prepareStatement("SELECT fld_TimelineName FROM tbl_Timeline WHERE fld_TimelineID = ?");
             preparedStatement.setString(1, ID);
@@ -109,7 +109,9 @@ public class DatabaseStorage implements StorageAdapter {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         String timelineName = null;
+
         try {
             if (resultSet.next()) {
                 timelineName = resultSet.getString("fld_TimelineName");
@@ -118,11 +120,10 @@ public class DatabaseStorage implements StorageAdapter {
             throwables.printStackTrace();
         }
 
-
         ArrayList<TimelineEventCard> timelineEventCards = getTimelineEventCards(ID);
         timeline = new Timeline(timelineEventCards, timelineName, UUID.fromString(ID));
-        return timeline;
 
+        return timeline;
     }
 
     /**
@@ -133,8 +134,9 @@ public class DatabaseStorage implements StorageAdapter {
      */
     public ArrayList<TimelineEventCard> getTimelineEventCards(String timelineID) {
         ArrayList<TimelineEventCard> timelineEventCards = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         ResultSet resultSet = null;
+
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM viewTimelineEventCards WHERE fld_TimelineID = ?");
             preparedStatement.setString(1, timelineID);
@@ -172,10 +174,10 @@ public class DatabaseStorage implements StorageAdapter {
      * @return the timeline event card entities
      */
     private ArrayList<Entity> getTimelineEventcardEntities(String timelineEventCardID) {
-
         ArrayList<Entity> entities = new ArrayList<>();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         ResultSet resultSet = null;
+
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM viewTimelineEventCardEntities WHERE fld_TimelineEventCardID = ?");
             preparedStatement.setString(1, timelineEventCardID);
@@ -184,6 +186,7 @@ public class DatabaseStorage implements StorageAdapter {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         try {
             while (resultSet.next()) {
                 UUID entitiyID = UUID.fromString(resultSet.getString("fld_EntityID"));
@@ -197,19 +200,18 @@ public class DatabaseStorage implements StorageAdapter {
             throwables.printStackTrace();
         }
 
-
         return entities;
     }
 
     @Override
     public ArrayList<Timeline> getAllTimelines() {
-
         ArrayList<String> timelineIDs = new ArrayList<>();
         ArrayList<Timeline> timelines = new ArrayList<>();
 
-        PreparedStatement getAllIDsStatement = null;
+        PreparedStatement getAllIDsStatement;
 
         ResultSet resultSet = null;
+
         try {
             getAllIDsStatement = connection.prepareStatement("SELECT fld_TimelineID FROM viewTimeline where fld_UserID = 1");
             getAllIDsStatement.execute();
@@ -222,20 +224,19 @@ public class DatabaseStorage implements StorageAdapter {
             while (resultSet.next()) {
                 timelineIDs.add(resultSet.getString("fld_TimelineID"));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
 
-        timelineIDs.forEach(timelineID -> {
-            timelines.add(getTimeline(timelineID));
-        });
+        timelineIDs.forEach(timelineID -> timelines.add(getTimeline(timelineID)));
+
         return timelines;
     }
 
     @Override
     public boolean saveTimeline(Timeline timeline) {
-
         CallableStatement callableStatement;
+
         try {
             callableStatement = connection.prepareCall("EXEC save_timeline @timelineName = ?, @timelineID = ?, @userID = ?");
             callableStatement.setString(1, timeline.getName());
@@ -244,9 +245,11 @@ public class DatabaseStorage implements StorageAdapter {
             callableStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+
             return false;
         }
         saveTimelineEventCards(timeline.getEventCards(), timeline.getIdentifier());
+
         return true;
     }
 
@@ -254,7 +257,8 @@ public class DatabaseStorage implements StorageAdapter {
         deleteTimelineEventCards(timelineID);
 
         String sql = "exec save_timelineEventCard @fld_TimelineEventCardID = ?, @fld_TimelineID = ?, @fld_Title = ?, @fld_EventContent = ?, @fld_ColorString = ?, @fld_X = ?, @fld_Y = ?";
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
+
         try {
             preparedStatement = connection.prepareStatement(sql);
 
@@ -269,12 +273,9 @@ public class DatabaseStorage implements StorageAdapter {
                 preparedStatement.setInt(7, timelineEventCard.getY());
                 preparedStatement.addBatch();
             }
-            int[] affectedRecords = preparedStatement.executeBatch();
-            System.out.println("affectedRecords.length = " + affectedRecords.length);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
-
     }
 
     /**

@@ -5,7 +5,6 @@ import javafx.scene.layout.Pane;
 
 import java.util.HashMap;
 
-
 /**
  * this class contains global state such as the different controllers and panes.
  * this makes it possible to switch pages and makes it possible for different controllers to access each others instances
@@ -15,6 +14,7 @@ public class Context {
     private final static Context instance = new Context();
 
     private HashMap<String, Pane> screenMap = new HashMap<>();
+
     private Scene main;
 
     public ProjectPageController projectPageController;
@@ -31,7 +31,6 @@ public class Context {
     public static Context getInstance() {
         return instance;
     }
-
 
     public ProjectPageController getProjectPageController() {
         return projectPageController;

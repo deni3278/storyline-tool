@@ -14,9 +14,8 @@ import java.io.IOException;
  * getting the buttons so they can be accessed from other controllers.
  */
 public class ActionPaneController {
-
     @FXML
-    Button createOrLoadButton, saveTimelineButton, exportTimelineButton, createEventButton, createEntityButton;
+    private Button createOrLoadButton, saveTimelineButton, exportTimelineButton, createEventButton, createEntityButton;
 
     public Button getCreateOrLoadButton() {
         return createOrLoadButton;
@@ -58,6 +57,4 @@ public class ActionPaneController {
             controller.getBtnCancel().setOnMouseClicked(event1 -> popup.hide());
         });
     }
-
-
 }

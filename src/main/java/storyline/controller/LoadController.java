@@ -24,7 +24,6 @@ public class LoadController {
     @FXML
     private IconButtonController databaseIconButtonController, localIconButtonController;
 
-
     @FXML
     private void initialize() {
         databaseIconButton.setOnMouseClicked(e -> showTimelines(DatabaseStorage.getInstance()));
@@ -40,11 +39,13 @@ public class LoadController {
     private void showTimelines(StorageAdapter storageAdapter) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/listTimelines.fxml"));
         ScrollPane root = null;
+
         try {
             root = loader.load();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+
         TimelineListViewController timelineListViewController = loader.getController();
         ArrayList<Timeline> allTimelines = storageAdapter.getAllTimelines();
 
@@ -57,12 +58,12 @@ public class LoadController {
         timelineListViewController.closeButton.setOnMouseClicked(event -> popup.hide());
 
         timelineListViewController.loadButton.setOnMouseClicked(event -> {
-            Timeline timelineSelected = (Timeline) timelineListViewController.timelineListView.getSelectionModel().getSelectedItem();
+            Timeline timelineSelected = (Timeline) timelineListViewController.getTimelineListView().getSelectionModel().getSelectedItem();
+
             loadSelectedTimeline(storageAdapter, timelineSelected);
+
             popup.hide();
         });
-
-
     }
 
     private void loadSelectedTimeline(StorageAdapter storageAdapter, Timeline timelineSelected) {

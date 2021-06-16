@@ -157,7 +157,6 @@ public class LocalStorage implements StorageAdapter {
         return filepathBuilder.toString();
     }
 
-
     /**
      * Read all objects from specified directory.
      *

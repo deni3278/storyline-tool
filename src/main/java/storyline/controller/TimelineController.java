@@ -28,26 +28,24 @@ import java.util.ArrayList;
  * The Timeline controller contains the logic of the gridpane(timeline) shown on the project page.
  */
 public class TimelineController {
-
     private Timeline timeline;
     private ArrayList<TimelineEventCard> timelineEventCards;
 
     @FXML
-    public ScrollPane timelineScrollPane;
+    private ScrollPane timelineScrollPane;
 
     @FXML
-    GridPane timelineGridPane;
+    private GridPane timelineGridPane;
 
     @FXML
-    VBox root;
+    private VBox root;
 
     @FXML
-    Label timelineLabel;
+    private Label timelineLabel;
 
     @FXML
     public void initialize() {
-
-        this.timelineEventCards = new ArrayList<>();
+        timelineEventCards = new ArrayList<>();
 
         //checks if the drag event source is an eventcard
         timelineGridPane.setOnDragOver(event -> {
@@ -59,7 +57,6 @@ public class TimelineController {
         });
 
         timelineGridPane.setOnDragDropped(event -> {
-
             //gets the row and column index according to the event's mouse coordinate
             Bounds cellBounds = timelineGridPane.impl_getCellBounds(0, 0);
             int columnIndex = (int) Math.floor(event.getX() / cellBounds.getWidth());
@@ -110,7 +107,6 @@ public class TimelineController {
         return this.timelineEventCards;
     }
 
-
     private boolean checkOverlap(int columnIndex, int rowIndex) {
         boolean overlap = false;
         for (TimelineEventCard eventCard : this.timelineEventCards) {
@@ -144,8 +140,6 @@ public class TimelineController {
      * @param ID             the id
      */
     public void loadGridFromSave(StorageAdapter storageAdapter, String ID) {
-
-
         //initializes variables
         timeline = storageAdapter.getTimeline(ID);
         timelineLabel.setText(timeline.getName());

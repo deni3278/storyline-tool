@@ -14,11 +14,10 @@ import java.util.UUID;
 public class EventCard extends Identifiable implements Serializable {
     private String title;
     private String colorString;
-    private ArrayList<Entity> EventAttachedEntities = new ArrayList<>();
     private String eventContent;
-    private static final long serialVersionUID = 355062238;
+    private ArrayList<Entity> eventAttachedEntities = new ArrayList<>();
 
-
+    private static final long SERIAL_VERSION_UID = 355062238;
 
     public EventCard(String title, String colorString, String eventContent) {
         this.title = title;
@@ -54,11 +53,11 @@ public class EventCard extends Identifiable implements Serializable {
     }
 
     public ArrayList<Entity> getEventAttachedEntities() {
-        return EventAttachedEntities;
+        return eventAttachedEntities;
     }
 
     public void setEventAttachedEntities(ArrayList<Entity> eventAttachedEntities) {
-        EventAttachedEntities = eventAttachedEntities;
+        this.eventAttachedEntities = eventAttachedEntities;
     }
 
     public String getEventContent() {
@@ -74,7 +73,7 @@ public class EventCard extends Identifiable implements Serializable {
         return "EventCard{" +
                 "title='" + title + '\'' +
                 ", color='" + getColor() + '\'' +
-                ", EventAttachedEntities=" + EventAttachedEntities +
+                ", EventAttachedEntities=" + eventAttachedEntities +
                 ", eventContent='" + eventContent + '\'' +
                 '}';
     }

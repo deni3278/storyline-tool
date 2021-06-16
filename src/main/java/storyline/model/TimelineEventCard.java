@@ -8,22 +8,23 @@ import java.util.UUID;
  * as it contains the coordinate that the card is placed on.
  */
 public class TimelineEventCard extends EventCard {
-
     private int x;
     private int y;
-    private static final long serialVersionUID = 355062241;
+
+    private static final long SERIAL_VERSION_UID = 355062241;
 
     public TimelineEventCard(String name, String colorString, String eventContent, int posX, int posY) {
         super(name, colorString, eventContent);
+
         this.x = posX;
         this.y = posY;
     }
     public TimelineEventCard(String name, String colorString, String eventContent, int posX, int posY, UUID ID) {
         super(name, colorString, eventContent,ID);
+
         this.x = posX;
         this.y = posY;
     }
-
 
     public int getX() {
         return x;
