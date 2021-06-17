@@ -3,6 +3,7 @@ import org.junit.Test;
 import storyline.model.EventCard;
 import storyline.storage.LocalStorage;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,9 +30,10 @@ public class LocalStorageTest {
         EventCard eventCardOut = new EventCard("eventcard1", BLUE.toString(), "eventcard1content");
         localStorage.saveEventCard(eventCardOut);
         localStorage.deleteFile("Eventcards", eventCardOut.getIdentifier().toString());
-        EventCard eventCardIn = localStorage.readObjectFromFile("Eventcards", eventCardOut.getIdentifier().toString());
-        assertNull(eventCardIn);
+        EventCard eventCardIn = null;
+        eventCardIn = localStorage.readObjectFromFile("Eventcards", eventCardOut.getIdentifier().toString());
 
+        assertNull(eventCardIn);
     }
 
     @Test

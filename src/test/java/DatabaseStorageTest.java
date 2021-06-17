@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DatabaseStorageTest {
 
@@ -26,9 +27,12 @@ public class DatabaseStorageTest {
         TimelineEventCard timelineEventCard3 = new TimelineEventCard("test", BLUE.toString(), "testesteteet", 4, 1);
         ArrayList<TimelineEventCard> eventCards = new ArrayList<>(Arrays.asList(timelineEventCard1, timelineEventCard2, timelineEventCard3));
         Timeline timelineOut = new Timeline(eventCards, "Test");
-        databaseStorage.saveTimeline(timelineOut);
+
+        assertTrue(databaseStorage.saveTimeline(timelineOut));
+
         Timeline timelineIn = databaseStorage.getTimeline(timelineOut.getIdentifier().toString());
         assertEquals(timelineIn.getIdentifier(),timelineOut.getIdentifier());
+
     }
 
     @Test
